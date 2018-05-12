@@ -1,0 +1,10 @@
+*.class
+*-gcc
+*-clang
+*-rs
+*-nim
+*.jar
+*.kexe
+*-swift
+*.pyc
+nimcache
