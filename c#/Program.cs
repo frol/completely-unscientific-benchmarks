@@ -27,14 +27,12 @@ namespace Benchmark
     class Node {
         public static Random random = new Random();
 
-        public Node(int x) {
-            this.x = x;
-        }
-
         int x;
         int y = random.Next();
         Node left, right;
 
+        public Node(int x)
+            => this.x = x;
 
         public static Node merge(Node lower, Node greater) {
             if (lower == null)
