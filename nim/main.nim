@@ -4,7 +4,7 @@ type Node = ref object
   x, y: int32
   left, right: Node
 
-proc newNode(x: int): Node =
+proc newNode(x: int32): Node =
   return Node(x: x, y: rand(high(int32).int).int32, left: nil, right: nil)
 
 proc merge(lower, greater: Node): Node =
