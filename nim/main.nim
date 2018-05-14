@@ -39,17 +39,10 @@ proc splitBinary(orig: Node, value: int): (Node, Node) =
 proc merge3(lower: Node, equal: Node, greater: Node): Node =
   return merge(merge(lower, equal), greater)
 
-
-type SplitResult = object
-  lower: Node
-  equal: Node
-  greater: Node
-
-
-proc split(orig: Node, value: int): SplitResult =
+proc split(orig: Node, value: int): tuple[lower, equal, greater: Node] =
   let (lower, equalGreater) = splitBinary(orig, value)
   let (equal, greater) = splitBinary(equalGreater, value + 1)
-  return SplitResult(lower: lower, equal: equal, greater: greater)
+  return (lower: lower, equal: equal, greater: greater)
 
 
 type Tree = ref object
