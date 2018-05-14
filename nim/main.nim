@@ -76,7 +76,7 @@ proc main() =
   var cur = 5
   var res = 0
 
-  for i in countup(1, 1000000):
+  for i in 1 ..< 1000000:
     let a = cur mod 3
     cur = (cur * 57 + 43) mod 10007
     case a:
