@@ -39,8 +39,9 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 
 | Language                          | Real Time, seconds | Slowdown Time | Memory, MB | Normalized Memory | Binary Size, MB                   | Compiler Version                 |
 | --------------------------------  | ------------------ | ------------- | ---------- | ----------------- | --------------------------------- | -------------------------------- |
-| C++ "ref-counted" (clang / gcc)   | 0.55               | x2.5          | 0.5        | x1.3              | 0.023 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
 | C++ "raw-pointers" (clang / gcc)  | 0.22               | x1            | 0.38       | x1                | 0.011 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
+| C++ "unique\_ptr" ("ref-counted") | 0.43               | x1.9          | 0.38       | x1                | 0.015 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
+| C++ "shared\_ptr" (clang / gcc)   | 0.57               | x2.6          | 0.5        | x1.3              | 0.023 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
 | Rust "ref-counted"                | 0.66               | x3            | 0.5        | x1.3              | 0.479                             | Rustc 1.27 (nightly)             |
 | Rust "idiomatic"                  | 0.37               | x1.7          | 0.5        | x1.3              | 0.475                             | Rustc 1.27 (nightly)             |
 | JavaScript                        | 1.12               | x5            | 52         | x137              | N/A                               | Node.js 10.1.0                   |
@@ -57,8 +58,8 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 
 | Language                          | Real Time, seconds | Slowdown Time | Binary Size, MB                  | Compiler version                              |
 | --------------------------------- | ------------------ | ------------- | -------------------------------- | --------------------------------------------- |
-| C++ "ref-counted" (clang)         | 1.35               | x5.4          | 0.019 + libstdc++                | Apple LLVM version 9.1.0 (clang-902.0.39.1)   |
 | C++ "raw-pointers" (clang)        | 0.25               | x1            | 0.009 + libstdc++                | Apple LLVM version 9.1.0 (clang-902.0.39.1)   |
+| C++ "shared\_ptr" (clang)         | 1.35               | x5.4          | 0.019 + libstdc++                | Apple LLVM version 9.1.0 (clang-902.0.39.1)   |
 | Rust "ref-counted"                | 0.7                | x2.8          | 0.415                            | Rustc 1.26.0                                  |
 | Rust "idiomatic"                  | 0.4                | x1.6          | 0.415                            | Rustc 1.26.0                                  |
 | JavaScript                        | 1.47               | x5.9          | N/A                              | Node.js 6.11.1                                |
@@ -75,12 +76,12 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 
 | Language                          | Real Time, seconds | Slowdown Time | Binary Size, MB                  | Compiler version                              |
 | --------------------------------- | ------------------ | ------------- | -------------------------------- | --------------------------------------------- |
-| C++ "ref-counted" (msvc 2017)     | 1.7                | x5.7          | 0.021 + libstdc++                | MSVC 2017 (19.13.26129)                       |
 | C++ "raw-pointers" (msvc 2017)    | 0.3                | x1            | 0.015 + libstdc++                | MSVC 2017 (19.13.26129)                       |
-| C++ "ref-counted" (clang)         | 1.6                | x5.3          | 0.258 + libstdc++                | Clang 6.0.0                                   |
+| C++ "shared\_ptr" (msvc 2017)     | 1.7                | x5.7          | 0.021 + libstdc++                | MSVC 2017 (19.13.26129)                       |
 | C++ "raw-pointers" (clang)        | 0.3                | x1            | 0.254 + libstdc++                | Clang 6.0.0                                   |
-| C++ "ref-counted" (mingw)         | 5                  | x16.7         | 0.031 + libstdc++                | GCC 6.3.0                                     |
+| C++ "shared\_ptr" (clang)         | 1.6                | x5.3          | 0.258 + libstdc++                | Clang 6.0.0                                   |
 | C++ "raw-pointers" (mingw)        | 1                  | x3.3          | 0.039 + libstdc++                | GCC 6.3.0                                     |
+| C++ "shared\_ptr" (mingw)         | 5                  | x16.7         | 0.031 + libstdc++                | GCC 6.3.0                                     |
 | Rust "ref-counted"                | 0.8                | x2.7          | 0.163                            | Rustc 1.26.0                                  |
 | Rust "idiomatic"                  | 0.5                | x1.7          | 0.16                             | Rustc 1.26.0                                  |
 | JavaScript                        | 1.25               | x4.2          | N/A                              | Node.js 8.11.1                                |

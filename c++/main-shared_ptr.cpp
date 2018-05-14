@@ -5,123 +5,122 @@ class Tree
 {
 public:
     Tree() = default;
-    
+
     bool hasValue(int x);
     void insert(int x);
     void erase(int x);
-    
+
 private:
-    
+
     struct Node
     {
         Node(int x): x(x) {}
         Node() {}
-        
+
         int x = 0;
         int y = rand();
-        
-        std::unique_ptr<Node> left;
-        std::unique_ptr<Node> right;
+
+        std::shared_ptr<Node> left;
+        std::shared_ptr<Node> right;
     };
-    
-    using NodePtr = std::unique_ptr<Node>;
-    
+
+    using NodePtr = std::shared_ptr<Node>;
+
     static NodePtr merge(NodePtr lower, NodePtr greater);
     static NodePtr merge(NodePtr lower, NodePtr equal, NodePtr greater);
     static void split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val);
     static void split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val);
-    
+
     NodePtr mRoot;
 };
 
 bool Tree::hasValue(int x)
 {
     NodePtr lower, equal, greater;
-    split(std::move(mRoot), lower, equal, greater, x);
+    split(mRoot, lower, equal, greater, x);
     bool res = equal != nullptr;
-    mRoot = merge(std::move(lower), std::move(equal), std::move(greater));
+    mRoot = merge(lower, equal, greater);
     return res;
 }
 
 void Tree::insert(int x)
 {
     NodePtr lower, equal, greater;
-    split(std::move(mRoot), lower, equal, greater, x);
+    split(mRoot, lower, equal, greater, x);
     if(!equal)
-        equal = std::make_unique<Node>(x);
-    
-    mRoot = merge(std::move(lower), std::move(equal), std::move(greater));
+        equal = std::make_shared<Node>(x);
+
+    mRoot = merge(lower, equal, greater);
 }
 
 void Tree::erase(int x)
 {
     NodePtr lower, equal, greater;
-    split(std::move(mRoot), lower, equal, greater, x);
-    mRoot = merge(std::move(lower), std::move(greater));
+    split(mRoot, lower, equal, greater, x);
+    mRoot = merge(lower, greater);
 }
 
 Tree::NodePtr Tree::merge(NodePtr lower, NodePtr greater)
 {
     if(!lower)
         return greater;
-    
+
     if(!greater)
         return lower;
-    
+
     if(lower->y < greater->y)
     {
-        lower->right = merge(std::move(lower->right), std::move(greater));
+        lower->right = merge(lower->right, greater);
         return lower;
     }
     else
     {
-        greater->left = merge(std::move(lower), std::move(greater->left));
+        greater->left = merge(lower, greater->left);
         return greater;
     }
 }
 
 Tree::NodePtr Tree::merge(NodePtr lower, NodePtr equal, NodePtr greater)
 {
-    return merge(merge(std::move(lower), std::move(equal)), std::move(greater));
+    return merge(merge(lower, equal), greater);
 }
 
 void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
 {
     if(!orig)
     {
-        lower = nullptr;
-        greaterOrEqual = nullptr;
+        lower = greaterOrEqual = nullptr;
         return;
     }
-    
+
     if(orig->x < val)
     {
-        lower = std::move(orig);
-        split(std::move(lower->right), lower->right, greaterOrEqual, val);
+        lower = orig;
+        split(lower->right, lower->right, greaterOrEqual, val);
     }
     else
     {
-        greaterOrEqual = std::move(orig);
-        split(std::move(greaterOrEqual->left), lower, greaterOrEqual->left, val);
+        greaterOrEqual = orig;
+        split(greaterOrEqual->left, lower, greaterOrEqual->left, val);
     }
 }
 
 void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val)
 {
     NodePtr equalOrGreater;
-    split(std::move(orig), lower, equalOrGreater, val);
-    split(std::move(equalOrGreater), equal, greater, val + 1);
+    split(orig, lower, equalOrGreater, val);
+    split(equalOrGreater, equal, greater, val + 1);
 }
 
 int main()
 {
     srand(time(0));
-    
+
     Tree tree;
-    
+
     int cur = 5;
     int res = 0;
-    
+
     for(int i = 1; i < 1000000; i++)
     {
         int mode = i % 3;
