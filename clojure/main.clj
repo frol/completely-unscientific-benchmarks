@@ -34,11 +34,13 @@
         [equal greater] (split-binary equal-greater (inc value))]
     [lower equal greater]))
 
-;; FIXME: why splitting to merge right afterwards?
+;; Very questionable function ...
 (defn has-value [root x]
   (let [[lower equal greater] (split root x)
         new-root (merge3 lower equal greater)]
-    (assert (= root new-root))
+    ;; Why splitting to merge right afterwards? This seems to
+    ;; be empirically true:
+    ;; (assert (= root new-root))
     [new-root (nil? equal)]))
 
 (defn insert [root x]
