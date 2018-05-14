@@ -117,8 +117,7 @@ namespace Benchmark
                 } else if (a == 1) {
                     tree.erase(cur);
                 } else if (a == 2) {
-                    bool hasVal = tree.hasValue(cur);
-                    if (hasVal)
+                    if (tree.hasValue(cur))
                         res++;
                 }
             }
