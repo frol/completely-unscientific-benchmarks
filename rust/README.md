@@ -3,19 +3,15 @@
 Author: Vlad Frolov (@frol)
 
 ## Compile
-
-NOTE: This compilation requires Nightly version of Rust to make it possible to
-compile a single `.rs` file instead of Cargo project. You can easily avoid
-Nightly if you create a cargo project (`cargo new --bin`) and put the source
-code to `src/main.rs`.
+NOTE: The idiomatic and refcount versions of this benchmark are locked behind feature gates.
 
 ```
-rustc +nightly -O -o main-rs main.rs
-strip -s main-rs
+cargo build --release --features refcount OR cargo build --release --features idiomatic
+strip -s target/release/rust
 ```
 
 ## Execute
 
 ```
-./main-rs
+./target/release/rust
 ```

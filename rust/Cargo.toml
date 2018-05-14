@@ -1,0 +1,11 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = []
+
+[dependencies]
+rand = "0.4.2"
+
+[features]
+refcount = []
+idiomatic = []
