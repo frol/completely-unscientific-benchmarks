@@ -121,7 +121,7 @@ namespace Benchmark
                         res++;
                 }
             }
-            System.Console.WriteLine(res);
+            Console.WriteLine(res);
         }
     }
 }
