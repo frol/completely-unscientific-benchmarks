@@ -37,11 +37,9 @@ namespace Benchmark
         public static Node merge(Node lower, Node greater) {
             if (lower == null)
                 return greater;
-
-            if (greater == null)
+            else if (greater == null)
                 return lower;
-
-            if (lower.y < greater.y) {
+            else if (lower.y < greater.y) {
                 lower.right = merge(lower.right, greater);
                 return lower;
             } else {
