@@ -17,14 +17,14 @@
         (assoc lower :right (merge (:right lower) greater))
         (assoc greater :left (merge lower (:left greater)))))))
 
-(defn split-binary [orig-node int-value]
-  (if (nil? orig-node)
+(defn split-binary [orig value]
+  (if (nil? orig)
     [nil nil]
-    (if (< (:x orig-node) int-value)
-      (let [[fst snd] (split-binary (:right orig-node) int-value)]
-        [(assoc orig-node :right fst) snd])
-      (let [[fst snd] (split-binary (:left orig-node) int-value)]
-        [fst (assoc orig-node :left snd)]))))
+    (if (< (:x orig) value)
+      (let [[fst snd] (split-binary (:right orig) value)]
+        [(assoc orig :right fst) snd])
+      (let [[fst snd] (split-binary (:left orig) value)]
+        [fst (assoc orig :left snd)]))))
 
 (defn merge3 [lower equal greater]
   (merge (merge lower equal) greater))
