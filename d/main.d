@@ -42,23 +42,12 @@ struct Tree
         Node* lower, equal, greater;
         split(mRoot, lower, equal, greater, x);
         mRoot = merge(lower, greater);
-        clear(equal);
     }
 
 private:
-    
 
     Node* mRoot = null;
 };
-
-void clear(Node* node)
-{
-    if(node == null)
-        return;
-
-    clear(node.left);
-    clear(node.right);
-}
 
 Node* merge(Node* lower, Node* greater)
 {
