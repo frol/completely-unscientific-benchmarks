@@ -6,7 +6,6 @@ import (
 )
 
 type Node struct {
-	notEmpty bool
 	X        int
 	Y        int
 	Left     *Node
@@ -18,7 +17,6 @@ func NewNode(v int) *Node {
 	return &Node{
 		X:        v,
 		Y:        y,
-		notEmpty: true,
 	}
 }
 
@@ -28,14 +26,14 @@ type Tree struct {
 
 func (t *Tree) HasValue(v int) bool {
 	splitted := split(t.Root, v)
-	res := splitted.Equal.notEmpty
+	res := splitted.Equal != nil
 	t.Root = merge3(splitted.Lower, splitted.Equal, splitted.Greater)
 	return res
 }
 
 func (t *Tree) Insert(v int) error {
 	splitted := split(t.Root, v)
-	if !splitted.Equal.notEmpty {
+	if splitted.Equal == nil {
 		splitted.Equal = NewNode(v)
 	}
 	t.Root = merge3(splitted.Lower, splitted.Equal, splitted.Greater)
@@ -55,25 +53,18 @@ type SplitResult struct {
 }
 
 func merge(lower, greater *Node) *Node {
-	if !lower.notEmpty {
+	if lower == nil {
 		return greater
 	}
 
-	if !greater.notEmpty {
+	if greater == nil {
 		return lower
 	}
 
 	if lower.Y < greater.Y {
-		if lower.Right == nil {
-			lower.Right = &Node{}
-		}
 		right := merge(lower.Right, greater)
 		lower.Right = right
 		return lower
-	}
-
-	if greater.Left == nil {
-		greater.Left = &Node{}
 	}
 	left := merge(lower, greater.Left)
 	greater.Left = left
@@ -85,22 +76,16 @@ func merge3(lower, equal, greater *Node) *Node {
 }
 
 func splitBinary(original *Node, value int) (*Node, *Node) {
-	if original == nil || *original == (Node{}) || !original.notEmpty {
-		return &Node{}, &Node{}
+	if original == nil {
+		return nil, nil
 	}
 
 	if original.X < value {
-		if original.Right == nil {
-			original.Right = &Node{}
-		}
 		splitPair0, splitPair1 := splitBinary(original.Right, value)
 		original.Right = splitPair0
 		return original, splitPair1
 	}
 
-	if original.Left == nil {
-		original.Left = &Node{}
-	}
 	splitPair0, splitPair1 := splitBinary(original.Left, value)
 	original.Left = splitPair1
 	return splitPair0, original
