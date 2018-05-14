@@ -4,7 +4,7 @@
 
 (defn make-random-node [x]
   {:x x
-   :y (rand (** 2 31))
+   :y (rand-int (** 2 31))
    :left nil
    :right nil})
 
