@@ -1,25 +1,29 @@
-(ns bench.core
-  (:gen-class))
 
-;; Exponentiation:
-(defn ** [x n] (reduce * (repeat n x)))
+type Node = 
+  {x: int
+   y: int
+   left: option<Node>
+   right: option<Node>}
 
-;; Why using PRNG below why still non-deterministic here?
-(defn make-random-node [x]
-  {:x x
-   :y (rand-int (** 2 31))
-   :left nil
-   :right nil})
+let rand_int = (let rng = System.Random() in fun () -> rng.Next())
 
-(defn merge2 [lower greater]
-  (if-not lower
-    greater
-    (if-not greater
-      lower
-      (if (< (:y lower) (:y greater))
-        (assoc lower :right (merge2 (:right lower) greater))
-        (assoc greater :left (merge2 lower (:left greater)))))))
+let make_node (x: int) =
+  Some({x = x; y = rand_int (); left = None; right = None})
 
+// printfn "%A" (make_node 42)
+
+let rec merge2 lower greater =
+  match (lower, greater) with
+  | (None, greater) -> greater
+  | (lower, None) -> lower
+  | (Some(lo), Some(gt)) ->
+      if lo.y < gt.y
+      then Some({lo with right = merge2 lo.right greater})
+      else Some({gt with left = merge2 lower gt.left})
+
+printfn "%A" (merge2 (make_node 42) (make_node 43))
+
+(*
 (defn split-binary [orig value]
   (if-not orig
     [nil nil]
@@ -83,3 +87,4 @@
   (println (main 1000000)))
 
 
+*)
