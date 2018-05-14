@@ -23,19 +23,27 @@ let rec merge2 lower greater =
 
 printfn "%A" (merge2 (make_node 42) (make_node 43))
 
+let rec splitBinary orig value =
+  match orig with
+  | None -> (None, None)
+  | Some(orig) ->
+      if orig.x < value then
+        let (fst, snd) = splitBinary orig.right value
+        in (Some({orig with right = fst}), snd)
+      else
+        let (fst, snd) = splitBinary orig.left value
+        in (fst, Some({orig with left = snd}))
+
+let merge3 lower equal greater = merge2 (merge2 lower equal) greater
+
+let split orig value =
+  let (lower, equal_greater) = splitBinary orig value in
+  let (equal, greater) = splitBinary equal_greater (value + 1) in
+  (lower, equal, greater)
+
+printfn "%A" (split (merge2 (make_node 42) (make_node 43)) 43)
+
 (*
-(defn split-binary [orig value]
-  (if-not orig
-    [nil nil]
-    (if (< (:x orig) value)
-      (let [[fst snd] (split-binary (:right orig) value)]
-        [(assoc orig :right fst) snd])
-      (let [[fst snd] (split-binary (:left orig) value)]
-        [fst (assoc orig :left snd)]))))
-
-(defn merge3 [lower equal greater]
-  (merge2 (merge2 lower equal) greater))
-
 (defn split [orig value]
   (let [[lower equal-greater] (split-binary orig value)
         [equal greater] (split-binary equal-greater (inc value))]
@@ -85,6 +93,5 @@ printfn "%A" (merge2 (make_node 42) (make_node 43))
 
 (defn -main [& args]
   (println (main 1000000)))
-
 
 *)
