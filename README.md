@@ -48,7 +48,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | Java (no-limit / -Xm*50M)         | 0.50 / 0.50        | x2.4          | 142 / 29   | x374 / x76        | N/A                               | OpenJDK 1.8.0                    |
 | Kotlin JVM (no-limit / -Xm*50M)   | 0.53 / 0.51        | x2.5          | 144 / 30   | x379 / x79        | N/A                               | Kotlinc 1.2.40 + OpenJDK 1.8.0   |
 | Kotlin Native                     | 5.88               | x28           | 1.2        | x3.2              | 0.239                             | Kotlinc-native 0.7               |
-| Swift                             | 2.04               | x9.7          | 2.5        | x6.6              | 0.020 + Swift shared libraries    | Swift 4.1                        |
+| Swift                             | 1.66               | x7.9          | 2.5        | x6.6              | 0.016 + Swift shared libraries    | Swift 4.1                        |
 | Nim                               | 1.00               | x4.8          | 0.5        | x1.3              | 0.051                             | Nim 0.18 / GCC 8.1.0             |
 | Nim (gc:markAndSweep)             | 0.64               | x3            | 5          | x13               | 0.055                             | Nim 0.18 / GCC 8.1.0             |
 | Python (CPython)                  | 12.25              | x58.3         | 5          | x13               | N/A                               | CPython 3.6                      |
