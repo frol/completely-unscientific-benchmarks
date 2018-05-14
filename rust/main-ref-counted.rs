@@ -25,20 +25,24 @@ impl Node {
 }
 
 fn merge(lower: NodePtr, greater: NodePtr) -> NodePtr {
-    match (lower.clone(), greater.clone()) {
-        (None, _) => greater,
+    match (lower, greater) {
+        (None, greater) => greater,
 
-        (_, None) => lower,
+        (lower, None) => lower,
 
         (Some(lower_rc), Some(greater_rc)) => {
             if lower_rc.borrow().y < greater_rc.borrow().y {
-                let mut lower_node = lower_rc.borrow_mut();
-                lower_node.right = merge(lower_node.right.clone(), greater);
-                lower
+                {
+                    let mut lower_node = lower_rc.borrow_mut();
+                    lower_node.right = merge(lower_node.right.take(), Some(greater_rc));
+                }
+                Some(lower_rc)
             } else {
-                let mut greater_node = greater_rc.borrow_mut();
-                greater_node.left = merge(lower, greater_node.left.clone());
-                greater
+                {
+                    let mut greater_node = greater_rc.borrow_mut();
+                    greater_node.left = merge(Some(lower_rc), greater_node.left.take());
+                }
+                Some(greater_rc)
             }
         }
     }
