@@ -5,13 +5,13 @@ class Tree
 {
 public:
     Tree() = default;
-    
+
     bool hasValue(int x);
     void insert(int x);
     void erase(int x);
-    
+
 private:
-    
+
     struct Node
     {
         Node(int x): x(x) {}
@@ -19,18 +19,18 @@ private:
 
         int x = 0;
         int y = rand();
-        
+
         std::shared_ptr<Node> left;
         std::shared_ptr<Node> right;
     };
-    
+
     using NodePtr = std::shared_ptr<Node>;
-    
+
     static NodePtr merge(const NodePtr& lower, const NodePtr& greater);
     static NodePtr merge(const NodePtr& lower, const NodePtr& equal, const NodePtr& greater);
     static void split(const NodePtr& orig, NodePtr& lower, NodePtr& greaterOrEqual, int val);
     static void split(const NodePtr& orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val);
-    
+
     NodePtr mRoot;
 };
 
@@ -49,7 +49,7 @@ void Tree::insert(int x)
     split(mRoot, lower, equal, greater, x);
     if(!equal)
         equal = std::make_shared<Node>(x);
-    
+
     mRoot = merge(lower, equal, greater);
 }
 
@@ -64,10 +64,10 @@ Tree::NodePtr Tree::merge(const NodePtr& lower, const NodePtr& greater)
 {
     if(!lower)
         return greater;
-    
+
     if(!greater)
         return lower;
-    
+
     if(lower->y < greater->y)
     {
         lower->right = merge(lower->right, greater);
@@ -92,7 +92,7 @@ void Tree::split(const NodePtr& orig, NodePtr& lower, NodePtr& greaterOrEqual, i
         lower = greaterOrEqual = nullptr;
         return;
     }
-    
+
     if(orig->x < val)
     {
         lower = orig;
@@ -115,12 +115,12 @@ void Tree::split(const NodePtr& orig, NodePtr& lower, NodePtr& equal, NodePtr& g
 int main()
 {
     srand(time(0));
-    
+
     Tree tree;
-    
+
     int cur = 5;
     int res = 0;
-    
+
     for(int i = 1; i < 1000000; i++)
     {
         int mode = i % 3;
