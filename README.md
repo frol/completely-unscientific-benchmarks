@@ -41,7 +41,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | --------------------------------  | ------------------ | ------------- | ---------- | ----------------- | --------------------------------- | -------------------------------- |
 | C++ "raw-pointers" (clang / gcc)  | 0.21               | x1            | 0.38       | x1                | 0.011 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
 | C++ "unique\_ptr" (clang / gcc)   | 0.26               | x1.24         | 0.38       | x1                | 0.011 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
-| C++ "shared\_ptr" ("ref-counted") | 0.51               | x2.4          | 0.5        | x1.3              | 0.019 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
+| C++ "shared\_ptr" ("ref-counted") | 0.38               | x1.8          | 0.5        | x1.3              | 0.015 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
 | Rust "idiomatic"                  | 0.37               | x1.8          | 0.5        | x1.3              | 0.427                             | Rustc 1.26                       |
 | Rust "ref-counted"                | 0.37               | x1.8          | 0.5        | x1.3              | 0.431                             | Rustc 1.26                       |
 | JavaScript                        | 1.12               | x5.3          | 52         | x137              | N/A                               | Node.js 10.1.0                   |
