@@ -7,7 +7,7 @@ type Node = ref object
     right: Node
 
 proc new_node(x: int): Node =
-    return Node(x: x, y: random.random(2147483647), left: nil, right: nil)
+    return Node(x: x, y: rand(2147483647), left: nil, right: nil)
 
 proc merge(lower: Node, greater: Node): Node =
     if lower == nil:
@@ -40,7 +40,7 @@ proc merge3(lower: Node, equal: Node, greater: Node): Node =
     return merge(merge(lower, equal), greater)
 
 
-type SplitResult = ref object
+type SplitResult = object
     lower: Node
     equal: Node
     greater: Node
@@ -79,13 +79,16 @@ proc main() =
     for i in countup(1, 1000000):
         let a = cur mod 3
         cur = (cur * 57 + 43) mod 10007
-        if a == 0:
+        case a:
+        of 0:
             tree.insert(cur)
-        elif a == 1:
+        of 1:
             tree.erase(cur)
-        elif a == 2:
+        of 2:
             if tree.has_value(cur):
                 res += 1
+        else:
+          continue
     echo res
 
 when isMainModule:
