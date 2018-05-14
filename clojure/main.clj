@@ -36,9 +36,10 @@
 
 ;; FIXME: why splitting to merge right afterwards?
 (defn has-value [root x]
-  (let [[lower equal greater] (split root x)]
-    [(merge3 lower equal greater)
-     (nil? equal)]))
+  (let [[lower equal greater] (split root x)
+        new-root (merge3 lower equal greater)]
+    (assert (= root new-root))
+    [new-root (nil? equal)]))
 
 (defn insert [root x]
   (let [[lower equal greater] (split root x)]
