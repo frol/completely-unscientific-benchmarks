@@ -48,7 +48,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | Kotlin JVM (no-limit / -Xm*50M)   | 0.53 / 0.51        | x2.4          | 144 / 30   | x379 / x79        | N/A                               | Kotlinc 1.2.40 + OpenJDK 1.8.0   |
 | Kotlin Native                     | 5.88               | x26.7         | 1.2        | x3.2              | 0.239                             | Kotlinc-native 0.7               |
 | Swift                             | 2.04               | x9.3          | 2.5        | x6.6              | 0.020 + Swift shared libraries    | Swift 4.1                        |
-| Nim                               | 3.94               | x17.9         | 0.5        | x1.3              | 0.283                             | Nim 0.18                         |
+| Nim                               | 0.55               | x2.5          | 5          | x13               | 0.111                             | Nim 0.18                         |
 | Python (CPython)                  | 12.25              | x55.7         | 5          | x13               | N/A                               | CPython 3.6                      |
 | Python (PyPy)                     | 3.20               | x14.5         | 48.5       | x128              | N/A                               | PyPy 6.0.0                       |
 
@@ -65,7 +65,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | Kotlin JVM (no-limit / -Xm*50M)   | 0.69 / 0.62        | x2.8 / x2.5   | N/A                              | Kotlinc 1.2.41 + Oracle JDK 1.8.0_131         |
 | Kotlin Native                     | 8.2                | x32.8         | 0.543                            | Kotlinc-native 0.6.2                          |
 | Swift                             | 2.2                | x8.8          | 0.019 + Swift shared libraries   | Apple Swift version 4.1                       |
-| Nim                               | 4.5                | x18           | 0.293                            | Nim 0.18                                      |
+| Nim                               | (needs update)     | ...           | ...                              | Nim 0.18                                      |
 | Python (CPython)                  | 15.9               | x63.6         | N/A                              | CPython 2.7.10                                |
 | Python (PyPy)                     | 3.7                | x14.8         | N/A                              | PyPy 6.0.0                                    |
             
@@ -87,7 +87,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | Kotlin JVM (no-limit / -Xm*50M)   | 0.8 / 0.8          | x2.7 / x2.7   | N/A                              | Kotlinc 1.2.41 + Oracle JDK 10.0.1            |
 | Kotlin Native                     | 7.8                | x26           | 0.46                             | Kotlinc-native 0.7                            |
 | Swift (Swift for Windows)         | 2.5                | x8.3          | 0.019 + Swift shared libraries   | Swift 4.0.3 (Swift for Windows 1.9.1)         |
-| Nim                               | 4.2                | x14           | 0.413                            | Nim 0.18                                      |
+| Nim                               | (needs update)     | ...           | ...                              | Nim 0.18                                      |
 | Python (CPython)                  | 15.4               | x51.3         | N/A                              | CPython 2.7.13                                |
 | Python (PyPy)                     | 3.4                | x11.3         | N/A                              | PyPy 6.0.0                                    |
 
