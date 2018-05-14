@@ -99,10 +99,8 @@ namespace Benchmark
         }
     }
 
-    class Program
-    {
-        static void Main(string[] args)
-        {
+    class Program {
+        static void Main() {
             var tree = new Tree();
             var cur = 5;
             var res = 0;
