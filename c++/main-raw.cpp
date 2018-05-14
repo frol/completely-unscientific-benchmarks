@@ -5,6 +5,10 @@ class Tree
 {
 public:
     Tree() = default;
+    ~Tree()
+    {
+        delete mRoot;
+    }
 
     bool hasValue(int x);
     void insert(int x);
@@ -15,6 +19,11 @@ private:
     {
         Node(int x): x(x) {}
         Node() {}
+        ~Node()
+        {
+            delete left;
+            delete right;
+        }
 
         int x = 0;
         int y = rand();
@@ -58,17 +67,7 @@ void Tree::erase(int x)
     NodePtr lower, equal, greater;
     split(mRoot, lower, equal, greater, x);
     mRoot = merge(lower, greater);
-    clear(equal);
-}
-
-void Tree::clear(NodePtr node)
-{
-    if(node == nullptr)
-        return;
-
-    clear(node->left);
-    clear(node->right);
-    delete node;
+    delete equal;
 }
 
 Tree::NodePtr Tree::merge(NodePtr lower, NodePtr greater)
