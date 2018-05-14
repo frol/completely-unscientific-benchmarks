@@ -25,6 +25,14 @@ separately, so it has a few shortcuts, and thus it might be not a completely
 fair comparison (I will try to implement "fair" C++ solution and also
 "C++"-like Rust solution to see if the performance can be on par).
 
+## Measurements
+
+To measure time we used `time` util on Mac OS and Windows (msys2 environment),
+and [`cgmemtime`](https://github.com/gsauthof/cgmemtime) on Linux.
+
+Memory measurement was only available on Linux with `cgmemtime` util, which
+leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
+
 ## Results
 
 ### Linux (Arch Linux, x64, Intel Core i7-4710HQ CPU)
