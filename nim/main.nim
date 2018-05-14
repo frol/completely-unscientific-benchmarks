@@ -54,7 +54,7 @@ proc hasValue(self: Tree, x: int32): bool =
 proc insert(self: Tree, x: int32) =
   var splited = split(self.root, x)
   if splited.equal.isNil:
-    splited.equal = new_node(x)
+    splited.equal = newNode(x)
   self.root = merge3(splited.lower, splited.equal, splited.greater)
 
 proc erase(self: Tree, x: int32) =
