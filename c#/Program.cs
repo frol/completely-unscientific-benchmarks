@@ -103,12 +103,12 @@ namespace Benchmark
     {
         static void Main(string[] args)
         {
-            Tree tree = new Tree();
-            int cur = 5;
-            int res = 0;
+            var tree = new Tree();
+            var cur = 5;
+            var res = 0;
 
-            for (int i = 1; i < 1000000; i++) {
-                int a = i % 3;
+            for (var i = 1; i < 1000000; i++) {
+                var a = i % 3;
                 cur = (cur * 57 + 43) % 10007;
                 if (a == 0) {
                     tree.insert(cur);
