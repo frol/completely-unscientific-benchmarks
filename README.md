@@ -56,6 +56,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | C#                                | 0.82*              | x3.9          | 11         | x29               | N/A                               | .NET Core 2.0                    |
 | Go                                | 3.68               | x17.5         | 8.6        | x23               | 1.2                               | Go 1.10.2                        |
 | D                                 | 0.24               | x1.1          | 1.6        | x4.2              | 0.019 + D runtime                 | LDC 1.9.0                        |
+| Haskell                           | 1.10               | x5.2          | 3.4        | x9                | 3.8                               | GHC 8.2.2                        |
 
 (*) C# has a noticable VM start time (~0.4 seconds), but we still measure real
 execution time of the whole program.
