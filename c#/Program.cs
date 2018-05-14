@@ -65,9 +65,8 @@ namespace Benchmark
             }
         }
 
-        public static Node merge(Node lower, Node equal, Node greater) {
-            return merge(merge(lower, equal), greater);
-        }
+        public static Node merge(Node lower, Node equal, Node greater)
+            => merge(merge(lower, equal), greater);
 
         public static SplitResult split(Node orig, int value) {
             NodePair lowerOther = splitBinary(orig, value);
