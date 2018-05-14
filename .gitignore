@@ -8,3 +8,6 @@
 *-swift
 *.pyc
 nimcache
+rust/target
+c#/bin
+c#/obj

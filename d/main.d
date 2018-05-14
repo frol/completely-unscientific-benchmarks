@@ -44,8 +44,6 @@ struct Tree
         merge1(lower, greater, mRoot);
     }
 
-private:
-    
 
     Node* mRoot = null;
 };
@@ -73,8 +71,6 @@ void merge1(Node* lower, Node* greater, ref Node* dest)
     {
         dest = greater;
         merge1(lower, greater.left, greater.left);
-    }
-}
 
 Node* merge(Node* lower, Node* equal, Node* greater)
 {

@@ -1,92 +1,86 @@
 import random
 
 type Node = ref object
-    x: int
-    y: int
-    left: Node
-    right: Node
+  x, y: int32
+  left, right: Node
 
-proc new_node(x: int): Node =
-    return Node(x: x, y: random.random(2147483647), left: nil, right: nil)
+proc newNode(x: int): Node =
+  return Node(x: x, y: rand(high(int32).int).int32, left: nil, right: nil)
 
-proc merge(lower: Node, greater: Node): Node =
-    if lower == nil:
-        return greater
-    
-    if greater == nil:
-        return lower
-    
-    if lower.y < greater.y:
-        lower.right = merge(lower.right, greater)
-        return lower
-    else:
-        greater.left = merge(lower, greater.left)
-        return greater
+proc merge(lower, greater: Node): Node =
+  if lower.isNil:
+    return greater
 
-proc splitBinary(orig: Node, value: int): (Node, Node) =
-    if orig == nil:
-        return (nil, nil)
-    
-    if orig.x < value:
-        let splitPair = splitBinary(orig.right, value)
-        orig.right = splitPair[0]
-        return (orig, splitPair[1])
-    else:
-        let splitPair = splitBinary(orig.left, value)
-        orig.left = splitPair[1]
-        return (splitPair[0], orig)
+  if greater.isNil:
+    return lower
 
-proc merge3(lower: Node, equal: Node, greater: Node): Node =
-    return merge(merge(lower, equal), greater)
+  if lower.y < greater.y:
+    lower.right = merge(lower.right, greater)
+    return lower
+  else:
+    greater.left = merge(lower, greater.left)
+    return greater
 
+proc splitBinary(orig: Node, value: int32): (Node, Node) =
+  if orig.isNil:
+    return (nil, nil)
 
-type SplitResult = ref object
-    lower: Node
-    equal: Node
-    greater: Node
+  if orig.x < value:
+    let splitPair = splitBinary(orig.right, value)
+    orig.right = splitPair[0]
+    return (orig, splitPair[1])
+  else:
+    let splitPair = splitBinary(orig.left, value)
+    orig.left = splitPair[1]
+    return (splitPair[0], orig)
 
+proc merge3(lower, equal, greater: Node): Node =
+  return merge(merge(lower, equal), greater)
 
-proc split(orig: Node, value: int): SplitResult =
-    let (lower, equalGreater) = splitBinary(orig, value)
-    let (equal, greater) = splitBinary(equalGreater, value + 1)
-    return SplitResult(lower: lower, equal: equal, greater: greater)
+proc split(orig: Node, value: int32): tuple[lower, equal, greater: Node] =
+  let (lower, equalGreater) = splitBinary(orig, value)
+  let (equal, greater) = splitBinary(equalGreater, value + 1)
+  return (lower: lower, equal: equal, greater: greater)
 
 
 type Tree = ref object
-    root: Node
+  root: Node
 
-proc has_value(self: Tree, x: int): bool =
-    let splited = split(self.root, x)
-    let res = splited.equal != nil
-    self.root = merge3(splited.lower, splited.equal, splited.greater)
-    return res
+proc hasValue(self: Tree, x: int32): bool =
+  let splited = split(self.root, x)
+  let res = not splited.equal.isNil
+  self.root = merge3(splited.lower, splited.equal, splited.greater)
+  return res
 
-proc insert(self: Tree, x: int) =
-    var splited = split(self.root, x)
-    if splited.equal == nil:
-        splited.equal = new_node(x)
-    self.root = merge3(splited.lower, splited.equal, splited.greater)
+proc insert(self: Tree, x: int32) =
+  var splited = split(self.root, x)
+  if splited.equal.isNil:
+    splited.equal = newNode(x)
+  self.root = merge3(splited.lower, splited.equal, splited.greater)
 
-proc erase(self: Tree, x: int) =
-    let splited = split(self.root, x)
-    self.root = merge(splited.lower, splited.greater)
+proc erase(self: Tree, x: int32) =
+  let splited = split(self.root, x)
+  self.root = merge(splited.lower, splited.greater)
 
 proc main() =
-    let tree = Tree()
-    var cur = 5
-    var res = 0
+  let tree = Tree()
+  var cur = 5'i32
+  var res = 0
 
-    for i in countup(1, 1000000):
-        let a = cur mod 3
-        cur = (cur * 57 + 43) mod 10007
-        if a == 0:
-            tree.insert(cur)
-        elif a == 1:
-            tree.erase(cur)
-        elif a == 2:
-            if tree.has_value(cur):
-                res += 1
-    echo res
+  for i in 1 ..< 1000000:
+    let a = i mod 3
+    cur = (cur * 57 + 43) mod 10007
+    case a:
+    of 0:
+      tree.insert(cur)
+    of 1:
+      tree.erase(cur)
+    of 2:
+      if tree.hasValue(cur):
+        res += 1
+    else:
+      continue
+  echo res
 
 when isMainModule:
-    main()
+  main()

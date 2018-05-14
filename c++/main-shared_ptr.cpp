@@ -1,6 +1,6 @@
 #include <iostream>
 #include <memory>
-    
+
 class Tree
 {
 public:
@@ -26,10 +26,10 @@ private:
 
     using NodePtr = std::shared_ptr<Node>;
 
-    static NodePtr merge(NodePtr lower, NodePtr greater);
-    static NodePtr merge(NodePtr lower, NodePtr equal, NodePtr greater);
-    static void split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val);
-    static void split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val);
+    static NodePtr merge(const NodePtr& lower, const NodePtr& greater);
+    static NodePtr merge(const NodePtr& lower, const NodePtr& equal, const NodePtr& greater);
+    static void split(const NodePtr& orig, NodePtr& lower, NodePtr& greaterOrEqual, int val);
+    static void split(const NodePtr& orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val);
 
     NodePtr mRoot;
 };
@@ -60,7 +60,7 @@ void Tree::erase(int x)
     mRoot = merge(lower, greater);
 }
 
-Tree::NodePtr Tree::merge(NodePtr lower, NodePtr greater)
+Tree::NodePtr Tree::merge(const NodePtr& lower, const NodePtr& greater)
 {
     if(!lower)
         return greater;
@@ -80,12 +80,12 @@ Tree::NodePtr Tree::merge(NodePtr lower, NodePtr greater)
     }
 }
 
-Tree::NodePtr Tree::merge(NodePtr lower, NodePtr equal, NodePtr greater)
+Tree::NodePtr Tree::merge(const NodePtr& lower, const NodePtr& equal, const NodePtr& greater)
 {
     return merge(merge(lower, equal), greater);
 }
 
-void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
+void Tree::split(const NodePtr& orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
 {
     if(!orig)
     {
@@ -105,7 +105,7 @@ void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
     }
 }
 
-void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val)
+void Tree::split(const NodePtr& orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val)
 {
     NodePtr equalOrGreater;
     split(orig, lower, equalOrGreater, val);
