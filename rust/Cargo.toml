@@ -9,3 +9,7 @@ rand = "0.4.2"
 [features]
 refcount = []
 idiomatic = []
+
+[profile.release]
+lto=true
+panic = "abort"

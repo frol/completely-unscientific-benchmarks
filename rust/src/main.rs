@@ -13,6 +13,7 @@ mod refcount;
 use refcount::Tree;
 
 fn main() {
+    let mut rng = rand::weak_rng();
     let mut tree = Tree::new();
     let mut cur = 5;
     let mut res = 0;
@@ -20,7 +21,7 @@ fn main() {
         let a = i % 3;
         cur = (cur * 57 + 43) % 10007;
         match a {
-            0 => tree.insert(cur),
+            0 => tree.insert(&mut rng, cur),
             1 => tree.erase(cur),
             2 => res += if tree.has_value(cur) { 1 } else { 0 },
             _ => {}
