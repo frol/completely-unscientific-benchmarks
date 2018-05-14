@@ -1,7 +1,5 @@
 import core.stdc.stdlib;
 
-import std.conv:emplace;
-
 //In lieu of runtime new, use malloc + placement new
 T* make(T, Args...)(Args args)
 {
