@@ -69,7 +69,7 @@ namespace Benchmark {
         }
     }
 
-    class Program {
+    static class Program {
         static void Main() {
             var tree = new Tree();
             var cur = 5;
