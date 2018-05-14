@@ -94,7 +94,7 @@ namespace Benchmark
         }
 
         public void erase(int x) {
-            SplitResult splited = Node.split(mRoot, x);
+            var splited = Node.split(mRoot, x);
             mRoot = Node.merge(splited.lower, splited.greater);
         }
     }
