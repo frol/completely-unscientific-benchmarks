@@ -1,4 +1,4 @@
-use rand::{self, Rng};
+use rand::Rng;
 
 type NodeCell = Option<Box<Node>>;
 

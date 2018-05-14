@@ -1,4 +1,4 @@
-use rand::{self, Rng};
+use rand::Rng;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -12,10 +12,10 @@ struct Node {
 }
 
 impl Node {
-    fn new<R: Rng>(rng: &mut Rng, x: i32) -> Self {
+    fn new<R: Rng>(rng: &mut R, x: i32) -> Self {
         Self {
             x,
-            y: rand::random::<i32>(),
+            y: rng.gen::<i32>(),
             left: None,
             right: None,
         }
