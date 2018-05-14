@@ -47,20 +47,27 @@ fn merge(lower: NodePtr, greater: NodePtr) -> NodePtr {
 }
 
 fn split_binary(orig: NodePtr, value: i32) -> (NodePtr, NodePtr) {
-    if let Some(orig_rc) = orig.clone() {
-        let mut orig_node = orig_rc.borrow_mut();
-        if orig_node.x < value {
-            let split_pair = split_binary(orig_node.right.clone(), value);
-            orig_node.right = split_pair.0;
-            (orig, split_pair.1)
+    let mut result = (None, None);
+    if let Some(orig_val) = orig {
+        if orig_val.borrow().x < value {
+            {
+                let mut orig_node = orig_val.borrow_mut();
+                let split_pair = split_binary(orig_node.right.take(), value);
+                orig_node.right = split_pair.0;
+                result.1 = split_pair.1;
+            }
+            result.0 = Some(orig_val);
         } else {
-            let split_pair = split_binary(orig_node.left.clone(), value);
-            orig_node.left = split_pair.1;
-            (split_pair.0, orig)
+            {
+                let mut orig_node = orig_val.borrow_mut();
+                let split_pair = split_binary(orig_node.left.clone(), value);
+                orig_node.left = split_pair.1;
+                result.0 = split_pair.0;
+            }
+            result.1 = Some(orig_val);
         }
-    } else {
-        (None, None)
     }
+    result
 }
 
 fn merge3(lower: NodePtr, equal: NodePtr, greater: NodePtr) -> NodePtr {
@@ -93,14 +100,14 @@ impl Tree {
     }
 
     pub fn has_value(&mut self, x: i32) -> bool {
-        let splited = split(self.root.clone(), x);
+        let splited = split(self.root.take(), x);
         let res = splited.equal.is_some();
         self.root = merge3(splited.lower, splited.equal, splited.greater);
         res
     }
 
     pub fn insert(&mut self, x: i32) {
-        let mut splited = split(self.root.clone(), x);
+        let mut splited = split(self.root.take(), x);
         if splited.equal.is_none() {
             splited.equal = Some(Rc::new(RefCell::new(Node::new(x))))
         }
@@ -108,7 +115,7 @@ impl Tree {
     }
 
     pub fn erase(&mut self, x: i32) {
-        let splited = split(self.root.clone(), x);
+        let splited = split(self.root.take(), x);
         self.root = merge(splited.lower, splited.greater);
     }
 }
