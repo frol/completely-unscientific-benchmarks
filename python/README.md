@@ -1,5 +1,7 @@
 # Python
 
+Author: Vlad Frolov (@frol)
+
 ## CPython
 
 ```

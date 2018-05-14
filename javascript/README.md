@@ -1,5 +1,7 @@
 # JavaScript
 
+Author: Vlad Frolov (@frol)
+
 ## Execute
 
 ```

@@ -1,4 +1,8 @@
-# Compile
+# C++
+
+Author: Stas Minakov (@supermina999)
+
+## Compile
 
 ```
 clang++ -O3 -s -o main-clang main.cpp
@@ -8,7 +12,7 @@ clang++ -O3 -s -o main-clang main.cpp
 g++ -O3 -s -o main-gcc main.cpp
 ```
 
-# Execute
+## Execute
 
 ```
 ./main-clang

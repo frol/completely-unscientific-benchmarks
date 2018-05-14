@@ -1,5 +1,7 @@
 # Rust
 
+Author: Vlad Frolov (@frol)
+
 ## Compile
 
 NOTE: This compilation requires Nightly version of Rust to make it possible to

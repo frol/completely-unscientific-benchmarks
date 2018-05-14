@@ -1,5 +1,7 @@
 # Nim
 
+Author: Vlad Frolov (@frol)
+
 ## Compile
 
 ```

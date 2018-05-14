@@ -1,5 +1,7 @@
 # Java
 
+Author: Stas Minakov (@supermina999)
+
 ## Compile
 
 ```

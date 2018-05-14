@@ -1,5 +1,7 @@
 # Swift
 
+Author: Vlad Frolov (@frol)
+
 ## Compile
 
 ```
