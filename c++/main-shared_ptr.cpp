@@ -16,7 +16,7 @@ private:
     {
         Node(int x): x(x) {}
         Node() {}
-        
+
         int x = 0;
         int y = rand();
         
