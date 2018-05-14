@@ -8,14 +8,14 @@
    :left nil
    :right nil})
 
-(defn merge [lower greater]
+(defn merge2 [lower greater]
   (if (nil? lower)
     greater
     (if (nil? greater)
       lower
       (if (< (:y lower) (:y greater))
-        (assoc lower :right (merge (:right lower) greater))
-        (assoc greater :left (merge lower (:left greater)))))))
+        (assoc lower :right (merge2 (:right lower) greater))
+        (assoc greater :left (merge2 lower (:left greater)))))))
 
 (defn split-binary [orig value]
   (if (nil? orig)
@@ -27,7 +27,7 @@
         [fst (assoc orig :left snd)]))))
 
 (defn merge3 [lower equal greater]
-  (merge (merge lower equal) greater))
+  (merge2 (merge2 lower equal) greater))
 
 (defn split [orig value]
   (let [[lower equal-greater] (split-binary orig value)
@@ -51,7 +51,7 @@
 
 (defn erase [root x]
   (let [[lower equal greater] (split root x)]
-    (merge lower greater)))
+    (merge2 lower greater)))
 
 (defn main [n]
   (loop [root nil
