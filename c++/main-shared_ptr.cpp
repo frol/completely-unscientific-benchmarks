@@ -5,32 +5,32 @@ class Tree
 {
 public:
     Tree() = default;
-
+    
     bool hasValue(int x);
     void insert(int x);
     void erase(int x);
-
+    
 private:
-
+    
     struct Node
     {
         Node(int x): x(x) {}
         Node() {}
-
+        
         int x = 0;
         int y = rand();
-
+        
         std::shared_ptr<Node> left;
         std::shared_ptr<Node> right;
     };
-
+    
     using NodePtr = std::shared_ptr<Node>;
-
-    static NodePtr merge(NodePtr lower, NodePtr greater);
-    static NodePtr merge(NodePtr lower, NodePtr equal, NodePtr greater);
-    static void split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val);
-    static void split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val);
-
+    
+    static NodePtr merge(const NodePtr& lower, const NodePtr& greater);
+    static NodePtr merge(const NodePtr& lower, const NodePtr& equal, const NodePtr& greater);
+    static void split(const NodePtr& orig, NodePtr& lower, NodePtr& greaterOrEqual, int val);
+    static void split(const NodePtr& orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val);
+    
     NodePtr mRoot;
 };
 
@@ -49,7 +49,7 @@ void Tree::insert(int x)
     split(mRoot, lower, equal, greater, x);
     if(!equal)
         equal = std::make_shared<Node>(x);
-
+    
     mRoot = merge(lower, equal, greater);
 }
 
@@ -60,14 +60,14 @@ void Tree::erase(int x)
     mRoot = merge(lower, greater);
 }
 
-Tree::NodePtr Tree::merge(NodePtr lower, NodePtr greater)
+Tree::NodePtr Tree::merge(const NodePtr& lower, const NodePtr& greater)
 {
     if(!lower)
         return greater;
-
+    
     if(!greater)
         return lower;
-
+    
     if(lower->y < greater->y)
     {
         lower->right = merge(lower->right, greater);
@@ -80,19 +80,19 @@ Tree::NodePtr Tree::merge(NodePtr lower, NodePtr greater)
     }
 }
 
-Tree::NodePtr Tree::merge(NodePtr lower, NodePtr equal, NodePtr greater)
+Tree::NodePtr Tree::merge(const NodePtr& lower, const NodePtr& equal, const NodePtr& greater)
 {
     return merge(merge(lower, equal), greater);
 }
 
-void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
+void Tree::split(const NodePtr& orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
 {
     if(!orig)
     {
         lower = greaterOrEqual = nullptr;
         return;
     }
-
+    
     if(orig->x < val)
     {
         lower = orig;
@@ -105,7 +105,7 @@ void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
     }
 }
 
-void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val)
+void Tree::split(const NodePtr& orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val)
 {
     NodePtr equalOrGreater;
     split(orig, lower, equalOrGreater, val);
@@ -115,12 +115,12 @@ void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater,
 int main()
 {
     srand(time(0));
-
+    
     Tree tree;
-
+    
     int cur = 5;
     int res = 0;
-
+    
     for(int i = 1; i < 1000000; i++)
     {
         int mode = i % 3;
