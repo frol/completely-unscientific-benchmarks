@@ -109,3 +109,15 @@ Kotlin JS produces JS code which is ~25% slower than the manual Kotlin to JS
 translation.
 
 With CPython vs PyPy you trade speed for memory.
+
+
+## License
+
+Completely Unscientific Benchmarks project is licensed under either of
+
+ * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or
+   http://www.apache.org/licenses/LICENSE-2.0)
+ * MIT license ([LICENSE-MIT](LICENSE-MIT) or
+   http://opensource.org/licenses/MIT)
+
+at your option.
