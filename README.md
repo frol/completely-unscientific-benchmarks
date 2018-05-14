@@ -41,7 +41,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | --------------------------------  | ------------------ | ------------- | ---------- | ----------------- | --------------------------------- | -------------------------------- |
 | C++ "raw-pointers" (clang / gcc)  | 0.21               | x1            | 0.38       | x1                | 0.011 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
 | C++ "unique\_ptr" (clang / gcc)   | 0.26               | x1.24         | 0.38       | x1                | 0.011 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
-| C++ "shared\_ptr" ("ref-counted") | 0.51               | x2.4          | 0.5        | x1.3              | 0.019 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
+| C++ "shared\_ptr" ("ref-counted") | 0.38               | x1.8          | 0.5        | x1.3              | 0.015 + libstdc++                 | Clang 6.0.0 / GCC 8.1.0          |
 | Rust "idiomatic"                  | 0.37               | x1.8          | 0.5        | x1.3              | 0.427                             | Rustc 1.26                       |
 | Rust "ref-counted"                | 0.37               | x1.8          | 0.5        | x1.3              | 0.431                             | Rustc 1.26                       |
 | JavaScript                        | 1.12               | x5.3          | 52         | x137              | N/A                               | Node.js 10.1.0                   |
@@ -56,6 +56,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | C#                                | 0.82*              | x3.9          | 11         | x29               | N/A                               | .NET Core 2.0                    |
 | Go                                | 3.68               | x17.5         | 8.6        | x23               | 1.2                               | Go 1.10.2                        |
 | D                                 | 0.24               | x1.1          | 1.6        | x4.2              | 0.019 + D runtime                 | LDC 1.9.0                        |
+| Haskell                           | 1.10               | x5.2          | 3.4        | x9                | 3.8                               | GHC 8.2.2                        |
 
 (*) C# has a noticable VM start time (~0.4 seconds), but we still measure real
 execution time of the whole program.
