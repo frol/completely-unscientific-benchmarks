@@ -1,7 +1,11 @@
+;;
+;; Execute with "clj main.clj"
+;;
 
 ;; Exponentiation:
 (defn ** [x n] (reduce * (repeat n x)))
 
+;; Why using PRNG below why still non-deterministic here?
 (defn make-random-node [x]
   {:x x
    :y (rand-int (** 2 31))
@@ -64,6 +68,8 @@
       res
       (let [a (mod i 3)
             cur (mod (+ 43 (* 57 cur)) 10007)
+            ;; This simulates an in-place update in place and a side
+            ;; result:
             [root res] (case a
                          0 [(insert root cur) res]
                          1 [(erase root cur) res]
