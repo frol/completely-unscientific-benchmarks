@@ -33,8 +33,8 @@ namespace Benchmark
 
         int x;
         int y = random.Next();
-        Node left = null;
-        Node right = null;
+        Node left, right;
+
 
         public static Node merge(Node lower, Node greater) {
             if (lower == null)
@@ -78,7 +78,9 @@ namespace Benchmark
         }
     }
 
-    class Tree {
+    sealed class Tree {
+        Node mRoot;
+
         public bool hasValue(int x) {
             SplitResult splited = Node.split(mRoot, x);
             bool res = splited.equal != null;
@@ -97,8 +99,6 @@ namespace Benchmark
             SplitResult splited = Node.split(mRoot, x);
             mRoot = Node.merge(splited.lower, splited.greater);
         }
-
-        private Node mRoot = null;
     }
 
     class Program
