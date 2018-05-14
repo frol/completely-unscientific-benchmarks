@@ -11,5 +11,5 @@ refcount = []
 idiomatic = []
 
 [profile.release]
-lto=true
+lto = true
 panic = "abort"

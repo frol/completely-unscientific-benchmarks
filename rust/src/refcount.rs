@@ -1,4 +1,4 @@
-use rand;
+use rand::{self, Rng};
 use std::cell::RefCell;
 use std::rc::Rc;
 
