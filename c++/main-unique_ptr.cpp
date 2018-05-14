@@ -26,10 +26,10 @@ private:
 
     using NodePtr = std::unique_ptr<Node>;
 
-    static NodePtr merge(NodePtr lower, NodePtr greater);
-    static NodePtr merge(NodePtr lower, NodePtr equal, NodePtr greater);
-    static void split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val);
-    static void split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val);
+    static NodePtr && merge(NodePtr && lower, NodePtr && greater);
+    static NodePtr && merge(NodePtr && lower, NodePtr && equal, NodePtr && greater);
+    static void split(NodePtr && orig, NodePtr& lower, NodePtr& greaterOrEqual, int val);
+    static void split(NodePtr && orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val);
 
     NodePtr mRoot;
 };
@@ -60,32 +60,32 @@ void Tree::erase(int x)
     mRoot = merge(std::move(lower), std::move(greater));
 }
 
-Tree::NodePtr Tree::merge(NodePtr lower, NodePtr greater)
+Tree::NodePtr && Tree::merge(NodePtr && lower, NodePtr && greater)
 {
     if(!lower)
-        return greater;
+        return std::move(greater);
 
     if(!greater)
-        return lower;
+        return std::move(lower);
 
     if(lower->y < greater->y)
     {
         lower->right = merge(std::move(lower->right), std::move(greater));
-        return lower;
+        return std::move(lower);
     }
     else
     {
         greater->left = merge(std::move(lower), std::move(greater->left));
-        return greater;
+        return std::move(greater);
     }
 }
 
-Tree::NodePtr Tree::merge(NodePtr lower, NodePtr equal, NodePtr greater)
+Tree::NodePtr && Tree::merge(NodePtr && lower, NodePtr && equal, NodePtr && greater)
 {
     return merge(merge(std::move(lower), std::move(equal)), std::move(greater));
 }
 
-void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
+void Tree::split(NodePtr && orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
 {
     if(!orig)
     {
@@ -106,7 +106,7 @@ void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
     }
 }
 
-void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val)
+void Tree::split(NodePtr && orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val)
 {
     NodePtr equalOrGreater;
     split(std::move(orig), lower, equalOrGreater, val);
