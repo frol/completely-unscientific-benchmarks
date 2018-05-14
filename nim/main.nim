@@ -6,28 +6,29 @@ type Node = ref object
   left: Node
   right: Node
 
-proc new_node(x: int): Node =
-  return Node(x: x, y: rand(2147483647), left: nil, right: nil)
+proc new_node(x: int): Node {.noinit.}=
+  new result
+  result.x = x
+  result.y = rand(2147483647)
+  result.left = nil
+  result.right = nil
 
-proc merge(lower: Node, greater: Node): Node =
-  if lower == nil:
+proc merge(lower: Node, greater: Node): Node {.noinit.}=
+  if lower.isNil:
     return greater
-
-  if greater == nil:
+  elif greater.isNil:
     return lower
-
-  if lower.y < greater.y:
+  elif lower.y < greater.y:
     lower.right = merge(lower.right, greater)
     return lower
   else:
     greater.left = merge(lower, greater.left)
     return greater
 
-proc splitBinary(orig: Node, value: int): (Node, Node) =
-  if orig == nil:
+proc splitBinary(orig: Node, value: int): (Node, Node) {.noinit.}=
+  if orig.isNil:
     return (nil, nil)
-
-  if orig.x < value:
+  elif orig.x < value:
     let splitPair = splitBinary(orig.right, value)
     orig.right = splitPair[0]
     return (orig, splitPair[1])
@@ -36,27 +37,25 @@ proc splitBinary(orig: Node, value: int): (Node, Node) =
     orig.left = splitPair[1]
     return (splitPair[0], orig)
 
-proc merge3(lower: Node, equal: Node, greater: Node): Node =
-  return merge(merge(lower, equal), greater)
+proc merge3(lower: Node, equal: Node, greater: Node): Node {.noInit.}=
+  result = merge(merge(lower, equal), greater)
 
 proc split(orig: Node, value: int): tuple[lower, equal, greater: Node] =
   let (lower, equalGreater) = splitBinary(orig, value)
-  let (equal, greater) = splitBinary(equalGreater, value + 1)
-  return (lower: lower, equal: equal, greater: greater)
-
+  result.lower = lower
+  (result.equal, result.greater) = splitBinary(equalGreater, value + 1)
 
 type Tree = ref object
   root: Node
 
 proc has_value(self: Tree, x: int): bool =
   let splited = split(self.root, x)
-  let res = splited.equal != nil
+  result = not splited.equal.isNil
   self.root = merge3(splited.lower, splited.equal, splited.greater)
-  return res
 
 proc insert(self: Tree, x: int) =
   var splited = split(self.root, x)
-  if splited.equal == nil:
+  if splited.equal.isNil:
     splited.equal = new_node(x)
   self.root = merge3(splited.lower, splited.equal, splited.greater)
 
