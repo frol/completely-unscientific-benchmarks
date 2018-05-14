@@ -53,6 +53,12 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | Nim (gc:markAndSweep)             | 0.64               | x3            | 5          | x13               | 0.055                             | Nim 0.18 / GCC 8.1.0             |
 | Python (CPython)                  | 12.25              | x58.3         | 5          | x13               | N/A                               | CPython 3.6                      |
 | Python (PyPy)                     | 3.20               | x15.2         | 48.5       | x128              | N/A                               | PyPy 6.0.0                       |
+| C#                                | 0.82*              | x3.9          | 11         | x29               | N/A                               | .NET Core 2.0                    |
+| Go                                | 3.68               | x17.5         | 8.6        | x23               | 1.2                               | Go 1.10.2                        |
+| D                                 | 0.24               | x1.1          | 1.6        | x4.2              | 0.019 + D runtime                 | LDC 1.9.0                        |
+
+(*) C# has a noticable VM start time (~0.4 seconds), but we still measure real
+execution time of the whole program.
 
 ### Mac OS (Mac OS 10.13, Intel Core i7-4770HQ CPU)
 
