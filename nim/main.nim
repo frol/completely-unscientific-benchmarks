@@ -4,28 +4,29 @@ type Node = ref object
   x, y: int32
   left, right: Node
 
-proc newNode(x: int): Node =
-  return Node(x: x, y: rand(high(int32).int).int32, left: nil, right: nil)
+proc new_node(x: int32): Node {.noinit.}=
+  new result
+  result.x = x
+  result.y = rand(high(int32).int).int32
+  result.left = nil
+  result.right = nil
 
-proc merge(lower, greater: Node): Node =
+proc merge(lower: Node, greater: Node): Node {.noinit.}=
   if lower.isNil:
     return greater
-
-  if greater.isNil:
+  elif greater.isNil:
     return lower
-
-  if lower.y < greater.y:
+  elif lower.y < greater.y:
     lower.right = merge(lower.right, greater)
     return lower
   else:
     greater.left = merge(lower, greater.left)
     return greater
 
-proc splitBinary(orig: Node, value: int32): (Node, Node) =
+proc splitBinary(orig: Node, value: int32): (Node, Node) {.noinit.}=
   if orig.isNil:
     return (nil, nil)
-
-  if orig.x < value:
+  elif orig.x < value:
     let splitPair = splitBinary(orig.right, value)
     orig.right = splitPair[0]
     return (orig, splitPair[1])
@@ -34,23 +35,21 @@ proc splitBinary(orig: Node, value: int32): (Node, Node) =
     orig.left = splitPair[1]
     return (splitPair[0], orig)
 
-proc merge3(lower, equal, greater: Node): Node =
-  return merge(merge(lower, equal), greater)
+proc merge3(lower: Node, equal: Node, greater: Node): Node {.noInit.}=
+  result = merge(merge(lower, equal), greater)
 
 proc split(orig: Node, value: int32): tuple[lower, equal, greater: Node] =
   let (lower, equalGreater) = splitBinary(orig, value)
-  let (equal, greater) = splitBinary(equalGreater, value + 1)
-  return (lower: lower, equal: equal, greater: greater)
-
+  result.lower = lower
+  (result.equal, result.greater) = splitBinary(equalGreater, value + 1)
 
 type Tree = ref object
   root: Node
 
 proc hasValue(self: Tree, x: int32): bool =
   let splited = split(self.root, x)
-  let res = not splited.equal.isNil
+  result = not splited.equal.isNil
   self.root = merge3(splited.lower, splited.equal, splited.greater)
-  return res
 
 proc insert(self: Tree, x: int32) =
   var splited = split(self.root, x)
