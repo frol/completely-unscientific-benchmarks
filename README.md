@@ -48,13 +48,13 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | Java (no-limit / -Xm*50M)         | 0.50 / 0.50        | x2.4          | 142 / 29   | x374 / x76        | N/A                               | OpenJDK 1.8.0                    |
 | Kotlin JVM (no-limit / -Xm*50M)   | 0.53 / 0.51        | x2.5          | 144 / 30   | x379 / x79        | N/A                               | Kotlinc 1.2.40 + OpenJDK 1.8.0   |
 | Kotlin Native                     | 5.88               | x28           | 1.2        | x3.2              | 0.239                             | Kotlinc-native 0.7               |
-| Swift                             | 2.04               | x9.7          | 2.5        | x6.6              | 0.020 + Swift shared libraries    | Swift 4.1                        |
+| Swift                             | 1.66               | x7.9          | 2.5        | x6.6              | 0.016 + Swift shared libraries    | Swift 4.1                        |
 | Nim                               | 1.00               | x4.8          | 0.5        | x1.3              | 0.051                             | Nim 0.18 / GCC 8.1.0             |
 | Nim (gc:markAndSweep)             | 0.64               | x3            | 5          | x13               | 0.055                             | Nim 0.18 / GCC 8.1.0             |
 | Python (CPython)                  | 12.25              | x58.3         | 5          | x13               | N/A                               | CPython 3.6                      |
 | Python (PyPy)                     | 3.20               | x15.2         | 48.5       | x128              | N/A                               | PyPy 6.0.0                       |
 | C#                                | 0.82*              | x3.9          | 11         | x29               | N/A                               | .NET Core 2.0                    |
-| Go                                | 3.68               | x17.5         | 8.6        | x23               | 1.2                               | Go 1.10.2                        |
+| Go                                | 0.88               | x4.2          | 7.6        | x20               | 1.2                               | Go 1.10.2                        |
 | D                                 | 0.24               | x1.1          | 1.6        | x4.2              | 0.019 + D runtime                 | LDC 1.9.0                        |
 | Haskell                           | 1.10               | x5.2          | 3.4        | x9                | 3.8                               | GHC 8.2.2                        |
 

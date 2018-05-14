@@ -3,7 +3,7 @@ author: Franklin Chen
 maintainer: franklinchen@franklinchen.com
 extra-source-files:
 - README.md
-ghc-options: -Wall -O2
+ghc-options: -Wall -O2 -rtsopts
 dependencies:
 - base >=4 && <=5
 - primitive
