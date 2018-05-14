@@ -44,7 +44,7 @@
     ;; Why splitting to merge right afterwards? This seems to
     ;; be empirically true:
     ;; (assert (= root new-root))
-    [new-root (nil? equal)]))
+    [new-root (not (nil? equal))]))
 
 (defn insert [root x]
   (let [[lower equal greater] (split root x)]
