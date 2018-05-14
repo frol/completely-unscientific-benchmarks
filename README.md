@@ -1,10 +1,15 @@
 # Completely Unscientific Benchmarks
 
+> [There are three kinds of lies: lies, damned lies, and statistics.](https://en.wikipedia.org/wiki/Lies,_damned_lies,_and_statistics)
+
 For this benchmark we implemented [Treap](https://en.wikipedia.org/wiki/Treap)
 in a few classic (C++, Java, Python) and hyped (JavaScript, Kotlin, Swift, Rust)
 programming languages and tested their performance on Linux, Mac OS, and
 Windows (all of them running on different hardware, so the results should not
 be compared between platforms).
+
+This turned out to be a good benchmark of memory-intensive operations, which
+should have been pushed memory management implementations to their edge.
 
 First, we tried to play by the rules of the garbage-collected languages, thus
 there are "ref-counted" versions of implementations for C++ and Rust, but then
@@ -16,10 +21,9 @@ mostly adapting the syntax from the very first implementation of the algorithm
 in Kotlin. Even Rust, which is considered to have the steepest learning curve
 among the tested languages, didn't require any "black magic" (the solution does
 not require either unsafe code or lifetime annotations). C++ was implemented
-separately, so it has a few shortcuts, so it might be not completely fair to
-compare other implementations to it (I will try to implement "fair" C++
-solution and also "C++"-like Rust solution to see if the performance can be on
-par).
+separately, so it has a few shortcuts, and thus it might be not a completely
+fair comparison (I will try to implement "fair" C++ solution and also
+"C++"-like Rust solution to see if the performance can be on par).
 
 ## Results
 
@@ -78,3 +82,22 @@ par).
 | Nim                               | 4.2                | x14           | 0.413                            | Nim 0.18                                      |
 | Python (CPython)                  | 15.4               | x51.3         | N/A                              | CPython 2.7.13                                |
 | Python (PyPy)                     | 3.4                | x11.3         | N/A                              | PyPy 6.0.0                                    |
+
+
+## Observations
+
+C++ "ref-counted" (`shared ptr`) has significant performance hit on non-Linux
+platforms.
+
+JVM speeds up if you limit its memory.
+
+JVM uses some tricks (JIT) which helps it to cut down some reference counting
+overheads and it manages to go faster than C++ and Rust "ref-counted"
+solutions.
+
+Kotlin Native is still much slower than the Kotlin running in JVM.
+
+Kotlin JS produces JS code which is ~25% slower than the manual Kotlin to JS
+translation.
+
+With CPython vs PyPy you trade speed for memory.
