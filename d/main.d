@@ -41,8 +41,7 @@ struct Tree
     {
         Node* lower, equal, greater;
         split(mRoot, lower, equal, greater, x);
-        mRoot = merge(lower, greater);
-        clear(equal);
+        merge1(lower, greater, mRoot);
     }
 
 private:
@@ -51,38 +50,38 @@ private:
     Node* mRoot = null;
 };
 
-void clear(Node* node)
-{
-    if(node == null)
-        return;
-
-    clear(node.left);
-    clear(node.right);
-}
-
-Node* merge(Node* lower, Node* greater)
+void merge1(Node* lower, Node* greater, ref Node* dest)
 {
     if(!lower)
-        return greater;
+    {
+        dest = greater;
+        return;
+    }
 
     if(!greater)
-        return lower;
+    {
+        dest = lower;
+        return;
+    }
 
     if(lower.y < greater.y)
     {
-        lower.right = merge(lower.right, greater);
-        return lower;
+        dest = lower;
+        merge1(lower.right, greater, lower.right);
     }
     else
     {
-        greater.left = merge(lower, greater.left);
-        return greater;
+        dest = greater;
+        merge1(lower, greater.left, greater.left);
     }
 }
 
 Node* merge(Node* lower, Node* equal, Node* greater)
 {
-    return merge(merge(lower, equal), greater);
+    Node* res = lower;
+    merge1(lower, equal, res);
+    merge1(res, greater, res);
+    return res;
 }
 
 void split(Node* orig, ref Node* lower, ref Node* greaterOrEqual, int val)
