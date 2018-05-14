@@ -12,16 +12,16 @@
    :right nil})
 
 (defn merge2 [lower greater]
-  (if (nil? lower)
+  (if-not lower
     greater
-    (if (nil? greater)
+    (if-not greater
       lower
       (if (< (:y lower) (:y greater))
         (assoc lower :right (merge2 (:right lower) greater))
         (assoc greater :left (merge2 lower (:left greater)))))))
 
 (defn split-binary [orig value]
-  (if (nil? orig)
+  (if-not orig
     [nil nil]
     (if (< (:x orig) value)
       (let [[fst snd] (split-binary (:right orig) value)]
@@ -44,14 +44,12 @@
     ;; Why splitting to merge right afterwards? This seems to
     ;; be empirically true:
     ;; (assert (= root new-root))
-    [new-root (not (nil? equal))]))
+    [new-root equal]))
 
 (defn insert [root x]
   (let [[lower equal greater] (split root x)]
     (merge3 lower
-            (if (nil? equal)
-              (make-random-node x)
-              equal)
+            (or equal (make-random-node x))
             greater)))
 
 (defn erase [root x]
@@ -72,8 +70,8 @@
             [root res] (case a
                          0 [(insert root cur) res]
                          1 [(erase root cur) res]
-                         2 (let [[root flag] (has-value root cur)]
-                             (if flag
+                         2 (let [[root equal] (has-value root cur)]
+                             (if equal
                                [root (inc res)]
                                [root res])))]
         (recur root
