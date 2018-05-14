@@ -1,4 +1,4 @@
-use rand;
+use rand::Rng;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -12,10 +12,10 @@ struct Node {
 }
 
 impl Node {
-    fn new(x: i32) -> Self {
+    fn new<R: Rng>(rng: &mut R, x: i32) -> Self {
         Self {
             x,
-            y: rand::random::<i32>(),
+            y: rng.gen::<i32>(),
             left: None,
             right: None,
         }
@@ -106,10 +106,10 @@ impl Tree {
         res
     }
 
-    pub fn insert(&mut self, x: i32) {
+    pub fn insert<R: Rng>(&mut self, rng: &mut R, x: i32) {
         let mut splited = split(self.root.take(), x);
         if splited.equal.is_none() {
-            splited.equal = Some(Rc::new(RefCell::new(Node::new(x))))
+            splited.equal = Some(Rc::new(RefCell::new(Node::new(rng, x))))
         }
         self.root = merge3(splited.lower, splited.equal, splited.greater);
     }
