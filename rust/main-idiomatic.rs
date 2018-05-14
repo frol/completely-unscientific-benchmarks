@@ -6,8 +6,8 @@ type NodeCell = Option<Box<Node>>;
 struct Node {
     x: i32,
     y: i32,
-    left: Option<Box<Node>>,
-    right: Option<Box<Node>>,
+    left: NodeCell,
+    right: NodeCell,
 }
 
 impl Node {
@@ -21,7 +21,7 @@ impl Node {
     }
 }
 
-fn merge<'a>(lower: NodeCell, greater: NodeCell) -> NodeCell {
+fn merge(lower: NodeCell, greater: NodeCell) -> NodeCell {
     match (lower, greater) {
         (None, greater) => greater,
 
@@ -39,7 +39,7 @@ fn merge<'a>(lower: NodeCell, greater: NodeCell) -> NodeCell {
     }
 }
 
-fn split_binary<'a>(orig: NodeCell, value: i32) -> (NodeCell, NodeCell) {
+fn split_binary(orig: NodeCell, value: i32) -> (NodeCell, NodeCell) {
     if let Some(mut orig_node) = orig {
         if orig_node.x < value {
             let split_pair = split_binary(orig_node.right.take(), value);
