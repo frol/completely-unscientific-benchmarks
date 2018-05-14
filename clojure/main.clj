@@ -2,7 +2,7 @@ import kotlin.io.*
 import platform.posix.*
 
 class Node(var x: Int)
-{    
+{
     var y = rand()
     var left: Node? = null
     var right: Node? = null
@@ -12,10 +12,10 @@ fun merge(lower: Node?, greater: Node?): Node?
 {
     if(lower == null)
     	return greater
-    
+
     if(greater == null)
     	return lower
-    
+
     if(lower.y < greater.y)
     {
         lower.right = merge(lower.right, greater)
@@ -32,7 +32,7 @@ fun splitBinary(orig: Node?, value: Int): Pair<Node?, Node?>
 {
     if(orig == null)
     	return Pair(null, null)
-    
+
     if(orig.x < value)
     {
         val splitPair = splitBinary(orig.right, value)
@@ -70,7 +70,7 @@ class Tree
         mRoot = merge(splited.lower, splited.equal, splited.greater)
         return res
     }
-    
+
     public fun insert(x: Int)
     {
         val splited = split(mRoot, x)
@@ -78,17 +78,17 @@ class Tree
         	splited.equal = Node(x)
         mRoot = merge(splited.lower, splited.equal, splited.greater)
     }
-    
+
     public fun erase(x: Int)
     {
         val splited = split(mRoot, x)
         mRoot = merge(splited.lower, splited.greater)
     }
-    
+
     private var mRoot: Node? = null
 }
 
-fun main(args: Array<String>) 
+fun main(args: Array<String>)
 {
     srand(time(null).toInt())
     val tree = Tree()
