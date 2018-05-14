@@ -8,3 +8,4 @@
 *-swift
 *.pyc
 nimcache
+rust/target

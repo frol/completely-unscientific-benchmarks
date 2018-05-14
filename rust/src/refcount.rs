@@ -1,8 +1,6 @@
-#![feature(rustc_private)]
+use rand;
 use std::cell::RefCell;
 use std::rc::Rc;
-
-extern crate rand;
 
 type NodePtr = Option<Rc<RefCell<Node>>>;
 
@@ -85,7 +83,7 @@ fn split(orig: NodePtr, value: i32) -> SplitResult {
     }
 }
 
-struct Tree {
+pub struct Tree {
     root: NodePtr,
 }
 
@@ -113,21 +111,4 @@ impl Tree {
         let splited = split(self.root.clone(), x);
         self.root = merge(splited.lower, splited.greater);
     }
-}
-
-fn main() {
-    let mut tree = Tree::new();
-    let mut cur = 5;
-    let mut res = 0;
-    for i in 1..1000000 {
-        let a = i % 3;
-        cur = (cur * 57 + 43) % 10007;
-        match a {
-            0 => tree.insert(cur),
-            1 => tree.erase(cur),
-            2 => res += if tree.has_value(cur) { 1 } else { 0 },
-            _ => {}
-        }
-    }
-    println!("{}", res);
 }
