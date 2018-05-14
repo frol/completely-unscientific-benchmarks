@@ -1,0 +1,15 @@
+name: unscientific
+author: Franklin Chen
+maintainer: franklinchen@franklinchen.com
+extra-source-files:
+- README.md
+ghc-options: -Wall -O2
+dependencies:
+- base >=4 && <=5
+- primitive
+- mwc-random
+- strict-base-types
+executables:
+  unscientific:
+    main: Main.hs
+    source-dirs: src
