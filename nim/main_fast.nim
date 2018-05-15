@@ -1,26 +1,11 @@
 import random
 
-type
-  NodeObj = object
-    x, y: int32
-    left, right: Node
-  Node = ptr NodeObj
+type Node = ref object
+  x, y: int32
+  left, right: Node
 
-proc destroy(self: Node) {.inline.} =
-  if not self.isNil:
-    if not self.left.isNil:
-      destroy self.left
-      self.left = nil
-    if not self.right.isNil:
-      destroy self.right
-      self.right = nil
-
-    dealloc self
-
-proc createNode(x: int32): Node {.noinit, inline.} =
-  result = create NodeObj
-  result.x = x
-  result.y = int32 rand(high int32)
+template newNode(value: int32): Node =
+  Node(x: value, y: rand(high int32).int32)
 
 proc merge(lower, greater: Node, res: var Node) =
   if lower.isNil:
@@ -57,10 +42,6 @@ template split(orig: Node, value: int32, lower, equal, greater: var Node) =
 type Tree = object
   root: Node
 
-proc destroy(self: var Tree) =
-  destroy self.root
-  self.root = nil
-
 template hasValue(self: var Tree, x: int32): bool =
   var lower, equal, greater: Node
   split(self.root, x, lower, equal, greater)
@@ -72,15 +53,13 @@ template insert(self: var Tree, x: int32) =
   var lower, equal, greater: Node
   split(self.root, x, lower, equal, greater)
   if equal.isNil:
-    equal = createNode(x)
+    equal = newNode(x)
   merge(lower, equal, greater, self.root)
 
 template erase(self: var Tree, x: int32) =
   var lower, equal, greater: Node
   split(self.root, x, lower, equal, greater)
   merge(lower, greater, self.root)
-  if not equal.isNil:
-    destroy equal
 
 proc main() =
   randomize()
@@ -103,7 +82,6 @@ proc main() =
       discard
 
   stdout.write res
-  destroy tree
 
 when isMainModule:
   main()
