@@ -22,21 +22,21 @@ proc createNode(x: int32): Node {.noinit, inline.} =
   result.x = x
   result.y = int32 rand(high int32)
 
-proc merge(lower, greater: Node, res: var Node) =
+proc merge(lower, greater: Node, result: var Node) =
   if lower.isNil:
-    res = greater
+    result = greater
   elif greater.isNil:
-    res = lower
+    result = lower
   elif lower.y < greater.y:
-    res = lower
+    result = lower
     merge(lower.right, greater, lower.right)
   else:
-    res = greater
+    result = greater
     merge(lower, greater.left, greater.left)
 
-template merge(lower, equal, greater: Node, res: var Node ) =
-  merge(lower, equal, res)
-  merge(res, greater, res)
+template merge(lower, equal, greater: Node, result: var Node) =
+  merge(lower, equal, result)
+  merge(result, greater, result)
 
 proc splitBinary(orig: Node, lower, equalGreater: var Node, value: int32) =
   if orig.isNil:
@@ -64,9 +64,9 @@ proc destroy(self: var Tree) =
 template hasValue(self: var Tree, x: int32): bool =
   var lower, equal, greater: Node
   split(self.root, x, lower, equal, greater)
-  let ret = not equal.isNil
+  let result = not equal.isNil
   merge(lower, equal, greater, self.root)
-  ret
+  result
 
 template insert(self: var Tree, x: int32) =
   var lower, equal, greater: Node
@@ -84,9 +84,10 @@ template erase(self: var Tree, x: int32) =
 
 proc main() =
   randomize()
-  var tree = Tree()
-  var cur = 5'i32
-  var res = 0'i32
+  var
+    tree = Tree()
+    cur = 5'i32
+    res = 0'i32
 
   for i in 1'i32 ..< 1000000'i32:
     let a = i mod 3
