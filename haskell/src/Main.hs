@@ -1,96 +1,79 @@
 -- Strict makes a huge difference.
 {-# LANGUAGE Strict #-}
 
--- A tiny improvement.
-{-# LANGUAGE UnboxedTuples #-}
-
--- Note: did not try to bother to use unboxed Int.
-
 module Main where
-
--- Using a strict Maybe makes a huge difference.
-import Prelude hiding (Maybe(..))
-import Data.Maybe.Strict (Maybe(..), isJust)
 
 import Control.Monad.Primitive (PrimMonad, PrimState)
 import System.Random.MWC (withSystemRandom, asGenIO, Gen, uniform)
 
-type NodeCell = Maybe Node
-
-data Node = Node
-  { xValue :: {-# UNPACK #-} Int
-  , yValue :: {-# UNPACK #-} Int
-  , left :: NodeCell
-  , right :: NodeCell
+data Node
+  = Empty
+  | Node {
+    xValue :: !Int,
+    yValue :: !Int,
+    left :: Node,
+    right :: Node
   }
+
+isNode :: Node -> Bool
+isNode Node{} = True
+isNode Empty = False
 
 newNode :: PrimMonad m => Gen (PrimState m) -> Int -> m Node
-newNode gen x =
-  do
-    y <- uniform gen
-    pure $ Node
-      { xValue = x
-      , yValue = y
-      , left = Nothing
-      , right = Nothing
-  }
+newNode gen x = Node x <$> uniform gen <*> pure Empty <*> pure Empty
 
-merge :: NodeCell -> NodeCell -> NodeCell
-merge Nothing greater = greater
-merge lower Nothing = lower
-merge lower@(Just lowerNode) greater@(Just greaterNode)
-  | yValue lowerNode < yValue greaterNode =
-    Just $ lowerNode { right = merge (right lowerNode) greater }
-  | otherwise =
-    Just $ greaterNode { left = merge lower (left greaterNode) }
+merge :: Node -> Node -> Node
+merge Empty greater = greater
+merge lower Empty = lower
+merge lower greater
+  | yValue lower < yValue greater = lower { right = merge (right lower) greater }
+  | otherwise = greater { left = merge lower (left greater) }
 
-splitBinary :: NodeCell -> Int -> (# NodeCell, NodeCell #)
-splitBinary Nothing _ = (# Nothing, Nothing #)
-splitBinary (Just origNode) value
+splitBinary :: Node -> Int -> (Node, Node)
+splitBinary Empty _ = (Empty, Empty)
+splitBinary origNode value
   | xValue origNode < value =
     case splitBinary (right origNode) value of
-      (# l, r #) -> (# Just (origNode { right = l }), r #)
+      (l, r) -> (origNode { right = l }, r)
   | otherwise =
     case splitBinary (left origNode) value of
-      (# l, r #) -> (# l, Just (origNode { left = r }) #)
+      (l, r) -> (l, origNode { left = r })
 
-merge3 :: NodeCell -> NodeCell -> NodeCell -> NodeCell
+merge3 :: Node -> Node -> Node -> Node
 merge3 lower equal greater = (lower `merge` equal) `merge` greater
 
-type SplitResult = (# NodeCell, NodeCell, NodeCell #)
+type SplitResult = (Node, Node, Node)
 
-split :: NodeCell -> Int -> SplitResult
+split :: Node -> Int -> SplitResult
 split orig value =
   case splitBinary orig value of
-    (# lower, equalGreater #) ->
+    (lower, equalGreater) ->
       case splitBinary equalGreater (value+1) of
-        (# equal, greater #) -> (# lower, equal, greater #)
+        (equal, greater) -> (lower, equal, greater)
 
-newtype Tree = Tree { root :: NodeCell }
+type Tree = Node
 
 emptyTree :: Tree
-emptyTree = Tree { root = Nothing }
+emptyTree = Empty
 
-hasValue :: Tree -> Int -> (# Tree, Bool #)
-hasValue tree x =
-  case split (root tree) x of
-    (# lower, equal, greater #) ->
-      (# Tree { root = merge3 lower equal greater }, isJust equal #)
+hasValue :: Tree -> Int -> (Tree, Bool)
+hasValue node x =
+  case split node x of
+    (lower, equal, greater) ->
+      (merge3 lower equal greater, isNode equal)
 
 insert :: PrimMonad m => Gen (PrimState m) -> Tree -> Int -> m Tree
 insert gen tree x =
-  case split (root tree) x of
-    (# lower, equal, greater #) ->
-      if isJust equal
-      then pure $ Tree { root = merge3 lower equal greater }
-      else do
-        newEqualNode <- newNode gen x
-        pure $ Tree { root = merge3 lower (Just newEqualNode) greater }
+  case split tree x of
+    (lower, equal, greater) ->
+      if isNode equal
+      then pure $ merge3 lower equal greater
+      else merge3 <$> pure lower <*> newNode gen x <*> pure greater
 
 erase :: Tree -> Int -> Tree
 erase tree x =
-  case split (root tree) x of
-    (# lower, _, greater #) -> Tree { root = merge lower greater }
+  case split tree x of
+    (lower, _, greater) -> merge lower greater
 
 run :: PrimMonad m => Gen (PrimState m) -> m Int
 run gen = loop 1 emptyTree 5 0 where
@@ -109,7 +92,7 @@ run gen = loop 1 emptyTree 5 0 where
              in loop newI newTree newCur res
            2 ->
              case hasValue tree newCur of
-               (# newTree, has #) ->
+               (newTree, has) ->
                  let newRes = if has then res+1 else res
                  in loop newI newTree newCur newRes
            _ ->
