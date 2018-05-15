@@ -53,9 +53,11 @@ let erase root x =
   let lower, _, greater = split root x in
   merge2 lower greater
 
-let main n =
+// Hm, if you put the loop into a main you will get
+// a stack overflow in mono & dotnet core:
+let () =
   let rec loop root i cur res =
-    if i >= n
+    if i >= 1000000
     then res
     else
       let cur = (cur * 57 + 43) % 10007 in
@@ -64,7 +66,5 @@ let main n =
         | 1 -> loop (erase root cur) (i + 1) cur res
         | _ -> let root, flag = has_value root cur in
                   loop root (i + 1) cur (if flag then res + 1 else res)
-  in loop None 1 5 0
-// FIXME: stack overflow in mono & dotnet core
-// for the actual number of 1000000 iterations:
-in printfn "%d" (main 100000)
+  in printfn "%d" (loop None 1 5 0)
+ 
