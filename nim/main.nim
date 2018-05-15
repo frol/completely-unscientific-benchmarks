@@ -4,70 +4,70 @@ type Node = ref object
   x, y: int32
   left, right: Node
 
-template newNode(value: int32): Node =
-  Node(x: value, y: rand(high int32).int32)
+proc newNode(x: int): Node =
+  return Node(x: x, y: rand(high(int32).int).int32, left: nil, right: nil)
 
-proc merge(lower, greater: Node, res: var Node) =
+proc merge(lower, greater: Node): Node =
   if lower.isNil:
-    res = greater
-  elif greater.isNil:
-    res = lower
-  elif lower.y < greater.y:
-    res = lower
-    merge(lower.right, greater, lower.right)
+    return greater
+
+  if greater.isNil:
+    return lower
+
+  if lower.y < greater.y:
+    lower.right = merge(lower.right, greater)
+    return lower
   else:
-    res = greater
-    merge(lower, greater.left, greater.left)
+    greater.left = merge(lower, greater.left)
+    return greater
 
-template merge(lower, equal, greater: Node, res: var Node ) =
-  merge(lower, equal, res)
-  merge(res, greater, res)
-
-proc splitBinary(orig: Node, lower, equalGreater: var Node, value: int32) =
+proc splitBinary(orig: Node, value: int32): (Node, Node) =
   if orig.isNil:
-    lower = nil
-    equalGreater = nil
-  elif orig.x < value:
-    lower = orig
-    splitBinary(lower.right, lower.right, equalGreater, value)
+    return (nil, nil)
+
+  if orig.x < value:
+    let splitPair = splitBinary(orig.right, value)
+    orig.right = splitPair[0]
+    return (orig, splitPair[1])
   else:
-    equalGreater = orig
-    splitBinary(equalGreater.left, lower, equalGreater.left, value)
+    let splitPair = splitBinary(orig.left, value)
+    orig.left = splitPair[1]
+    return (splitPair[0], orig)
 
-template split(orig: Node, value: int32, lower, equal, greater: var Node) =
-  var equalGreater: Node
-  splitBinary(orig, lower, equalGreater, value)
-  splitBinary(equalGreater, equal, greater, value + 1)
+proc merge3(lower, equal, greater: Node): Node =
+  return merge(merge(lower, equal), greater)
 
-type Tree = object
+proc split(orig: Node, value: int32): tuple[lower, equal, greater: Node] =
+  let (lower, equalGreater) = splitBinary(orig, value)
+  let (equal, greater) = splitBinary(equalGreater, value + 1)
+  return (lower: lower, equal: equal, greater: greater)
+
+
+type Tree = ref object
   root: Node
 
-template hasValue(self: var Tree, x: int32): bool =
-  var lower, equal, greater: Node
-  split(self.root, x, lower, equal, greater)
-  let ret = not equal.isNil
-  merge(lower, equal, greater, self.root)
-  ret
+proc hasValue(self: Tree, x: int32): bool =
+  let splited = split(self.root, x)
+  let res = not splited.equal.isNil
+  self.root = merge3(splited.lower, splited.equal, splited.greater)
+  return res
 
-template insert(self: var Tree, x: int32) =
-  var lower, equal, greater: Node
-  split(self.root, x, lower, equal, greater)
-  if equal.isNil:
-    equal = newNode(x)
-  merge(lower, equal, greater, self.root)
+proc insert(self: Tree, x: int32) =
+  var splited = split(self.root, x)
+  if splited.equal.isNil:
+    splited.equal = newNode(x)
+  self.root = merge3(splited.lower, splited.equal, splited.greater)
 
-template erase(self: var Tree, x: int32) =
-  var lower, equal, greater: Node
-  split(self.root, x, lower, equal, greater)
-  merge(lower, greater, self.root)
+proc erase(self: Tree, x: int32) =
+  let splited = split(self.root, x)
+  self.root = merge(splited.lower, splited.greater)
 
 proc main() =
-  randomize()
-  var tree = Tree()
+  let tree = Tree()
   var cur = 5'i32
-  var res = 0'i32
+  var res = 0
 
-  for i in 1'i32 ..< 1000000'i32:
+  for i in 1 ..< 1000000:
     let a = i mod 3
     cur = (cur * 57 + 43) mod 10007
     case a:
@@ -79,9 +79,8 @@ proc main() =
       if tree.hasValue(cur):
         res += 1
     else:
-      discard
-
-  stdout.write res
+      continue
+  echo res
 
 when isMainModule:
   main()
