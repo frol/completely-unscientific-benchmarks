@@ -7,20 +7,21 @@ type Node = ref object
 template newNode(value: int32): Node =
   Node(x: value, y: rand(high int32).int32)
 
-proc merge(lower, greater: Node): Node {.noInit.} =
+proc merge(lower, greater: Node, res: var Node) =
   if lower.isNil:
-    greater
+    res = greater
   elif greater.isNil:
-    lower
+    res = lower
   elif lower.y < greater.y:
-    lower.right = merge(lower.right, greater)
-    lower
+    res = lower
+    merge(lower.right, greater, lower.right)
   else:
-    greater.left = merge(lower, greater.left)
-    greater
+    res = greater
+    merge(lower, greater.left, greater.left)
 
-template merge(lower, equal, greater: Node): Node =
-  merge(merge(lower, equal), greater)
+template merge(lower, equal, greater: Node, res: var Node ) =
+  merge(lower, equal, res)
+  merge(res, greater, res)
 
 proc splitBinary(orig: Node, lower, equalGreater: var Node, value: int32) =
   if orig.isNil:
@@ -45,7 +46,7 @@ template hasValue(self: var Tree, x: int32): bool =
   var lower, equal, greater: Node
   split(self.root, x, lower, equal, greater)
   let ret = not equal.isNil
-  self.root = merge(lower, equal, greater)
+  merge(lower, equal, greater, self.root)
   ret
 
 template insert(self: var Tree, x: int32) =
@@ -53,14 +54,15 @@ template insert(self: var Tree, x: int32) =
   split(self.root, x, lower, equal, greater)
   if equal.isNil:
     equal = newNode(x)
-  self.root = merge(lower, equal, greater)
+  merge(lower, equal, greater, self.root)
 
 template erase(self: var Tree, x: int32) =
   var lower, equal, greater: Node
   split(self.root, x, lower, equal, greater)
-  self.root = merge(lower, greater)
+  merge(lower, greater, self.root)
 
 proc main() =
+  randomize()
   var tree = Tree()
   var cur = 5'i32
   var res = 0'i32
