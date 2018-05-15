@@ -12,7 +12,7 @@ type Node = {
 let rand_int = (let rng = System.Random() in fun () -> rng.Next())
 
 let make_node (x: int) =
-  Some({x = x; y = rand_int (); left = None; right = None})
+  Some {x = x; y = rand_int (); left = None; right = None}
 
 let rec merge2 lower greater =
   match lower, greater with
