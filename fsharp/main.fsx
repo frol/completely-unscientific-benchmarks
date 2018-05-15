@@ -47,7 +47,8 @@ let has_value root x =
 
 let insert root x =
   let lower, equal, greater = split root x in
-  (merge3 lower (if equal <> None then equal else make_node x) greater)
+  let equal = (if equal <> None then equal else make_node x) in
+  merge3 lower equal greater
 
 let erase root x =
   let lower, _, greater = split root x in
