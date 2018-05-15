@@ -58,6 +58,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | D                                 | 0.24               | x1.1          | 1.6        | x4.2              | 0.019 + D runtime                 | LDC 1.9.0                        |
 | Haskell                           | 1.10               | x5.2          | 3.4        | x9                | 3.8                               | GHC 8.2.2                        |
 | Object Pascal                     | 0.36               | x1.7          | 0.38       | x1                | 0.175 (static)                    | FPC 3.0.4                        |
+| Ada                               | 0.24               | x1.1          | 0.38       | x1                | 0.274                             | GCC Ada 8.1.0                    |
 
 (*) C# has a noticable VM start time (~0.4 seconds), but we still measure real
 execution time of the whole program.
