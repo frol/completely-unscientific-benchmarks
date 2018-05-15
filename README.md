@@ -105,8 +105,8 @@ execution time of the whole program.
 | Rust "idiomatic"                  | 0.42               | x1.5          | 0.16                             | Rustc 1.26.0                                  |
 | JavaScript                        | 1.25               | x4.2          | N/A                              | Node.js 8.11.1                                |
 | Java (no-limit / -Xm*50M)         | 0.8 / 0.75         | x2.7 / x2.5   | N/A                              | Oracle JDK 10.0.1                             |
-| Kotlin JVM (no-limit / -Xm*50M)   | 0.8 / 0.8          | x2.7 / x2.7   | N/A                              | Kotlinc 1.2.41 + Oracle JDK 10.0.1            |
-| Kotlin Native                     | 7.8                | x26           | 0.46                             | Kotlinc-native 0.7                            |
+| Kotlin/JVM (no-limit / -Xm*50M)   | 0.8 / 0.8          | x2.7 / x2.7   | N/A                              | Kotlinc 1.2.41 + Oracle JDK 10.0.1            |
+| Kotlin/Native                     | 7.8                | x26           | 0.46                             | Kotlinc-native 0.7                            |
 | Swift (Swift for Windows)         | 2.1                | x7.5          | 0.019 + Swift shared libraries   | Swift 4.0.3 (Swift for Windows 1.9.1)         |
 | Nim                               | 1.1                | x3.9          | 0.134                            | Nim 0.18                                      |
 | Nim gc:markAndSweep               | 0.83               | x3            | 0.143                            | Nim 0.18                                      |
@@ -130,9 +130,9 @@ JVM uses some tricks (JIT) which helps it to cut down some reference counting
 overheads and it manages to go faster than C++ and Rust "ref-counted"
 solutions.
 
-Kotlin Native is still much slower than the Kotlin running in JVM.
+Kotlin/Native is still much slower than the Kotlin running in JVM.
 
-Kotlin JS produces JS code which is ~25% slower than the manual Kotlin to JS
+Kotlin/JS produces JS code which is ~25% slower than the manual Kotlin to JS
 translation.
 
 With CPython vs PyPy you trade speed for memory.
