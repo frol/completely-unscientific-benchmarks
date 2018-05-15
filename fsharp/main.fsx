@@ -1,5 +1,7 @@
 #!/usr/bin/dotnet /usr/share/dotnet/sdk/2.1.300-rc1-008673/FSharp/fsi.exe
 
+// See also Ocaml version in ../ocaml/immutable.ml
+
 type Node = 
   {x: int
    y: int
@@ -20,38 +22,39 @@ let rec merge2 lower greater =
       then Some({lo with right = merge2 lo.right greater})
       else Some({gt with left = merge2 lower gt.left})
 
-let rec splitBinary orig value =
+let rec split2 orig value =
   match orig with
   | None -> (None, None)
   | Some(orig) ->
       if orig.x < value then
-        let fst, snd = splitBinary orig.right value
+        let fst, snd = split2 orig.right value
         in (Some({orig with right = fst}), snd)
       else
-        let fst, snd = splitBinary orig.left value
+        let fst, snd = split2 orig.left value
         in (fst, Some({orig with left = snd}))
 
-let merge3 lower equal greater = merge2 (merge2 lower equal) greater
+let merge3 lower equal greater =
+  merge2 (merge2 lower equal) greater
 
-let split orig value =
-  let lower, equal_greater = splitBinary orig value in
-  let equal, greater = splitBinary equal_greater (value + 1) in
+let split3 orig value =
+  let lower, equal_greater = split2 orig value in
+  let equal, greater = split2 equal_greater (value + 1) in
   (lower, equal, greater)
 
-// printfn "%A" (split (merge2 (make_node 42) (make_node 43)) 43)
+// printfn "%A" (split3 (merge2 (make_node 42) (make_node 43)) 43)
 
 let has_value root x =
-  let lower, equal, greater = split root x in
+  let lower, equal, greater = split3 root x in
   // FIXME: splitting just to merge it again:
   ((merge3 lower equal greater), equal <> None)
 
 let insert root x =
-  let lower, equal, greater = split root x in
+  let lower, equal, greater = split3 root x in
   let equal = (if equal <> None then equal else make_node x) in
   merge3 lower equal greater
 
 let erase root x =
-  let lower, _, greater = split root x in
+  let lower, _, greater = split3 root x in
   merge2 lower greater
 
 // Hm, if you put the loop into a main you will get
