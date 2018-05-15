@@ -6,6 +6,7 @@ Author: John Perry (john.perry@usm.edu)
 
 ```
 gnatmake -O2 -gnatp complete_unscientific.adb
+strip -s ./complete_unscientific
 ```
 
 ## Execute
