@@ -1,5 +1,7 @@
 program MainNew;
 
+//Author: Ben Grasset
+
 {$mode objfpc}{$j-}
 {$modeswitch advancedrecords}
 {$coperators on}{$inline on}
