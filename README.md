@@ -54,7 +54,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | Python (CPython)                  | 12.25              | x58.3         | 5          | x13               | N/A                               | CPython 3.6                      |
 | Python (PyPy)                     | 3.20               | x15.2         | 48.5       | x128              | N/A                               | PyPy 6.0.0                       |
 | C#                                | 0.70*              | x3.3          | 11         | x29               | N/A                               | .NET Core 2.0                    |
-| Go                                | 0.38               | x1.8          | 5.7        | x15               | 1.2                               | Go 1.10.2                        |
+| Go                                | 0.38               | x1.8          | 5.7        | x15               | 1.2 (static)                      | Go 1.10.2                        |
 | D                                 | 0.24               | x1.1          | 1.6        | x4.2              | 0.019 + D runtime                 | LDC 1.9.0                        |
 | Haskell                           | 1.10               | x5.2          | 3.4        | x9                | 3.8                               | GHC 8.2.2                        |
 
@@ -79,8 +79,8 @@ execution time of the whole program.
 | Nim gc:markAndSweep               | 0.7                | x2.8          | 0.293                            | Nim 0.18                                      |
 | Python (CPython)                  | 15.9               | x63.6         | N/A                              | CPython 2.7.10                                |
 | Python (PyPy)                     | 3.7                | x14.8         | N/A                              | PyPy 6.0.0                                    |
-| C#                                | 0.92*              | x3.7          | 0.006 + .Net                     | .NET Core 2.1.200                             |
-| Go                                | 0.8                | x3.2          | 2.1                              | Go 1.10.2                                     |
+| C#                                | 0.79*              | x3.2          | 0.006 + .Net                     | .NET Core 2.1.200                             |
+| Go                                | 0.39               | x1.6          | 2.1 (static)                     | Go 1.10.2                                     |
 | D                                 | 0.26               | x1.04         | 0.019 + D runtime                | LDC 1.9.0                                     |
 | Haskell                           | 1.15               | x4.6          | 1.3                              | GHC 8.2.2                                     |
 
@@ -109,8 +109,8 @@ execution time of the whole program.
 | Nim gc:markAndSweep               | 0.83               | x3            | 0.143                            | Nim 0.18                                      |
 | Python (CPython)                  | 15.4               | x51.3         | N/A                              | CPython 2.7.13                                |
 | Python (PyPy)                     | 3.4                | x11.3         | N/A                              | PyPy 6.0.0                                    |
-| C#                                | 0.69               | x2.5          | 0.006 + .Net                     | MSVC 2017                                     |
-| Go                                | 0.85               | x3            | 2.0                              | Go 1.10.2                                     |
+| C#                                | 0.56               | x2            | 0.006 + .Net                     | Visual Studio 2017 (Visual C# Compiler 2.7.0) |
+| Go                                | 0.43               | x1.5          | 2.0 (static)                     | Go 1.10.2                                     |
 | D                                 | 0.31               | x1.1          | 0.681 + D runtime                | LDC 1.9.0                                     |
 | Haskell                           | 1.2                | x4.3          | 4.1                              | GHC 8.2.2                                     |
 
