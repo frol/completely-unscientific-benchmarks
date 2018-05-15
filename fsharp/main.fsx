@@ -61,10 +61,11 @@ let () =
     then res
     else
       let cur = (cur * 57 + 43) % 10007 in
-        match i % 3 with
-        | 0 -> loop (insert root cur) (i + 1) cur res
-        | 1 -> loop (erase root cur) (i + 1) cur res
-        | _ -> let root, flag = has_value root cur in
-                  loop root (i + 1) cur (if flag then res + 1 else res)
+      match i % 3 with
+      | 0 -> loop (insert root cur) (i + 1) cur res
+      | 1 -> loop (erase root cur) (i + 1) cur res
+      | _ ->
+        let root, flag = has_value root cur in
+        loop root (i + 1) cur (if flag then res + 1 else res)
   in printfn "%d" (loop None 1 5 0)
  
