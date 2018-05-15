@@ -1,4 +1,4 @@
-program Main;
+program MainNew;
 
 {$mode objfpc}{$j-}
 {$modeswitch advancedrecords}
