@@ -1,5 +1,4 @@
-(ns bench.core
-  (:gen-class))
+#!/usr/bin/env clj
 
 ;; Exponentiation:
 (defn ** [x n] (reduce * (repeat n x)))
@@ -71,7 +70,6 @@
                   new-res (if equal (inc res) res)]
               (recur root (inc i) cur new-res)))))))
 
-(defn -main [& args]
-  (println (main 1000000)))
+(println (main 1000000))
 
 
