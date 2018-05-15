@@ -63,11 +63,10 @@
          res 0]
     (if-not (< i n)
       res
-      (let [a (mod i 3)
-            cur (mod (+ 43 (* 57 cur)) 10007)
+      (let [cur (mod (+ 43 (* 57 cur)) 10007)
             ;; This simulates an in-place update in place and a side
             ;; result:
-            [root res] (case a
+            [root res] (case (mod i 3)
                          0 [(insert root cur) res]
                          1 [(erase root cur) res]
                          2 (let [[root equal] (has-value root cur)]
