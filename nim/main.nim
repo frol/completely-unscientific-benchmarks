@@ -5,52 +5,48 @@ type Node = ref object
   left, right: Node
 
 proc newNode(x: int32): Node =
-  return Node(x: x, y: rand(high(int32).int).int32, left: nil, right: nil)
+  result = Node(x: x, y: rand(high int32).int32)
 
 proc merge(lower, greater: Node): Node =
   if lower.isNil:
-    return greater
-
-  if greater.isNil:
-    return lower
-
-  if lower.y < greater.y:
+    result = greater
+  elif greater.isNil:
+    result = lower
+  elif lower.y < greater.y:
     lower.right = merge(lower.right, greater)
-    return lower
+    result = lower
   else:
     greater.left = merge(lower, greater.left)
-    return greater
+    result = greater
 
 proc splitBinary(orig: Node, value: int32): (Node, Node) =
   if orig.isNil:
-    return (nil, nil)
-
-  if orig.x < value:
+    result = (nil, nil)
+  elif orig.x < value:
     let splitPair = splitBinary(orig.right, value)
     orig.right = splitPair[0]
-    return (orig, splitPair[1])
+    result = (orig, splitPair[1])
   else:
     let splitPair = splitBinary(orig.left, value)
     orig.left = splitPair[1]
-    return (splitPair[0], orig)
+    result = (splitPair[0], orig)
 
 proc merge3(lower, equal, greater: Node): Node =
-  return merge(merge(lower, equal), greater)
+  merge(merge(lower, equal), greater)
 
 proc split(orig: Node, value: int32): tuple[lower, equal, greater: Node] =
-  let (lower, equalGreater) = splitBinary(orig, value)
-  let (equal, greater) = splitBinary(equalGreater, value + 1)
-  return (lower: lower, equal: equal, greater: greater)
-
+  let
+    (lower, equalGreater) = splitBinary(orig, value)
+    (equal, greater) = splitBinary(equalGreater, value + 1)
+  result = (lower, equal, greater)
 
 type Tree = ref object
   root: Node
 
 proc hasValue(self: Tree, x: int32): bool =
   let splited = split(self.root, x)
-  let res = not splited.equal.isNil
+  result = not splited.equal.isNil
   self.root = merge3(splited.lower, splited.equal, splited.greater)
-  return res
 
 proc insert(self: Tree, x: int32) =
   var splited = split(self.root, x)
@@ -64,8 +60,9 @@ proc erase(self: Tree, x: int32) =
 
 proc main() =
   let tree = Tree()
-  var cur = 5'i32
-  var res = 0
+  var
+    cur = 5'i32
+    res = 0
 
   for i in 1 ..< 1000000:
     let a = i mod 3
@@ -79,7 +76,7 @@ proc main() =
       if tree.hasValue(cur):
         res += 1
     else:
-      continue
+      discard
   echo res
 
 when isMainModule:
