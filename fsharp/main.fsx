@@ -63,8 +63,8 @@ let main n =
         | 0 -> loop (insert root cur) (i + 1) cur res
         | 1 -> loop (erase root cur) (i + 1) cur res
         | _ -> let root, flag = has_value root cur in
-                  if flag then loop root (i + 1) cur res + 1
-                  else loop root (i + 1) cur res
+                  loop root (i + 1) cur (if flag then res + 1 else res)
   in loop None 1 5 0
-// FIXME: stack overflow in mono & dotnet core:
-in printfn "%d" (main 1000000)
+// FIXME: stack overflow in mono & dotnet core
+// for the actual number of 1000000 iterations:
+in printfn "%d" (main 100000)
