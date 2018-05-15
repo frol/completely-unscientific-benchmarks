@@ -1,15 +1,38 @@
-import std.stdio;
-import std.random;
+import core.stdc.stdlib;
 
+//In lieu of runtime new, use malloc + placement new
+T* make(T, Args...)(Args args)
+{
+    auto result = cast(T*) calloc(1,T.sizeof);
+    result.__ctor(args);
+    return result;
+}
+
+//In lieu of runtime destroy, use manual __dtor call + free
+void destroy(T)(T* obj)
+{
+    if(!obj) return;
+    obj.__dtor();
+    obj.free();
+}
+
+align((void*).sizeof):
 private struct Node
 {
+
     int x = 0;
     int y = 0;
 
     this(int x)
     {
         this.x = x;
-        y = uniform!int();
+        y = rand();
+    }
+
+    ~this()
+    {
+        left.destroy();
+        right.destroy();
     }
 
     Node* left = null;
@@ -32,7 +55,7 @@ struct Tree
         Node* lower, equal, greater;
         split(mRoot, lower, equal, greater, x);
         if(!equal)
-            equal = new Node(x);
+            equal = make!Node(x);
 
         mRoot = merge(lower, equal, greater);
     }
@@ -41,37 +64,52 @@ struct Tree
     {
         Node* lower, equal, greater;
         split(mRoot, lower, equal, greater, x);
-        mRoot = merge(lower, greater);
+        merge_t(lower, greater, mRoot);
+
+        //Equivalent of delete in C++
+        if(equal) equal.destroy();
     }
 
-private:
+    ~this()
+    {
+        mRoot.destroy();
+    }
 
-    Node* mRoot = null;
+    private Node* mRoot = null;
 };
 
-Node* merge(Node* lower, Node* greater)
+void merge_t(Node* lower, Node* greater, ref Node* dest)
 {
     if(!lower)
-        return greater;
+    {
+        dest = greater;
+        return;
+    }
 
     if(!greater)
-        return lower;
+    {
+        dest = lower;
+        return;
+    }
 
     if(lower.y < greater.y)
     {
-        lower.right = merge(lower.right, greater);
-        return lower;
+        dest = lower;
+        merge_t(lower.right, greater, lower.right);
     }
     else
     {
-        greater.left = merge(lower, greater.left);
-        return greater;
+        dest = greater;
+        merge_t(lower, greater.left, greater.left);
     }
 }
 
 Node* merge(Node* lower, Node* equal, Node* greater)
 {
-    return merge(merge(lower, equal), greater);
+    Node* res = lower;
+    merge_t(lower, equal, res);
+    merge_t(res, greater, res);
+    return res;
 }
 
 void split(Node* orig, ref Node* lower, ref Node* greaterOrEqual, int val)
@@ -102,8 +140,13 @@ void split(Node* orig, ref Node* lower, ref Node* equal, ref Node* greater, int 
     split(equalOrGreater, equal, greater, val + 1);
 }
 
+extern(C)
 int main(string[] args)
 {
+    import core.stdc.stdio;
+    import core.stdc.time;
+
+    srand(cast(uint)time(null));
     Tree tree;
 
     int cur = 5;
@@ -126,6 +169,6 @@ int main(string[] args)
             res += tree.hasValue(cur);
         }
     }
-    writeln(res);
+    printf("%d\n", res);
     return 0;
 }
