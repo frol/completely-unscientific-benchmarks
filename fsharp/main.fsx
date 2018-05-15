@@ -2,11 +2,12 @@
 
 // See also Ocaml version in ../ocaml/immutable.ml
 
-type Node = 
-  {x: int
-   y: int
-   left: option<Node>
-   right: option<Node>}
+type Node = {
+  x: int
+  y: int
+  left: option<Node>
+  right: option<Node>
+}
 
 let rand_int = (let rng = System.Random() in fun () -> rng.Next())
 
@@ -17,21 +18,21 @@ let rec merge2 lower greater =
   match lower, greater with
   | None, greater -> greater
   | lower, None -> lower
-  | Some(lo), Some(gt) ->
+  | Some lo, Some gt ->
       if lo.y < gt.y
-      then Some({lo with right = merge2 lo.right greater})
-      else Some({gt with left = merge2 lower gt.left})
+      then Some {lo with right = merge2 lo.right greater}
+      else Some {gt with left = merge2 lower gt.left}
 
 let rec split2 orig value =
   match orig with
   | None -> (None, None)
-  | Some(orig) ->
+  | Some orig ->
       if orig.x < value then
         let fst, snd = split2 orig.right value
-        in (Some({orig with right = fst}), snd)
+        in (Some {orig with right = fst}, snd)
       else
         let fst, snd = split2 orig.left value
-        in (fst, Some({orig with left = snd}))
+        in (fst, Some {orig with left = snd})
 
 let merge3 lower equal greater =
   merge2 (merge2 lower equal) greater
@@ -40,8 +41,6 @@ let split3 orig value =
   let lower, equal_greater = split2 orig value in
   let equal, greater = split2 equal_greater (value + 1) in
   (lower, equal, greater)
-
-// printfn "%A" (split3 (merge2 (make_node 42) (make_node 43)) 43)
 
 let has_value root x =
   let lower, equal, greater = split3 root x in
