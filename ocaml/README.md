@@ -20,11 +20,11 @@ ocamlopt -o main main.ml
 ## Compile
 
 ```
-ocamlopt -o idiomatic idiomatic.ml
+ocamlopt -o immutable immutable.ml
 ```
 
 ## Execute
 
 ```
-./idiomatic
+./immutable
 ```
