@@ -3,9 +3,17 @@ import core.stdc.stdlib;
 //In lieu of runtime new, use malloc + placement new
 T* make(T, Args...)(Args args)
 {
-    auto result = cast(T*) malloc(T.sizeof);
+    auto result = cast(T*) calloc(1,T.sizeof);
     result.__ctor(args);
     return result;
+}
+
+//In lieu of runtime destroy, use manual __dtor call + free
+void destroy(T)(T* obj)
+{
+    if(!obj) return;
+    obj.__dtor();
+    obj.free();
 }
 
 align((void*).sizeof):
@@ -23,8 +31,8 @@ private struct Node
 
     ~this()
     {
-        if(left) free(left);
-        if(right) free(right);
+        left.destroy();
+        right.destroy();
     }
 
     Node* left = null;
@@ -56,13 +64,16 @@ struct Tree
     {
         Node* lower, equal, greater;
         split(mRoot, lower, equal, greater, x);
+        merge_t(lower, greater, mRoot);
 
         //Equivalent of delete in C++
-        equal.destroy();
-
-        merge_t(lower, greater, mRoot);
+        if(equal) equal.destroy();
     }
 
+    ~this()
+    {
+        mRoot.destroy();
+    }
 
     private Node* mRoot = null;
 };
