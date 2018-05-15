@@ -57,6 +57,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | Go                                | 0.38               | x1.8          | 5.7        | x15               | 1.2 (static)                      | Go 1.10.2                        |
 | D                                 | 0.24               | x1.1          | 1.6        | x4.2              | 0.019 + D runtime                 | LDC 1.9.0                        |
 | Haskell                           | 1.10               | x5.2          | 3.4        | x9                | 3.8                               | GHC 8.2.2                        |
+| Object Pascal                     | 0.36               | x1.7          | 0.38       | x1                | 0.175 (static)                    | FPC 3.0.4                        |
 
 (*) C# has a noticable VM start time (~0.4 seconds), but we still measure real
 execution time of the whole program.
@@ -83,6 +84,7 @@ execution time of the whole program.
 | Go                                | 0.39               | x1.6          | 2.1 (static)                     | Go 1.10.2                                     |
 | D                                 | 0.26               | x1.04         | 0.019 + D runtime                | LDC 1.9.0                                     |
 | Haskell                           | 1.15               | x4.6          | 1.3                              | GHC 8.2.2                                     |
+| Object Pascal                     | 0.36               | x1.4          | 0.272                            | FPC 3.0.4                                     |
 
             
 ### Windows (Windows 10, x64, Intel Core i7-6700HQ CPU)
@@ -113,6 +115,7 @@ execution time of the whole program.
 | Go                                | 0.43               | x1.5          | 2.0 (static)                     | Go 1.10.2                                     |
 | D                                 | 0.31               | x1.1          | 0.681 + D runtime                | LDC 1.9.0                                     |
 | Haskell                           | 1.2                | x4.3          | 4.1                              | GHC 8.2.2                                     |
+| Object Pascal                     | 0.44               | x1.6          | 0.045                            | FPC 3.0.4                                     |
 
 
 ## Observations
