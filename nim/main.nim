@@ -40,27 +40,27 @@ proc split(orig: Node, value: int32): tuple[lower, equal, greater: Node] =
     (equal, greater) = splitBinary(equalGreater, value + 1)
   result = (lower, equal, greater)
 
-type Tree = ref object
+type Tree = object
   root: Node
 
-proc hasValue(self: Tree, x: int32): bool =
+proc hasValue(self: var Tree, x: int32): bool =
   let splited = split(self.root, x)
   result = not splited.equal.isNil
   self.root = merge3(splited.lower, splited.equal, splited.greater)
 
-proc insert(self: Tree, x: int32) =
+proc insert(self: var Tree, x: int32) =
   var splited = split(self.root, x)
   if splited.equal.isNil:
     splited.equal = newNode(x)
   self.root = merge3(splited.lower, splited.equal, splited.greater)
 
-proc erase(self: Tree, x: int32) =
+proc erase(self: var Tree, x: int32) =
   let splited = split(self.root, x)
   self.root = merge(splited.lower, splited.greater)
 
 proc main() =
-  let tree = Tree()
   var
+    tree = Tree()
     cur = 5'i32
     res = 0
 
