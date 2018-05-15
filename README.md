@@ -54,7 +54,7 @@ leverages CGroup capabilities to capture the high-water RSS+CACHE memory usage.
 | Python (CPython)                  | 12.25              | x58.3         | 5          | x13               | N/A                               | CPython 3.6                      |
 | Python (PyPy)                     | 3.20               | x15.2         | 48.5       | x128              | N/A                               | PyPy 6.0.0                       |
 | C#                                | 0.70*              | x3.3          | 11         | x29               | N/A                               | .NET Core 2.0                    |
-| Go                                | 0.88               | x4.2          | 7.6        | x20               | 1.2                               | Go 1.10.2                        |
+| Go                                | 0.38               | x1.8          | 5.7        | x15               | 1.2                               | Go 1.10.2                        |
 | D                                 | 0.24               | x1.1          | 1.6        | x4.2              | 0.019 + D runtime                 | LDC 1.9.0                        |
 | Haskell                           | 1.10               | x5.2          | 3.4        | x9                | 3.8                               | GHC 8.2.2                        |
 
