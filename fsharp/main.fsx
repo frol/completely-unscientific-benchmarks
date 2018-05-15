@@ -58,7 +58,7 @@ let main n =
     if i >= n
     then res
     else
-      let cur = (cur * 57 + 43) % 1007 in
+      let cur = (cur * 57 + 43) % 10007 in
         match i % 3 with
         | 0 -> loop (insert root cur) (i + 1) cur res
         | 1 -> loop (erase root cur) (i + 1) cur res
