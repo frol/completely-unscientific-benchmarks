@@ -10,8 +10,6 @@ let rand_int = (let rng = System.Random() in fun () -> rng.Next())
 let make_node (x: int) =
   Some({x = x; y = rand_int (); left = None; right = None})
 
-// printfn "%A" (make_node 42)
-
 let rec merge2 lower greater =
   match (lower, greater) with
   | (None, greater) -> greater
@@ -20,8 +18,6 @@ let rec merge2 lower greater =
       if lo.y < gt.y
       then Some({lo with right = merge2 lo.right greater})
       else Some({gt with left = merge2 lower gt.left})
-
-printfn "%A" (merge2 (make_node 42) (make_node 43))
 
 let rec splitBinary orig value =
   match orig with
@@ -41,57 +37,33 @@ let split orig value =
   let (equal, greater) = splitBinary equal_greater (value + 1) in
   (lower, equal, greater)
 
-printfn "%A" (split (merge2 (make_node 42) (make_node 43)) 43)
+// printfn "%A" (split (merge2 (make_node 42) (make_node 43)) 43)
 
-(*
-(defn split [orig value]
-  (let [[lower equal-greater] (split-binary orig value)
-        [equal greater] (split-binary equal-greater (inc value))]
-    [lower equal greater]))
+let has_value root x =
+  let (lower, equal, greater) = split root x in
+  // FIXME: splitting just to merge it again:
+  ((merge3 lower equal greater), equal <> None)
 
-;; Very questionable function ...
-(defn has-value [root x]
-  (let [[lower equal greater] (split root x)
-        new-root (merge3 lower equal greater)]
-    ;; Why splitting to merge right afterwards? This seems to
-    ;; be empirically true:
-    ;; (assert (= root new-root))
-    [new-root equal]))
+let insert root x =
+  let (lower, equal, greater) = split root x in
+  (merge3 lower (if equal <> None then equal else make_node x) greater)
 
-(defn insert [root x]
-  (let [[lower equal greater] (split root x)]
-    (merge3 lower
-            (or equal (make-random-node x))
-            greater)))
+let erase root x =
+  let (lower, _, greater) = split root x in
+  merge2 lower greater
 
-(defn erase [root x]
-  (let [[lower equal greater] (split root x)]
-    (merge2 lower greater)))
-
-(defn main [n]
-  (loop [root nil
-         i 1
-         cur 5
-         res 0]
-    (if-not (< i n)
-      res
-      (let [a (mod i 3)
-            cur (mod (+ 43 (* 57 cur)) 10007)
-            ;; This simulates an in-place update in place and a side
-            ;; result:
-            [root res] (case a
-                         0 [(insert root cur) res]
-                         1 [(erase root cur) res]
-                         2 (let [[root equal] (has-value root cur)]
-                             (if equal
-                               [root (inc res)]
-                               [root res])))]
-        (recur root
-               (inc i)
-               cur
-               res)))))
-
-(defn -main [& args]
-  (println (main 1000000)))
-
-*)
+let main n =
+  let rec loop root i cur res =
+    if i >= n
+    then res
+    else
+      let cur = (cur * 57 + 43) % 1007 in
+        match i % 3 with
+        | 0 -> loop (insert root cur) (i + 1) cur res
+        | 1 -> loop (erase root cur) (i + 1) cur res
+        | _ -> let (root, flag) = has_value root cur in
+                  if flag then loop root (i + 1) cur res + 1
+                  else loop root (i + 1) cur res
+  in loop None 1 5 0
+// FIXME: stack overflow in mono:
+in printfn "%d" (main 1000000)
