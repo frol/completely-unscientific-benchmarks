@@ -1,3 +1,4 @@
+#!/usr/bin/dotnet /usr/share/dotnet/sdk/2.1.300-rc1-008673/FSharp/fsi.exe
 
 type Node = 
   {x: int
@@ -65,5 +66,5 @@ let main n =
                   if flag then loop root (i + 1) cur res + 1
                   else loop root (i + 1) cur res
   in loop None 1 5 0
-// FIXME: stack overflow in mono:
+// FIXME: stack overflow in mono & dotnet core:
 in printfn "%d" (main 1000000)
