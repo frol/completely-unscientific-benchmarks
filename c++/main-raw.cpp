@@ -76,10 +76,8 @@ inline void Treap::Split(Node* input, int value, Node** less,
 }
 
 inline void Treap::Merge(Node* less, Node* greater, Node** result) {
-  if (!less) {
-    *result = greater;
-  } else if (!greater) {
-    *result = less;
+  if (!less | !greater) {
+    *result = less ? less : greater;
   } else if (less->priority < greater->priority) {
     *result = less;
     Merge(less->right, greater, &less->right);
