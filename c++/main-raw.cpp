@@ -1,153 +1,111 @@
 #include <iostream>
 #include <memory>
 
-class Tree
-{
-public:
-    Tree() = default;
-    ~Tree()
-    {
-        delete mRoot;
+class Treap {
+ public:
+  ~Treap() { delete root_; }
+
+  bool HasValue(int value);
+  void Insert(int value);
+  void Erase(int value);
+
+ private:
+  struct Node {
+    explicit Node(int value) : value(value) {}
+
+    ~Node() {
+      delete left;
+      delete right;
     }
 
-    bool hasValue(int x);
-    void insert(int x);
-    void erase(int x);
+    int value;
+    int priority = rand();
 
-private:
-    struct Node
-    {
-        Node(int x): x(x) {}
-        Node() {}
-        ~Node()
-        {
-            delete left;
-            delete right;
-        }
+    Node* left = nullptr;
+    Node* right = nullptr;
+  };
 
-        int x = 0;
-        int y = rand();
+  static void Split(Node* input, int value, Node** less,
+                    Node** greater_or_equal);
+  static void Merge(Node* less, Node* greater, Node** result);
 
-        Node* left = nullptr;
-        Node* right = nullptr;
-    };
-
-    using NodePtr = Node*;
-
-    static NodePtr merge(NodePtr lower, NodePtr greater);
-    static NodePtr merge(NodePtr lower, NodePtr equal, NodePtr greater);
-    static void split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val);
-    static void split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val);
-    static void clear(NodePtr node);
-
-    NodePtr mRoot = nullptr;
+  Node* root_ = nullptr;
 };
 
-bool Tree::hasValue(int x)
-{
-    NodePtr lower, equal, greater;
-    split(mRoot, lower, equal, greater, x);
-    bool res = equal != nullptr;
-    mRoot = merge(lower, equal, greater);
-    return res;
+inline bool Treap::HasValue(int value) {
+  Node* less;
+  Node* greater;
+  Split(root_, value, &less, &greater);
+  Split(greater, value + 1, &root_, &greater);
+  const bool has_value = root_ != nullptr;
+  Merge(less, root_, &root_);
+  Merge(root_, greater, &root_);
+  return has_value;
 }
 
-void Tree::insert(int x)
-{
-    NodePtr lower, equal, greater;
-    split(mRoot, lower, equal, greater, x);
-    if(!equal)
-        equal = new Node(x);
-
-    mRoot = merge(lower, equal, greater);
+inline void Treap::Insert(int value) {
+  Node* less;
+  Node* greater;
+  Split(root_, value, &less, &greater);
+  Split(greater, value + 1, &root_, &greater);
+  if (!root_) root_ = new Node(value);
+  Merge(less, root_, &root_);
+  Merge(root_, greater, &root_);
 }
 
-void Tree::erase(int x)
-{
-    NodePtr lower, equal, greater;
-    split(mRoot, lower, equal, greater, x);
-    mRoot = merge(lower, greater);
-    delete equal;
+inline void Treap::Erase(int value) {
+  Node* less;
+  Node* greater;
+  Split(root_, value, &less, &greater);
+  Split(greater, value + 1, &root_, &greater);
+  delete root_;
+  Merge(less, greater, &root_);
 }
 
-Tree::NodePtr Tree::merge(NodePtr lower, NodePtr greater)
-{
-    if(!lower)
-        return greater;
+inline void Treap::Split(Node* input, int value, Node** less,
+                         Node** greater_or_equal) {
+  if (!input) {
+    *less = *greater_or_equal = nullptr;
+  } else if (input->value < value) {
+    *less = input;
+    Split(input->right, value, &input->right, greater_or_equal);
+  } else {
+    *greater_or_equal = input;
+    Split(input->left, value, less, &input->left);
+  }
+}
 
-    if(!greater)
-        return lower;
+inline void Treap::Merge(Node* less, Node* greater, Node** result) {
+  if (!less) {
+    *result = greater;
+  } else if (!greater) {
+    *result = less;
+  } else if (less->priority < greater->priority) {
+    *result = less;
+    Merge(less->right, greater, &less->right);
+  } else {
+    *result = greater;
+    Merge(less, greater->left, &greater->left);
+  }
+}
 
-    if(lower->y < greater->y)
-    {
-        lower->right = merge(lower->right, greater);
-        return lower;
+int main() {
+  srand(time(0));
+
+  Treap treap;
+  int current = 5;
+  int result = 0;
+  for (int i = 1; i < 1000000; ++i) {
+    const int mode = i % 3;
+    current = (current * 57 + 43) % 10007;
+    if (mode == 0) {
+      treap.Insert(current);
+    } else if (mode == 1) {
+      treap.Erase(current);
+    } else if (mode == 2) {
+      result += treap.HasValue(current);
     }
-    else
-    {
-        greater->left = merge(lower, greater->left);
-        return greater;
-    }
-}
-
-Tree::NodePtr Tree::merge(NodePtr lower, NodePtr equal, NodePtr greater)
-{
-    return merge(merge(lower, equal), greater);
-}
-
-void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
-{
-    if(!orig)
-    {
-        lower = greaterOrEqual = nullptr;
-        return;
-    }
-
-    if(orig->x < val)
-    {
-        lower = orig;
-        split(lower->right, lower->right, greaterOrEqual, val);
-    }
-    else
-    {
-        greaterOrEqual = orig;
-        split(greaterOrEqual->left, lower, greaterOrEqual->left, val);
-    }
-}
-
-void Tree::split(NodePtr orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val)
-{
-    NodePtr equalOrGreater;
-    split(orig, lower, equalOrGreater, val);
-    split(equalOrGreater, equal, greater, val + 1);
-}
-
-int main()
-{
-    srand(time(0));
-
-    Tree tree;
-
-    int cur = 5;
-    int res = 0;
-
-    for(int i = 1; i < 1000000; i++)
-    {
-        int mode = i % 3;
-        cur = (cur * 57 + 43) % 10007;
-        if(mode == 0)
-        {
-            tree.insert(cur);
-        }
-        else if(mode == 1)
-        {
-            tree.erase(cur);
-        }
-        else if(mode == 2)
-        {
-            res += tree.hasValue(cur);
-        }
-    }
-    std::cout << res;
-    return 0;
+  }
+  std::cout << result;
+  return 0;
 }
