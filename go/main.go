@@ -3,25 +3,35 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"sync"
 )
 
 type Node struct {
-	X        int
-	Y        int
-	Left     *Node
-	Right    *Node
+	X     int
+	Y     int
+	Left  *Node
+	Right *Node
 }
 
-func NewNode(v int) *Node {
-	y := rand.Int()
-	return &Node{
-		X:        v,
-		Y:        y,
-	}
+func (n *Node) Set(v int) {
+	n.X = v
+	n.Y = rand.Int()
 }
 
 type Tree struct {
 	Root *Node
+	pool *sync.Pool
+}
+
+func NewTree() *Tree {
+
+	pool := sync.Pool{
+		New: func() interface{} { return &Node{} },
+	}
+	return &Tree{
+		Root: nil,
+		pool: &pool,
+	}
 }
 
 func (t *Tree) HasValue(v int) bool {
@@ -33,15 +43,19 @@ func (t *Tree) HasValue(v int) bool {
 
 func (t *Tree) Insert(v int) error {
 	splitted := split(t.Root, v)
-	if splitted.Equal == nil {
-		splitted.Equal = NewNode(v)
-	}
+	node := t.pool.Get().(*Node)
+	node.Set(v)
+	splitted.Equal = node
 	t.Root = merge3(splitted.Lower, splitted.Equal, splitted.Greater)
 	return nil
 }
 
 func (t *Tree) Erase(v int) error {
 	splitted := split(t.Root, v)
+	if splitted.Equal != nil {
+		equal := splitted.Equal
+		t.pool.Put(equal)
+	}
 	t.Root = merge(splitted.Lower, splitted.Greater)
 	return nil
 }
@@ -97,13 +111,13 @@ func split(original *Node, value int) SplitResult {
 	return SplitResult{lower, equal, greater}
 }
 
-func main() {
-	t := &Tree{}
+func treap(n int) int {
+	t := NewTree()
 
 	cur := 5
 	res := 0
 
-	for i := 1; i < 1000000; i++ {
+	for i := 1; i < n; i++ {
 		a := i % 3
 		cur = (cur*57 + 43) % 10007
 		if a == 0 {
@@ -117,6 +131,8 @@ func main() {
 			}
 		}
 	}
-
-	fmt.Println(res)
+	return res
+}
+func main() {
+	fmt.Println(treap(1000000))
 }
