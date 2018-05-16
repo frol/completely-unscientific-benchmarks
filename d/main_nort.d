@@ -16,6 +16,12 @@ void destroy(T)(T* obj)
     obj.free();
 }
 
+version(LDC) extern(C)
+{
+    __gshared int _d_eh_personality(int, int, ulong, void*, void*) { return 0;};
+    __gshared void _d_eh_resume_unwind(void*) { return ;};
+}
+
 align((void*).sizeof):
 private struct Node
 {
@@ -46,7 +52,7 @@ struct Tree
         Node* lower, equal, greater;
         split(mRoot, lower, equal, greater, x);
         bool res = equal != null;
-        mRoot = merge(lower, equal, greater);
+        merge(lower, equal, greater, mRoot);
         return res;
     }
 
@@ -57,14 +63,14 @@ struct Tree
         if(!equal)
             equal = make!Node(x);
 
-        mRoot = merge(lower, equal, greater);
+        merge(lower, equal, greater, mRoot);
     }
 
     void erase(int x)
     {
         Node* lower, equal, greater;
         split(mRoot, lower, equal, greater, x);
-        merge_t(lower, greater, mRoot);
+        merge(lower, greater, mRoot);
 
         //Equivalent of delete in C++
         if(equal) equal.destroy();
@@ -78,7 +84,7 @@ struct Tree
     private Node* mRoot = null;
 };
 
-void merge_t(Node* lower, Node* greater, ref Node* dest)
+void merge()(Node* lower, Node* greater, ref Node* dest)
 {
     if(!lower)
     {
@@ -95,24 +101,22 @@ void merge_t(Node* lower, Node* greater, ref Node* dest)
     if(lower.y < greater.y)
     {
         dest = lower;
-        merge_t(lower.right, greater, lower.right);
+        merge(lower.right, greater, lower.right);
     }
     else
     {
         dest = greater;
-        merge_t(lower, greater.left, greater.left);
+        merge(lower, greater.left, greater.left);
     }
 }
 
-Node* merge(Node* lower, Node* equal, Node* greater)
+void merge()(Node* lower, Node* equal, Node* greater, ref Node* res)
 {
-    Node* res = lower;
-    merge_t(lower, equal, res);
-    merge_t(res, greater, res);
-    return res;
+    merge(lower, equal, res);
+    merge(res, greater, res);
 }
 
-void split(Node* orig, ref Node* lower, ref Node* greaterOrEqual, int val)
+void split()(Node* orig, ref Node* lower, ref Node* greaterOrEqual, int val)
 {
     if(!orig)
     {
@@ -133,7 +137,7 @@ void split(Node* orig, ref Node* lower, ref Node* greaterOrEqual, int val)
     }
 }
 
-void split(Node* orig, ref Node* lower, ref Node* equal, ref Node* greater, int val)
+void split()(Node* orig, ref Node* lower, ref Node* equal, ref Node* greater, int val)
 {
     Node* equalOrGreater;
     split(orig, lower, equalOrGreater, val);
