@@ -15,17 +15,16 @@ type
     Left, Right: PNode;
   end;
 
-var
-  NodePool: array[0..333332] of Node;
-  NodeIndex: Integer = 0;
-
-type
   Tree = record
     Root: PNode;
     function HasValue(const X: Integer): Boolean;
     procedure Insert(const X: Integer);
     procedure Erase(const X: Integer);
   end;
+
+var
+  NodePool: array[0..333332] of Node;
+  NodeIndex: Integer = 0;
 
   function GetNode(const IX: Integer): PNode;
   begin
@@ -129,7 +128,7 @@ begin
     case Mode of
       0: T.Insert(Cur);
       1: T.Erase(Cur);
-      2: if T.HasValue(Cur) then Res += 1;
+      2: Res += Integer(T.HasValue(Cur));
     end;
   end;
   WriteLn(Res);
