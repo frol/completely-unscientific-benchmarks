@@ -16,6 +16,12 @@ void destroy(T)(T* obj)
     obj.free();
 }
 
+version(LDC) extern(C)
+{
+    __gshared int _d_eh_personality(int, int, ulong, void*, void*) { return 0;};
+    __gshared void _d_eh_resume_unwind(void*) { return ;};
+}
+
 align((void*).sizeof):
 private struct Node
 {
