@@ -5,11 +5,12 @@ Author: John Perry (john.perry@usm.edu)
 ## Compile
 
 ```
-gnatmake -O2 -gnatp complete_unscientific.adb
+gnatmake -O2 -gnatp main.adb
+strip -s ./main
 ```
 
 ## Execute
 
 ```
-./complete_unscientific
+./main
 ```
