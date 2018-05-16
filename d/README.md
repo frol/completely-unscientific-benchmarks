@@ -14,6 +14,8 @@ ldc2 main.d -O3 -release -Xcc -flto -of=main-ldc
 gdc main.d -O3 -frelease -flto -of=main-gdc
 ```
 
+NOTE: To compile statically, add `-static` flag.
+
 ## Execute
 
 ```

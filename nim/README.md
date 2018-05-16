@@ -26,6 +26,8 @@ For a version using manual memory allocation (so much less memory used):
 nim compile -d:release --passC:-flto --passL:-s --gc:none --out:main-nim main_manual.nim
 ```
 
+NOTE: To compile statically, add `--passL:-static` flag.
+
 ## Execute
 
 ```
