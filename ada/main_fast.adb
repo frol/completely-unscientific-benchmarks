@@ -1,10 +1,10 @@
 with Ada.Integer_Text_IO;
 with Ada.Text_IO;
 
-with Tree; use Tree;
+with Tree_Fast; use Tree_Fast;
 
-procedure Complete_Unscientific is
-  t: Tree.Tree;
+procedure Main_Fast is
+  t: Tree_Fast.Tree;
   cur: Integer := 5;
   res: Integer := 0;
   mode: Integer;
@@ -22,4 +22,4 @@ begin
     end if;
   end loop;
   PutI(res); New_Line(1);
-end Complete_Unscientific;
+end Main_Fast;

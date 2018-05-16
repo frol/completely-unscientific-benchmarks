@@ -1,6 +1,7 @@
 # D
 
 Author: Edmund Smith
+
 Translated from C++ version by: Stas Minakov (@supermina999)
 
 ## Compile
