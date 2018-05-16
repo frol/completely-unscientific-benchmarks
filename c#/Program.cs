@@ -1,49 +1,22 @@
 ﻿using System;
 
-namespace Benchmark
-{
-    class SplitResult {
-        public SplitResult(Node lower, Node equal, Node greater) {
-            this.lower = lower;
-            this.equal = equal;
-            this.greater = greater;
-        }
-
-        public Node lower;
-        public Node equal;
-        public Node greater;
-    }
-
-    class NodePair {
-        public NodePair(Node first, Node second) {
-            this.first = first;
-            this.second = second;
-        }
-
-        public Node first;
-        public Node second;
-    }
-
-    class Node {
+namespace Benchmark {
+    sealed class Node {
         public static Random random = new Random();
-
-        public Node(int x) {
-            this.x = x;
-        }
 
         int x;
         int y = random.Next();
-        Node left = null;
-        Node right = null;
+        Node left, right;
+
+        public Node(int x)
+            => this.x = x;
 
         public static Node merge(Node lower, Node greater) {
             if (lower == null)
                 return greater;
-
-            if (greater == null)
+            else if (greater == null)
                 return lower;
-
-            if (lower.y < greater.y) {
+            else if (lower.y < greater.y) {
                 lower.right = merge(lower.right, greater);
                 return lower;
             } else {
@@ -52,77 +25,69 @@ namespace Benchmark
             }
         }
 
-        public static NodePair splitBinary(Node orig, int value) {
+        public static (Node first, Node second) splitBinary(Node orig, int value) {
             if (orig == null)
-                return new NodePair(null, null);
-
-            if (orig.x < value) {
-                NodePair splitPair = splitBinary(orig.right, value);
-                orig.right = splitPair.first;
-                return new NodePair(orig, splitPair.second);
+                return default;
+            else if (orig.x < value) {
+                var (first, second) = splitBinary(orig.right, value);
+                orig.right = first;
+                return (orig, second);
             } else {
-                NodePair splitPair = splitBinary(orig.left, value);
-                orig.left = splitPair.second;
-                return new NodePair(splitPair.first, orig);
+                var (first, second) = splitBinary(orig.left, value);
+                orig.left = second;
+                return (first, orig);
             }
         }
 
-        public static Node merge(Node lower, Node equal, Node greater) {
-            return merge(merge(lower, equal), greater);
-        }
+        public static Node merge(Node lower, Node equal, Node greater)
+            => merge(merge(lower, equal), greater);
 
-        public static SplitResult split(Node orig, int value) {
-            NodePair lowerOther = splitBinary(orig, value);
-            NodePair equalGreater = splitBinary(lowerOther.second, value + 1);
-            return new SplitResult(lowerOther.first, equalGreater.first, equalGreater.second);
+        public static (Node lower, Node equal, Node greater) split(Node orig, int value) {
+            var lowerOther = splitBinary(orig, value);
+            var equalGreater = splitBinary(lowerOther.second, value + 1);
+            return (lowerOther.first, equalGreater.first, equalGreater.second);
         }
     }
 
-    class Tree {
+    sealed class Tree {
+        Node mRoot;
+
         public bool hasValue(int x) {
-            SplitResult splited = Node.split(mRoot, x);
-            bool res = splited.equal != null;
-            mRoot = Node.merge(splited.lower, splited.equal, splited.greater);
-            return res;
+            var (lower, equal, greater) = Node.split(mRoot, x);
+            mRoot = Node.merge(lower, equal, greater);
+            return equal != null;
         }
 
         public void insert(int x) {
-            SplitResult splited = Node.split(mRoot, x);
-            if (splited.equal == null)
-                splited.equal = new Node(x);
-            mRoot = Node.merge(splited.lower, splited.equal, splited.greater);
+            var (lower, equal, greater) = Node.split(mRoot, x);
+            mRoot = Node.merge(lower, equal ?? new Node(x), greater);
         }
 
         public void erase(int x) {
-            SplitResult splited = Node.split(mRoot, x);
+            var splited = Node.split(mRoot, x);
             mRoot = Node.merge(splited.lower, splited.greater);
         }
-
-        private Node mRoot = null;
     }
 
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Tree tree = new Tree();
-            int cur = 5;
-            int res = 0;
+    static class Program {
+        static void Main() {
+            var tree = new Tree();
+            var cur = 5;
+            var res = 0;
 
-            for (int i = 1; i < 1000000; i++) {
-                int a = i % 3;
+            for (var i = 1; i < 1000000; i++) {
+                var a = i % 3;
                 cur = (cur * 57 + 43) % 10007;
                 if (a == 0) {
                     tree.insert(cur);
                 } else if (a == 1) {
                     tree.erase(cur);
                 } else if (a == 2) {
-                    bool hasVal = tree.hasValue(cur);
-                    if (hasVal)
+                    if (tree.hasValue(cur))
                         res++;
                 }
             }
-            System.Console.WriteLine(res);
+            Console.WriteLine(res);
         }
     }
 }
