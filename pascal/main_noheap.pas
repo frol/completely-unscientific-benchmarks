@@ -1,6 +1,7 @@
-program MainNew;
+program main_noheap;
 
-//Author: Ben Grasset
+//Author: Akira13641
+//compile with: fpc -Ci- -Cr- -g- -O4 -Xs -XX main_noheap.pas
 
 {$mode objfpc}{$j-}
 {$modeswitch advancedrecords}
