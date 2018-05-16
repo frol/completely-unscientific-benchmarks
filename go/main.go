@@ -43,9 +43,11 @@ func (t *Tree) HasValue(v int) bool {
 
 func (t *Tree) Insert(v int) error {
 	splitted := split(t.Root, v)
-	node := t.pool.Get().(*Node)
-	node.Set(v)
-	splitted.Equal = node
+	if splitted.Equal == nil {
+		node := t.pool.Get().(*Node)
+		node.Set(v)
+		splitted.Equal = node
+	}
 	t.Root = merge3(splitted.Lower, splitted.Equal, splitted.Greater)
 	return nil
 }
