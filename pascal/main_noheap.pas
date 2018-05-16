@@ -27,11 +27,11 @@ type
     procedure Erase(const X: Integer);
   end;
 
-  function MakeNode(const IX: Integer): PNode;
+  function GetNode(const IX: Integer): PNode;
   begin
     Result := @NodePool[NodeIndex];
     Result^.X := IX;
-    Result^.Y := Random(High(2147483647));
+    Result^.Y := Random(2147483647);
     Result^.Left := nil;
     Result^.Right := nil;
     Inc(NodeIndex);
@@ -102,7 +102,7 @@ type
   begin
     Split(Root, Lower, Equal, Greater, X);
     if Equal = nil then
-      Equal := MakeNode(X);
+      Equal := GetNode(X);
     Root := Merge(Lower, Equal, Greater);
   end;
 
