@@ -35,37 +35,28 @@ func NewTree() *Tree {
 }
 
 func (t *Tree) HasValue(v int) bool {
-	splitted := split(t.Root, v)
-	res := splitted.Equal != nil
-	t.Root = merge3(splitted.Lower, splitted.Equal, splitted.Greater)
+	lower, equal, greater := split(t.Root, v)
+	res := equal != nil
+	t.Root = merge3(lower, equal, greater)
 	return res
 }
 
-func (t *Tree) Insert(v int) error {
-	splitted := split(t.Root, v)
-	if splitted.Equal == nil {
+func (t *Tree) Insert(v int) {
+	lower, equal, greater := split(t.Root, v)
+	if equal == nil {
 		node := t.pool.Get().(*Node)
 		node.Set(v)
-		splitted.Equal = node
+		equal = node
 	}
-	t.Root = merge3(splitted.Lower, splitted.Equal, splitted.Greater)
-	return nil
+	t.Root = merge3(lower, equal, greater)
 }
 
-func (t *Tree) Erase(v int) error {
-	splitted := split(t.Root, v)
-	if splitted.Equal != nil {
-		equal := splitted.Equal
+func (t *Tree) Erase(v int) {
+	lower, equal, greater := split(t.Root, v)
+	if equal != nil {
 		t.pool.Put(equal)
 	}
-	t.Root = merge(splitted.Lower, splitted.Greater)
-	return nil
-}
-
-type SplitResult struct {
-	Lower   *Node
-	Equal   *Node
-	Greater *Node
+	t.Root = merge(lower, greater)
 }
 
 func merge(lower, greater *Node) *Node {
@@ -78,12 +69,11 @@ func merge(lower, greater *Node) *Node {
 	}
 
 	if lower.Y < greater.Y {
-		right := merge(lower.Right, greater)
-		lower.Right = right
+		lower.Right = merge(lower.Right, greater)
 		return lower
 	}
-	left := merge(lower, greater.Left)
-	greater.Left = left
+
+	greater.Left = merge(lower, greater.Left)
 	return greater
 }
 
@@ -107,10 +97,11 @@ func splitBinary(original *Node, value int) (*Node, *Node) {
 	return splitPair0, original
 }
 
-func split(original *Node, value int) SplitResult {
-	lower, equalGreater := splitBinary(original, value)
-	equal, greater := splitBinary(equalGreater, value+1)
-	return SplitResult{lower, equal, greater}
+func split(original *Node, value int) (lower, equal, greater *Node) {
+	var equalGreater *Node
+	lower, equalGreater = splitBinary(original, value)
+	equal, greater = splitBinary(equalGreater, value+1)
+	return lower, equal, greater
 }
 
 func treap(n int) int {
@@ -129,7 +120,7 @@ func treap(n int) int {
 		} else if a == 2 {
 			has := t.HasValue(cur)
 			if has {
-				res += 1
+				res++
 			}
 		}
 	}
