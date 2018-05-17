@@ -19,7 +19,7 @@ proc merge(lower, greater: Node, res: var Node) =
     res = greater
     merge(lower, greater.left, greater.left)
 
-template merge(lower, equal, greater: Node, res: var Node ) =
+template merge(lower, equal, greater: Node, res: var Node) =
   merge(lower, equal, res)
   merge(res, greater, res)
 
@@ -63,9 +63,10 @@ template erase(self: var Tree, x: int32) =
 
 proc main() =
   randomize()
-  var tree = Tree()
-  var cur = 5'i32
-  var res = 0'i32
+  var
+    tree = Tree()
+    cur = 5'i32
+    res = 0'i32
 
   for i in 1'i32 ..< 1000000'i32:
     let a = i mod 3

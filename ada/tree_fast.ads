@@ -1,6 +1,6 @@
 with Ada.Numerics.Discrete_Random;
 
-package Tree is
+package Tree_Fast is
 
 type Node is private;
 
@@ -43,4 +43,4 @@ type Node is record
   y: Integer := Random(g);
 end record;
 
-end Tree;
+end Tree_Fast;
