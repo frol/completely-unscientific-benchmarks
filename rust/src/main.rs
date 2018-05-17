@@ -1,16 +1,22 @@
 extern crate rand;
 
 #[cfg(feature = "idiomatic")]
-mod idiomatic;
+mod idiomatic_impl;
 
 #[cfg(feature = "idiomatic")]
-use idiomatic::Tree;
+use idiomatic_impl::Tree;
 
 #[cfg(feature = "refcount")]
-mod refcount;
+mod refcount_impl;
 
 #[cfg(feature = "refcount")]
-use refcount::Tree;
+use refcount_impl::Tree;
+
+#[cfg(feature = "unsafe")]
+mod unsafe_impl;
+
+#[cfg(feature = "unsafe")]
+use unsafe_impl::Tree;
 
 fn main() {
     let mut tree = Tree::new();
