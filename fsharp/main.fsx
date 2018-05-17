@@ -1,7 +1,11 @@
-#!/usr/bin/dotnet /usr/share/dotnet/sdk/2.1.300-rc1-008673/FSharp/fsi.exe
-
+#!/usr/bin/fsharpi
+// #!/usr/bin/dotnet /usr/share/dotnet/sdk/2.1.300-rc1-008673/FSharp/fsi.exe
+//
+// Mono 4.2.1 is dog slow on this benchmark. You may try .Net Core
+// with with the commented shebang line instead.
+//
 // See also Ocaml version in ../ocaml/immutable.ml
-
+//
 type Node = {
   x: int
   y: int
