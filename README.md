@@ -141,6 +141,7 @@ execution time of the whole program.
 | Object Pascal "raw pointers"      | 0.369              | x2.1          | 0.38       | **0.028 (static)**              | FPC 3.0.4                         |
 | Object Pascal "no-heap-cheating"  | 0.327              | x1.8          | 8          | 0.027 (static)                  | FPC 3.0.4                         |
 | Rust "unsafe pointers"            | 0.217              | x1.22         | 0.5        | 0.427                           | Rustc 1.26.0                      |
+| Rust "safe mem::forget"           | 0.239              | x1.34         | 0.5        | 0.427                           | Rustc 1.26.0                      |
 
 
 #### Mac OS (Mac OS 10.13, Intel Core i7-4770HQ CPU)
