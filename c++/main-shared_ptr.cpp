@@ -1,93 +1,81 @@
 #include <iostream>
 #include <memory>
 
-class Treap {
- public:
-  bool HasValue(int value);
-  void Insert(int value);
-  void Erase(int value);
+struct Node {
+  explicit Node(int value) : value(value) {}
 
- private:
-  struct Node {
-    explicit Node(int value) : value(value) {}
+  int value;
+  int priority = rand();
 
-    int value;
-    int priority = rand();
-
-    std::shared_ptr<Node> left;
-    std::shared_ptr<Node> right;
-  };
-
-  static void Split(std::shared_ptr<Node>&& input, int value,
-                    std::shared_ptr<Node>* less,
-                    std::shared_ptr<Node>* greater_or_equal);
-  static void Merge(std::shared_ptr<Node>&& less,
-                    std::shared_ptr<Node>&& greater,
-                    std::shared_ptr<Node>* result);
-
-  std::shared_ptr<Node> root_;
+  std::shared_ptr<Node> left;
+  std::shared_ptr<Node> right;
 };
 
-inline bool Treap::HasValue(int value) {
-  std::shared_ptr<Node> less;
-  std::shared_ptr<Node> greater;
-  Split(std::move(root_), value, &less, &greater);
-  Split(std::move(greater), value + 1, &root_, &greater);
-  const bool has_value = root_ != nullptr;
-  Merge(std::move(less), std::move(root_), &root_);
-  Merge(std::move(root_), std::move(greater), &root_);
-  return has_value;
-}
-
-inline void Treap::Insert(int value) {
-  std::shared_ptr<Node> less;
-  std::shared_ptr<Node> greater;
-  Split(std::move(root_), value, &less, &greater);
-  Split(std::move(greater), value + 1, &root_, &greater);
-  if (!root_) root_ = std::make_shared<Node>(value);
-  Merge(std::move(less), std::move(root_), &root_);
-  Merge(std::move(root_), std::move(greater), &root_);
-}
-
-inline void Treap::Erase(int value) {
-  std::shared_ptr<Node> less;
-  std::shared_ptr<Node> greater;
-  Split(std::move(root_), value, &less, &greater);
-  Split(std::move(greater), value + 1, &root_, &greater);
-  Merge(std::move(less), std::move(greater), &root_);
-}
-
-inline void Treap::Split(std::shared_ptr<Node>&& input, int value,
-                         std::shared_ptr<Node>* less,
-                         std::shared_ptr<Node>* greater_or_equal) {
+inline std::tuple<std::shared_ptr<Node>, std::shared_ptr<Node>> SplitBinary(
+    std::shared_ptr<Node>&& input, int value) {
   if (!input) {
-    *less = *greater_or_equal = nullptr;
+    return std::make_tuple(nullptr, nullptr);
   } else if (input->value < value) {
-    const auto ptr = &input->right;
-    *less = std::move(input);
-    Split(std::move(*ptr), value, ptr, greater_or_equal);
+    auto [less, greater] = SplitBinary(std::move(input->right), value);
+    input->right = std::move(less);
+    return std::make_tuple(std::move(input), std::move(greater));
   } else {
-    const auto ptr = &input->left;
-    *greater_or_equal = std::move(input);
-    Split(std::move(*ptr), value, less, ptr);
+    auto [less, greater] = SplitBinary(std::move(input->left), value);
+    input->left = std::move(greater);
+    return std::make_tuple(std::move(less), std::move(input));
   }
 }
 
-inline void Treap::Merge(std::shared_ptr<Node>&& less,
-                         std::shared_ptr<Node>&& greater,
-                         std::shared_ptr<Node>* result) {
+inline std::tuple<std::shared_ptr<Node>, std::shared_ptr<Node>,
+                  std::shared_ptr<Node>>
+Split(std::shared_ptr<Node>&& input, int value) {
+  auto [less, greater_or_equal] = SplitBinary(std::move(input), value);
+  auto [equal, greater] = SplitBinary(std::move(greater_or_equal), value + 1);
+  return std::make_tuple(std::move(less), std::move(equal), std::move(greater));
+}
+
+inline std::shared_ptr<Node>&& Merge(std::shared_ptr<Node>&& less,
+                                     std::shared_ptr<Node>&& greater) {
   if (!less | !greater) {
-    *result = std::move(less ? less : greater);
+    return std::move(less ? less : greater);
   } else if (less->priority < greater->priority) {
-    const auto ptr = &less->right;
-    Merge(std::move(*ptr), std::move(greater), ptr);
-    *result = std::move(less);
+    less->right = Merge(std::move(less->right), std::move(greater));
+    return std::move(less);
   } else {
-    const auto ptr = &greater->left;
-    Merge(std::move(less), std::move(*ptr), ptr);
-    *result = std::move(greater);
+    greater->left = Merge(std::move(less), std::move(greater->left));
+    return std::move(greater);
   }
 }
+
+inline std::shared_ptr<Node>&& Merge(std::shared_ptr<Node>&& less,
+                                     std::shared_ptr<Node>&& equal,
+                                     std::shared_ptr<Node>&& greater) {
+  return Merge(Merge(std::move(less), std::move(equal)), std::move(greater));
+}
+
+class Treap {
+ public:
+  bool HasValue(int value) {
+    auto [less, equal, greater] = Split(std::move(root_), value);
+    const bool has_value = equal != nullptr;
+    root_ = Merge(std::move(less), std::move(equal), std::move(greater));
+    return has_value;
+  }
+
+  void Insert(int value) {
+    auto [less, equal, greater] = Split(std::move(root_), value);
+    if (!equal) equal = std::make_shared<Node>(value);
+    root_ = Merge(std::move(less), std::move(equal), std::move(greater));
+  }
+
+  void Erase(int value) {
+    auto [less, equal, greater] = Split(std::move(root_), value);
+    root_ = Merge(std::move(less), std::move(greater));
+  }
+
+ private:
+  std::shared_ptr<Node> root_;
+};
 
 int main() {
   srand(time(0));
