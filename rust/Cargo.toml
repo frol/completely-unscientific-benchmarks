@@ -10,6 +10,7 @@ rand = "0.4.2"
 refcount = []
 idiomatic = []
 unsafe = []
+swap_forget = []
 
 [profile.release]
 lto = true
