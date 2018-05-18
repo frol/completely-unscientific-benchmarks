@@ -9,6 +9,7 @@ rand = "0.4.2"
 [features]
 refcount = []
 idiomatic = []
+unsafe = []
 
 [profile.release]
 lto = true
