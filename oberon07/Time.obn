@@ -1,0 +1,26 @@
+MODULE Time;
+(** Obtain the system time.
+
+Interface to the standard C library function. *)
+
+TYPE CTimeStruct* = RECORD
+  (** C's tm structure *)
+  tmSec*,   (** seconds after the minute   *)
+  tmMin*,   (** minutes after the hour     *)
+  tmHour*,  (** hours since midnight       *)
+  tmMday*,  (** day of the month           *)
+  tmMon*,   (** months since January       *)
+  tmYear*,  (** years since 1900           *)
+  tmWday*,  (** days since Sunday          *)
+  tmYday*,  (** days since January 1       *)
+  tmIsdst*  (** Daylight Savings Time flag *)
+  : INTEGER
+END;
+
+PROCEDURE Time*(VAR time: CTimeStruct);
+(** Place the system time into time. *)
+BEGIN
+  (* Implemented in C *)
+END Time;
+
+END Time.
