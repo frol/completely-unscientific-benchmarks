@@ -1,8 +1,12 @@
 #include <iostream>
 #include <memory>
+#include <random>
 
 class Treap {
  public:
+  explicit Treap(int seed = std::minstd_rand::default_seed)
+      : generator_(seed) {}
+
   ~Treap() { delete root_; }
 
   bool HasValue(int value);
@@ -11,7 +15,7 @@ class Treap {
 
  private:
   struct Node {
-    explicit Node(int value) : value(value) {}
+    Node(int value, int priority) : value(value), priority(priority) {}
 
     ~Node() {
       delete left;
@@ -19,7 +23,7 @@ class Treap {
     }
 
     int value;
-    int priority = rand();
+    int priority;
 
     Node* left = nullptr;
     Node* right = nullptr;
@@ -30,6 +34,7 @@ class Treap {
   static void Merge(Node* less, Node* greater, Node** result);
 
   Node* root_ = nullptr;
+  std::minstd_rand generator_;
 };
 
 inline bool Treap::HasValue(int value) {
@@ -48,7 +53,7 @@ inline void Treap::Insert(int value) {
   Node* greater;
   Split(root_, value, &less, &greater);
   Split(greater, value + 1, &root_, &greater);
-  if (!root_) root_ = new Node(value);
+  if (!root_) root_ = new Node(value, generator_());
   Merge(less, root_, &root_);
   Merge(root_, greater, &root_);
 }
@@ -90,8 +95,6 @@ inline void Treap::Merge(Node* less, Node* greater, Node** result) {
 }
 
 int main() {
-  srand(time(0));
-
   Treap treap;
   int current = 5;
   int result = 0;
