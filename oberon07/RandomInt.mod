@@ -1,0 +1,6 @@
+DEFINITION RandomInt;
+
+PROCEDURE Init;
+PROCEDURE NextInt(): INTEGER;
+
+END RandomInt.
