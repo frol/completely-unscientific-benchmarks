@@ -1,0 +1,23 @@
+MODULE RandomInt;
+(**Linear Congruential random number generator
+
+Generates a random integer using a standard linear congruential generator.*)
+
+IMPORT Time;
+
+VAR
+  time: Time.CTimeStruct; (** to seed the generator *)
+  last: INTEGER; (** most recent random number *)
+
+PROCEDURE NextInt*(): INTEGER;
+(** generates a random integer *)
+BEGIN
+  last := last * 1103515245 + 12345;
+  RETURN last
+END NextInt;
+
+BEGIN
+  (* seed the generator based on current time *)
+  Time.Time(time);
+  last := time.tmSec * 3600 + time.tmMin * 60 + time.tmHour;
+END RandomInt.
