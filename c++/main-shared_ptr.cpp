@@ -1,143 +1,99 @@
 #include <iostream>
 #include <memory>
 
-class Tree
-{
-public:
-    Tree() = default;
+struct Node {
+  explicit Node(int value) : value(value) {}
 
-    bool hasValue(int x);
-    void insert(int x);
-    void erase(int x);
+  int value;
+  int priority = rand();
 
-private:
-
-    struct Node
-    {
-        Node(int x): x(x) {}
-        Node() {}
-
-        int x = 0;
-        int y = rand();
-
-        std::shared_ptr<Node> left;
-        std::shared_ptr<Node> right;
-    };
-
-    using NodePtr = std::shared_ptr<Node>;
-
-    static NodePtr merge(const NodePtr& lower, const NodePtr& greater);
-    static NodePtr merge(const NodePtr& lower, const NodePtr& equal, const NodePtr& greater);
-    static void split(const NodePtr& orig, NodePtr& lower, NodePtr& greaterOrEqual, int val);
-    static void split(const NodePtr& orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val);
-
-    NodePtr mRoot;
+  std::shared_ptr<Node> left;
+  std::shared_ptr<Node> right;
 };
 
-bool Tree::hasValue(int x)
-{
-    NodePtr lower, equal, greater;
-    split(mRoot, lower, equal, greater, x);
-    bool res = equal != nullptr;
-    mRoot = merge(lower, equal, greater);
-    return res;
+inline std::tuple<std::shared_ptr<Node>, std::shared_ptr<Node>> SplitBinary(
+    std::shared_ptr<Node>&& input, int value) {
+  if (!input) {
+    return std::make_tuple(nullptr, nullptr);
+  } else if (input->value < value) {
+    auto [less, greater] = SplitBinary(std::move(input->right), value);
+    input->right = std::move(less);
+    return std::make_tuple(std::move(input), std::move(greater));
+  } else {
+    auto [less, greater] = SplitBinary(std::move(input->left), value);
+    input->left = std::move(greater);
+    return std::make_tuple(std::move(less), std::move(input));
+  }
 }
 
-void Tree::insert(int x)
-{
-    NodePtr lower, equal, greater;
-    split(mRoot, lower, equal, greater, x);
-    if(!equal)
-        equal = std::make_shared<Node>(x);
-
-    mRoot = merge(lower, equal, greater);
+inline std::tuple<std::shared_ptr<Node>, std::shared_ptr<Node>,
+                  std::shared_ptr<Node>>
+Split(std::shared_ptr<Node>&& input, int value) {
+  auto [less, greater_or_equal] = SplitBinary(std::move(input), value);
+  auto [equal, greater] = SplitBinary(std::move(greater_or_equal), value + 1);
+  return std::make_tuple(std::move(less), std::move(equal), std::move(greater));
 }
 
-void Tree::erase(int x)
-{
-    NodePtr lower, equal, greater;
-    split(mRoot, lower, equal, greater, x);
-    mRoot = merge(lower, greater);
+inline std::shared_ptr<Node>&& Merge(std::shared_ptr<Node>&& less,
+                                     std::shared_ptr<Node>&& greater) {
+  if (!less | !greater) {
+    return std::move(less ? less : greater);
+  } else if (less->priority < greater->priority) {
+    less->right = Merge(std::move(less->right), std::move(greater));
+    return std::move(less);
+  } else {
+    greater->left = Merge(std::move(less), std::move(greater->left));
+    return std::move(greater);
+  }
 }
 
-Tree::NodePtr Tree::merge(const NodePtr& lower, const NodePtr& greater)
-{
-    if(!lower)
-        return greater;
+inline std::shared_ptr<Node>&& Merge(std::shared_ptr<Node>&& less,
+                                     std::shared_ptr<Node>&& equal,
+                                     std::shared_ptr<Node>&& greater) {
+  return Merge(Merge(std::move(less), std::move(equal)), std::move(greater));
+}
 
-    if(!greater)
-        return lower;
+class Treap {
+ public:
+  bool HasValue(int value) {
+    auto [less, equal, greater] = Split(std::move(root_), value);
+    const bool has_value = equal != nullptr;
+    root_ = Merge(std::move(less), std::move(equal), std::move(greater));
+    return has_value;
+  }
 
-    if(lower->y < greater->y)
-    {
-        lower->right = merge(lower->right, greater);
-        return lower;
+  void Insert(int value) {
+    auto [less, equal, greater] = Split(std::move(root_), value);
+    if (!equal) equal = std::make_shared<Node>(value);
+    root_ = Merge(std::move(less), std::move(equal), std::move(greater));
+  }
+
+  void Erase(int value) {
+    auto [less, equal, greater] = Split(std::move(root_), value);
+    root_ = Merge(std::move(less), std::move(greater));
+  }
+
+ private:
+  std::shared_ptr<Node> root_;
+};
+
+int main() {
+  srand(time(0));
+
+  Treap treap;
+  int current = 5;
+  int result = 0;
+  for (int i = 1; i < 1000000; ++i) {
+    const int mode = i % 3;
+    current = (current * 57 + 43) % 10007;
+    if (mode == 0) {
+      treap.Insert(current);
+    } else if (mode == 1) {
+      treap.Erase(current);
+    } else if (mode == 2) {
+      result += treap.HasValue(current);
     }
-    else
-    {
-        greater->left = merge(lower, greater->left);
-        return greater;
-    }
-}
-
-Tree::NodePtr Tree::merge(const NodePtr& lower, const NodePtr& equal, const NodePtr& greater)
-{
-    return merge(merge(lower, equal), greater);
-}
-
-void Tree::split(const NodePtr& orig, NodePtr& lower, NodePtr& greaterOrEqual, int val)
-{
-    if(!orig)
-    {
-        lower = greaterOrEqual = nullptr;
-        return;
-    }
-
-    if(orig->x < val)
-    {
-        lower = orig;
-        split(lower->right, lower->right, greaterOrEqual, val);
-    }
-    else
-    {
-        greaterOrEqual = orig;
-        split(greaterOrEqual->left, lower, greaterOrEqual->left, val);
-    }
-}
-
-void Tree::split(const NodePtr& orig, NodePtr& lower, NodePtr& equal, NodePtr& greater, int val)
-{
-    NodePtr equalOrGreater;
-    split(orig, lower, equalOrGreater, val);
-    split(equalOrGreater, equal, greater, val + 1);
-}
-
-int main()
-{
-    srand(time(0));
-
-    Tree tree;
-
-    int cur = 5;
-    int res = 0;
-
-    for(int i = 1; i < 1000000; i++)
-    {
-        int mode = i % 3;
-        cur = (cur * 57 + 43) % 10007;
-        if(mode == 0)
-        {
-            tree.insert(cur);
-        }
-        else if(mode == 1)
-        {
-            tree.erase(cur);
-        }
-        else if(mode == 2)
-        {
-            res += tree.hasValue(cur);
-        }
-    }
-    std::cout << res;
-    return 0;
+  }
+  std::cout << result;
+  return 0;
 }
