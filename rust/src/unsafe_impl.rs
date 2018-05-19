@@ -33,7 +33,6 @@ impl Node {
     }
 }
 
-
 fn merge(lower: NodePtr, greater: NodePtr, res: &mut NodePtr) {
     *res = {
         if lower.is_null() {
@@ -70,20 +69,32 @@ fn split(orig: NodePtr, val: i32, lower: &mut NodePtr, greater_or_equal: &mut No
                 split((**lower).right, val, &mut (**lower).right, greater_or_equal);
             } else {
                 *greater_or_equal = orig;
-                split((**greater_or_equal).left, val, lower, &mut (**greater_or_equal).left);
+                split(
+                    (**greater_or_equal).left,
+                    val,
+                    lower,
+                    &mut (**greater_or_equal).left,
+                );
             }
         }
     }
 }
 
-fn split5(orig: NodePtr, val: i32,
-          lower: &mut NodePtr, equal: &mut NodePtr, greater: &mut NodePtr) {
+fn split5(
+    orig: NodePtr,
+    val: i32,
+    lower: &mut NodePtr,
+    equal: &mut NodePtr,
+    greater: &mut NodePtr,
+) {
     let mut equal_or_greater = null_mut();
     split(orig, val, lower, &mut equal_or_greater);
-    split(equal_or_greater, val+1, equal, greater);
+    split(equal_or_greater, val + 1, equal, greater);
 }
 
-pub struct Tree { root: NodePtr }
+pub struct Tree {
+    root: NodePtr,
+}
 
 impl Drop for Tree {
     fn drop(&mut self) {
