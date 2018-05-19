@@ -3,19 +3,17 @@
 Author: John Perry
 
 This code works with two different compilers for the Oberon-07 language.
-I originally wrote it for the oberonc compiler for the Java Virtual Machine.
-For details on obtaining, installing, and using that compiler, see
+I originally wrote it for the [oberonc](https://github.com/lboasso/oberonc)
+compiler for the Java Virtual Machine.
 
-    https://github.com/lboasso/oberonc
+A second version works on the [obnc](http://miasap.se/obnc/) compiler,
+which translates Oberon-07 to C, then compiles the C code to native code.
 
-A second version works on the obnc compiler, which translates Oberon-07 to C,
-and comiles the C code. For details on obtaining, installing, and using that
-compiler, see
+See the links for details on obtaining, installing, and using those compilers.
+`obnc` will require installaiton of the [Boehm garbage collector](http://www.hboehm.info/gc/),
+whereas `oberonc` relies simply on Java.
 
-    http://miasap.se/obnc/
-
-Both versions have been tested to compile and run on a MacBook Pro running
-Java 1.8.
+Both versions compiled and ran successfully on a MacBook Pro running Java 1.8.
 
 ## Compile with oberonc
 
