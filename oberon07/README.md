@@ -23,7 +23,8 @@ javac -d build RandomInt.java
 java -cp $OBERON_BIN oberonc build RandomInt.mod CompleteUnscientificBenchmark.mod
 ```
 
-The $OBERON_BIN variable should be defined according to the compiler's directions and your particular installation.
+The `$OBERON_BIN` variable should be defined according to the compiler's
+directions and your particular installation.
 
 ## Execute oberonc
 
@@ -46,11 +47,11 @@ Then compile:
 obnc CompleteUnscientificBenchmark.obn
 ```
 
-## Execute obnc
-
-**Do not** delete Time.c. This is necessary to interface to the C
+**Do not** delete `Time.c`. This is necessary to interface to the C
 standard library to obtain the time, which we use to see the
 random number generator.
+
+## Execute obnc
 
 ```
 ./CompleteUnscientificBenchmark
