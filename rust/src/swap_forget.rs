@@ -49,11 +49,13 @@ fn split_binary(orig: NodeCell, value: i32) -> (NodeCell, NodeCell) {
         if orig_node.x < value {
             let mut split_pair = split_binary(orig_node.right.take(), value);
             mem::swap(&mut orig_node.right, &mut split_pair.0);
+            debug_assert!(split_pair.0.is_none());
             mem::forget(split_pair.0);
             (Some(orig_node), split_pair.1)
         } else {
             let mut split_pair = split_binary(orig_node.left.take(), value);
             mem::swap(&mut orig_node.left, &mut split_pair.1);
+            debug_assert!(split_pair.1.is_none());
             mem::forget(split_pair.1);
             (split_pair.0, Some(orig_node))
         }
