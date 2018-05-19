@@ -35,11 +35,24 @@ java -cp $OBERON_BIN:build CompleteUnscientificBenchmark
 
 ## Compile with obnc
 
+For best performance, set `CFLAGS` appropriately for the C compiler to optimize.
+On a Unix-based system, for instance:
+
+```
+export CFLAGS=-Ofast
+```
+
+Then compile:
+
 ```
 obnc CompleteUnscientificBenchmark.obn
 ```
 
 ## Execute obnc
+
+**Do not** delete Time.c. This is necessary to interface to the C
+standard library to obtain the time, which we use to see the
+random number generator.
 
 ```
 ./CompleteUnscientificBenchmark
