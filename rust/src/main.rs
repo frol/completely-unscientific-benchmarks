@@ -6,6 +6,12 @@ mod idiomatic_impl;
 #[cfg(feature = "idiomatic")]
 use idiomatic_impl::Tree;
 
+#[cfg(feature = "swap_forget")]
+mod swap_forget;
+
+#[cfg(feature = "swap_forget")]
+use swap_forget::Tree;
+
 #[cfg(feature = "refcount")]
 mod refcount_impl;
 
