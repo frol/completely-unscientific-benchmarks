@@ -54,7 +54,7 @@ All tables are sorted in an alphabetical order.
 
 | Language                          | Real Time, seconds | Slowdown Time | Memory, MB | Binary Size, MB                 | Compiler Version                  |
 | --------------------------------  | ------------------ | ------------- | ---------- | ------------------------------- | --------------------------------- |
-| *Best tunned solution*            | 0.178              | x1            | 0.38       |                                 |                                   |
+| *Best tuned solution*             | 0.178              | x1            | 0.38       |                                 |                                   |
 | **C++ `shared_ptr` ("ref-counted")** | **0.38**        | x2.1          | **0.5**    | 0.015 + libstdc++               | Clang 6.0.0 / GCC 8.1.0           |
 | C#                                | 0.70\*             | x3.9          | 11         | N/A                             | .NET Core 2.0                     |
 | **Go**                            | **0.38**           | x2.1          | 5.8        | 1.2 (static)                    | Go 1.10.2                         |
@@ -79,7 +79,7 @@ execution time of the whole program.
 
 | Language                          | Real Time, seconds | Slowdown Time | Binary Size, MB                  | Compiler version                              |
 | --------------------------------- | ------------------ | ------------- | -------------------------------- | --------------------------------------------- |
-| *Best tunned solution*            | 0.25               | x1            |                                  |                                               |
+| *Best tuned solution*             | 0.25               | x1            |                                  |                                               |
 | C++ `shared_ptr` ("ref-counted")  | 0.72               | x2.9          | 0.019 + libstdc++                | Apple LLVM version 9.1.0 (clang-902.0.39.1)   |
 | C#                                | 0.79\*             | x3.2          | 0.006 + .Net                     | .NET Core 2.1.200                             |
 | **Go**                            | **0.39**           | x1.6          | 2.1 (static)                     | Go 1.10.2                                     |
@@ -100,7 +100,7 @@ execution time of the whole program.
 
 | Language                          | Real Time, seconds | Slowdown Time | Binary Size, MB                  | Compiler version                              |
 | --------------------------------- | ------------------ | ------------- | -------------------------------- | --------------------------------------------- |
-| *Best tunned solution*            | 0.28               | x1            |                                  |                                               |
+| *Best tuned solution*             | 0.28               | x1            |                                  |                                               |
 | C++ `shared_ptr` (msvc 2017)      | 0.92               | x3.3          | 0.021 + libstdc++                | MSVC 2017 (19.13.26129)                       |
 | C++ `shared_ptr` (clang)          | 0.84               | x3            | 0.258 + libstdc++                | Clang 6.0.0                                   |
 | C++ `shared_ptr` (mingw)          | 0.65               | x2.3          | 0.031 + libstdc++                | GCC 6.3.0                                     |
@@ -118,7 +118,7 @@ execution time of the whole program.
 | Rust "ref-counted"                | 0.46               | x1.6          | 0.16                             | Rustc 1.26.0                                  |
 | Swift (Swift for Windows)         | 2.1                | x7.5          | 0.019 + Swift shared libraries   | Swift 4.0.3 (Swift for Windows 1.9.1)         |
 
-### Tunned Implementations Scoreboard
+### Tuned Implementations Scoreboard
 
 #### Linux (Arch Linux, x64, Intel Core i7-4710HQ CPU)
 
