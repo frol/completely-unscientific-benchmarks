@@ -7,8 +7,8 @@ Translated from C++ version by: Stas Minakov (@supermina999)
 ## Compile
 
 ```
-ldc2 main_naive_pointers.d -O3 -release -Xcc -flto -of=main_naive_pointers-ldc
-ldc2 -betterC main_tuned_no_rt.d -O3 -release -Xcc -flto -of=main_tuned_no_rt-ldc -defaultlib= 
+ldc2 main_naive_pointers.d -O3 -release -flto=full -of=main_naive_pointers-ldc
+ldc2 -betterC main_tuned_no_rt.d -O3 -release -flto=full -of=main_tuned_no_rt-ldc -defaultlib=
 ```
 
 ```
