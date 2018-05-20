@@ -1,6 +1,6 @@
 with Ada.Unchecked_Deallocation;
 
-package body Tree_Fast is
+package body Tree_Naive_Pointers is
 
 procedure initialize is
 begin
@@ -96,4 +96,4 @@ begin
   delete_node(equal);
 end erase;
 
-end Tree_Fast;
+end Tree_Naive_Pointers;

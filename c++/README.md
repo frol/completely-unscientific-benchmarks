@@ -1,6 +1,6 @@
 # C++
 
-Author: Stas Minakov (@supermina999)
+Authors: Stas Minakov (@supermina999), Paul Harvey (@prharvey)
 
 ## Compile
 
