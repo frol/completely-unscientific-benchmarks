@@ -85,33 +85,34 @@ All tables are sorted in an alphabetical order.
 
 #### Linux (Arch Linux, x64, Intel Core i7-4710HQ CPU)
 
-| Language                                      | e12s   | M.C.  | Real Time, seconds | Slowdown Time | Memory, MB | Binary Size, MB                 | Compiler Version                  |
-| --------------------------------------------- |:------:|:-----:| ------------------ |:-------------:| ---------- | ------------------------------- | --------------------------------- |
-| *Best tuned solution*                         |        |       | **0.165**          | x1            | **0.25**   |                                 |                                   |
-| Ada "naive unsafe raw pointers"               | 6      | 8     | 0.24               | x1.45         | **0.4**    | 0.278                           | GCC Ada 8.1.0                     |
-| C++ "java-like" (clang)                       | 7      | 5     | 0.33               | x2            | **0.5**    | 0.015 + libstdc++               | Clang 6.0.0                       |
-| C++ "java-like" (gcc)                         | 7      | 5     | 0.37               | x2.2          | **0.5**    | 0.043 + libstdc++               | GCC 8.1.0                         |
-| C++ "naive unsafe raw pointers" (clang)       | 6      | 8     | 0.20               | x1.21         | **0.4**    | 0.011 + libstdc++               | Clang 6.0.0                       |
-| **C++ "naive unsafe raw pointers" (gcc)**     | 6      | 8     | **0.19**           | x1.15         | **0.4**    | 0.023 + libstdc++               | GCC 8.1.0                         |
-| C++ "naive `shared_ptr`" (clang)              | 6      | 6     | 0.36               | x2.2          | **0.5**    | 0.015 + libstdc++               | Clang 6.0.0                       |
-| C++ "naive `shared_ptr`" (gcc)                | 6      | 6     | 0.35               | x2.1          | **0.5**    | 0.047 + libstdc++               | GCC 8.1.0                         |
-| C#                                            | 9      | 1     | 0.70\*             | x4.2          | 11         | N/A                             | .NET Core 2.0                     |
-| D "naive unsafe raw pointers"                 | 8      | 6     | 0.24               | x1.45         | 1.6        | 0.019 + D runtime               | LDC 1.9.0                         |
-| Go "naive unsafe raw pointers"                | 9      | 6     | 0.38               | x2.3          | 5.8        | 1.2 (static)                    | Go 1.10.2                         |
-| Haskell                                       | ?      | ?     | 0.87               | x5.3          | 3.4        | 3.8                             | GHC 8.2.2                         |
-| JavaScript                                    | 10\*\* | 3\*\* | 1.12               | x6.8          | 52         | N/A                             | Node.js 10.1.0                    |
-| Java (no-limit / `-Xm*50M`)                   | 9      | 1     | 0.50 / 0.50        | x3            | 142 / 29   | N/A                             | OpenJDK 1.8.0                     |
-| Kotlin/JVM (no-limit / `-Xm*50M`)             | 9      | 1     | 0.53 / 0.51        | x3.2          | 144 / 30   | N/A                             | Kotlinc 1.2.40 + OpenJDK 1.8.0    |
-| Kotlin/Native                                 | 9      | 1     | 5.88               | x36           | 1.2        | 0.239                           | Kotlinc-native 0.7                |
-| Nim                                           | 9      | 1     | 1.00               | x6            | **0.5**    | 0.051                           | Nim 0.18 / GCC 8.1.0              |
-| OCaml                                         | ?      | ?     | 0.69               | x4.2          | 3.8        | N/A                             | OCaml 4.06                        |
-| Object Pascal "naive unsafe raw pointers"     | 6      | 8     | 0.37               | x2.2          | 0.38       | **0.028 (static)**              | FPC 3.0.4                         |
-| PHP                                           | 9      | 3\*\* | 4.44               | x27           | 5.8        | N/A                             | PHP 7.2.5                         |
-| Python (CPython)                              | 10\*\* | 3\*\* | 12.25              | x74           | 5          | N/A                             | CPython 3.6                       |
-| Python (PyPy)                                 | 10\*\* | 3\*\* | 3.20               | x19           | 48.5       | N/A                             | PyPy 6.0.0                        |
-| Rust "idiomatic"                              | 8      | 2     | 0.37\*\*\*         | x2.2          | **0.5**    | 0.427                           | Rustc 1.26                        |
-| Rust "ref-counted"                            | 6      | 5     | 0.37               | x2.2          | **0.5**    | 0.431                           | Rustc 1.26                        |
-| Swift                                         | 9      | 1     | 1.66               | x10           | 2.5        | 0.016 + Swift shared libraries  | Swift 4.1                         |
+| Language                                      | e12s            | M.C.           | Real Time, seconds | Slowdown Time | Memory, MB | Binary Size, MB                 | Compiler Version                  |
+| --------------------------------------------- |:---------------:|:--------------:| ------------------ |:-------------:| ---------- | ------------------------------- | --------------------------------- |
+| *Best tuned solution*                         |                 |                | **0.165**          | x1            | **0.25**   |                                 |                                   |
+| Ada "naive unsafe raw pointers"               | 💛<br/>(6)      | 💔<br/>(8)     | 0.24               | x1.45         | **0.4**    | 0.278                           | GCC Ada 8.1.0                     |
+| C++ "java-like" (clang)                       | 💙<br/>(7)      | 💙<br/>(5)     | 0.33               | x2            | **0.5**    | 0.015 + libstdc++               | Clang 6.0.0                       |
+| C++ "java-like" (gcc)                         | 💙<br/>(7)      | 💙<br/>(5)     | 0.37               | x2.2          | **0.5**    | 0.043 + libstdc++               | GCC 8.1.0                         |
+| C++ "naive unsafe raw pointers" (clang)       | 💛<br/>(6)      | 💔<br/>(8)     | 0.20               | x1.21         | **0.4**    | 0.011 + libstdc++               | Clang 6.0.0                       |
+| **C++ "naive unsafe raw pointers" (gcc)**     | 💛<br/>(6)      | 💔<br/>(8)     | **0.19**           | x1.15         | **0.4**    | 0.023 + libstdc++               | GCC 8.1.0                         |
+| C++ "naive `shared_ptr`" (clang)              | 💛<br/>(6)      | 💛<br/>(6)     | 0.36               | x2.2          | **0.5**    | 0.015 + libstdc++               | Clang 6.0.0                       |
+| C++ "naive `shared_ptr`" (gcc)                | 💛<br/>(6)      | 💛<br/>(6)     | 0.35               | x2.1          | **0.5**    | 0.047 + libstdc++               | GCC 8.1.0                         |
+| C#                                            | 💚<br/>(9)      | 💚<br/>(1)     | 0.70\*             | x4.2          | 11         | N/A                             | .NET Core 2.0                     |
+| D "garbage collected"                         | 💚<br/>(9)      | 💚<br/>(1)     | 0.27               | x1.6          | 1.6        | 0.019 + D runtime               | LDC 1.9.0                         |
+| D "naive unsafe raw pointers"                 | 💙<br/>(8)      | 💛<br/>(6)     | 0.24               | x1.45         | 1.6        | 0.019 + D runtime               | LDC 1.9.0                         |
+| Go "naive unsafe raw pointers"                | 💚<br/>(9)      | 💛<br/>(6)     | 0.38               | x2.3          | 5.8        | 1.2 (static)                    | Go 1.10.2                         |
+| Haskell                                       | ?               | ?              | 0.87               | x5.3          | 3.4        | 3.8                             | GHC 8.2.2                         |
+| JavaScript                                    | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 1.12               | x6.8          | 52         | N/A                             | Node.js 10.1.0                    |
+| Java (no-limit / `-Xm*50M`)                   | 💚<br/>(9)      | 💚<br/>(1)     | 0.50 / 0.50        | x3            | 142 / 29   | N/A                             | OpenJDK 1.8.0                     |
+| Kotlin/JVM (no-limit / `-Xm*50M`)             | 💚<br/>(9)      | 💚<br/>(1)     | 0.53 / 0.51        | x3.2          | 144 / 30   | N/A                             | Kotlinc 1.2.40 + OpenJDK 1.8.0    |
+| Kotlin/Native                                 | 💚<br/>(9)      | 💚<br/>(1)     | 5.88               | x36           | 1.2        | 0.239                           | Kotlinc-native 0.7                |
+| Nim                                           | 💚<br/>(9)      | 💚<br/>(1)     | 1.00               | x6            | **0.5**    | 0.051                           | Nim 0.18 / GCC 8.1.0              |
+| OCaml                                         | ?               | ?              | 0.69               | x4.2          | 3.8        | N/A                             | OCaml 4.06                        |
+| Object Pascal "naive unsafe raw pointers"     | 💛<br/>(6)      | 💔<br/>(8)     | 0.37               | x2.2          | 0.38       | **0.028 (static)**              | FPC 3.0.4                         |
+| PHP                                           | 💚<br/>(9)      | 💙<br/>(3)\*\* | 4.44               | x27           | 5.8        | N/A                             | PHP 7.2.5                         |
+| Python (CPython)                              | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 12.25              | x74           | 5          | N/A                             | CPython 3.6                       |
+| Python (PyPy)                                 | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.20               | x19           | 48.5       | N/A                             | PyPy 6.0.0                        |
+| Rust "idiomatic"                              | 💙<br/>(8)      | 💚<br/>(2)     | 0.37\*\*\*         | x2.2          | **0.5**    | 0.427                           | Rustc 1.26                        |
+| Rust "ref-counted"                            | 💛<br/>(6)      | 💙<br/>(5)     | 0.37               | x2.2          | **0.5**    | 0.431                           | Rustc 1.26                        |
+| Swift                                         | 💚<br/>(9)      | 💚<br/>(1)     | 1.66               | x10           | 2.5        | 0.016 + Swift shared libraries  | Swift 4.1                         |
 
 (\*) C# has a noticeable VM start time (~0.4 seconds), but we still measure real
 execution time of the whole program.
