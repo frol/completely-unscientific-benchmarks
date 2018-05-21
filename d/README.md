@@ -1,4 +1,4 @@
-# D
+# D - Manual Memory Management
 
 Author: Edmund Smith
 
@@ -26,3 +26,22 @@ NOTE: To compile statically, add `-static` flag.
 ./main_tuned_no_rt-ldc
 ./main_tuned_no_rt-gdc
 ```
+
+# D - Full GC and Runtime
+
+Translated from Java version by: Chris Collazo (@nervecenter)
+
+## Compile
+
+```
+dmd main_full_gc.d -O -release -of=main_full_gc-dmd
+ldc2 main_full_gc.d -O3 -release -flto=full -of=main_full_gc-ldc
+```
+
+NOTE: To compile statically, add `-static` flag.
+
+## Execute
+
+```
+./main_full_gc-dmd
+./main_full_gc-ldc
