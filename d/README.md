@@ -38,7 +38,7 @@ dmd main_full_gc.d -O -release -of=main_full_gc-dmd
 ldc2 main_full_gc.d -O3 -release -flto=full -of=main_full_gc-ldc
 ```
 
-NOTE: To compile statically, add `-static` flag.
+NOTE: To compile statically in LDC, add `-static` flag. DMD statically links by default.
 
 ## Execute
 
