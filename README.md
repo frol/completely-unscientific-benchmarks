@@ -105,8 +105,8 @@ All tables are sorted in an alphabetical order.
 | Kotlin/JVM (no-limit / `-Xm*50M`)             | 💚<br/>(9)      | 💚<br/>(1)     | 0.53 / 0.51        | x3.2          | 144 / 30   | N/A                             | Kotlinc 1.2.40 + OpenJDK 1.8.0    |
 | Kotlin/Native                                 | 💚<br/>(9)      | 💚<br/>(1)     | 5.88               | x36           | 1.2        | 0.239                           | Kotlinc-native 0.7                |
 | Nim                                           | 💚<br/>(9)      | 💚<br/>(1)     | 1.00               | x6            | **0.5**    | 0.051                           | Nim 0.18 / GCC 8.1.0              |
-| OCaml                                         | ?               | ?              | 0.69               | x4.2          | 3.8        | N/A                             | OCaml 4.06                        |
 | Object Pascal "naive unsafe raw pointers"     | 💛<br/>(6)      | 💔<br/>(8)     | 0.37               | x2.2          | 0.38       | **0.028 (static)**              | FPC 3.0.4                         |
+| OCaml                                         | ?               | ?              | 0.69               | x4.2          | 3.8        | N/A                             | OCaml 4.06                        |
 | PHP                                           | 💚<br/>(9)      | 💙<br/>(3)\*\* | 4.44               | x27           | 5.8        | N/A                             | PHP 7.2.5                         |
 | Python (CPython)                              | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 12.25              | x74           | 5          | N/A                             | CPython 3.6                       |
 | Python (PyPy)                                 | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.20               | x19           | 48.5       | N/A                             | PyPy 6.0.0                        |
@@ -128,6 +128,10 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 
 #### Mac OS (Mac OS 10.13, Intel Core i7-4770HQ CPU) (outdated)
 
+<details>
+  <summary>The Scoreboard</summary>
+  <p>
+
 | Language                          | Real Time, seconds | Slowdown Time | Binary Size, MB                  | Compiler version                              |
 | --------------------------------- | ------------------ |:-------------:| -------------------------------- | --------------------------------------------- |
 | *Best tuned solution*             | **0.25**           | x1            |                                  |                                               |
@@ -148,9 +152,14 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 | Rust "idiomatic"                  | 0.41               | x1.6          | 0.415                            | Rustc 1.26.0                                  |
 | Rust "ref-counted"                | 0.40               | x1.6          | 0.415                            | Rustc 1.26.0                                  |
 | Swift                             | 1.72               | x6.9          | 0.019 + Swift shared libraries   | Apple Swift version 4.1                       |
-
-
+</p>
+</details>
+  
 #### Windows (Windows 10, x64, Intel Core i7-6700HQ CPU) (outdated)
+
+<details>
+  <summary>The Scoreboard</summary>
+  <p>
 
 | Language                          | Real Time, seconds | Slowdown Time | Binary Size, MB                  | Compiler version                              |
 | --------------------------------- | ------------------ |:-------------:| -------------------------------- | --------------------------------------------- |
@@ -176,6 +185,8 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 | Rust "idiomatic"                  | 0.42               | x1.5          | 0.16                             | Rustc 1.26.0                                  |
 | Rust "ref-counted"                | 0.46               | x1.6          | 0.16                             | Rustc 1.26.0                                  |
 | Swift (Swift for Windows)         | 2.1                | x7.5          | 0.019 + Swift shared libraries   | Swift 4.0.3 (Swift for Windows 1.9.1)         |
+</p>
+</details>
 
 ### Tuned Implementations Scoreboard
 
@@ -207,14 +218,23 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 
 #### Mac OS (Mac OS 10.13, Intel Core i7-4770HQ CPU) (outdated)
 
+<details>
+  <summary>The Scoreboard</summary>
+  <p>
+
 | Language                          | Real Time, seconds | Slowdown Time | Binary Size, MB                  | Compiler version                              |
 | --------------------------------- | ------------------ |:-------------:| -------------------------------- | --------------------------------------------- |
 | **C++ "naive unsafe raw pointers" (clang)** | **0.25** | x1            | 0.009 + libstdc++                | Apple LLVM version 9.1.0 (clang-902.0.39.1)   |
 | C++ `unique_ptr` (clang)          | 0.3                | x1.2          | 0.009 + libstdc++                | Apple LLVM version 9.1.0 (clang-902.0.39.1)   |
 | Nim `--gc:markAndSweep`           | 0.7                | x2.8          | 0.293                            | Nim 0.18                                      |
-
+</p>
+</details>
 
 #### Windows (Windows 10, x64, Intel Core i7-6700HQ CPU) (outdated)
+
+<details>
+  <summary>The Scoreboard</summary>
+  <p>
 
 | Language                          | Real Time, seconds | Slowdown Time | Binary Size, MB                  | Compiler version                              |
 | --------------------------------- | ------------------ |:-------------:| -------------------------------- | --------------------------------------------- |
@@ -223,23 +243,29 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 | C++ `unique_ptr` (clang)          | 0.36               | x1.3          | 0.254 + libstdc++                | Clang 6.0.0                                   |
 | C++ `unique_ptr` (mingw)          | 0.34               | x1.2          | 0.039 + libstdc++                | GCC 6.3.0                                     |
 | Nim `--gc:markAndSweep`           | 0.83               | x3            | 0.143                            | Nim 0.18                                      |
-
+</p>
+</details>
 
 ## Observations
 
-C++ "ref-counted" (`shared ptr`) has significant performance hit on non-Linux
+D demonstrated the best performance among garbage-collected solutions. It even
+managed to outperform Object Pascal solution which used raw pointers and manual
+memory management, as well as naive C++ `shared_ptr`-based implementations and
+naive "idiomatic" Rust implementation.
+
+C++ "ref-counted" (`shared_ptr`) has significant performance hit on non-Linux
 platforms.
 
-JVM speeds up if you limit its memory.
+C++ `unique_ptr` has some non-zero runtime overhead over raw pointers.
 
-JVM uses some tricks (JIT) which helps it to cut down some reference counting
-overheads and it manages to go faster than C++ and Rust "ref-counted"
-solutions.
+JVM speeds up if you limit its memory.
 
 Kotlin Native is still much slower than the Kotlin running in JVM.
 
 Kotlin JS produces JS code which is ~25% slower than the manual Kotlin to JS
 translation.
+
+Nim, D, and Rust can go as fast as C/C++ can when you switch to "unsafe" manual memory management.
 
 With CPython vs PyPy you trade speed for memory.
 
