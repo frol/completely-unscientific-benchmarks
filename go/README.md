@@ -7,7 +7,7 @@ Translated from JavaScript version by: Vlad Frolov (@frol)
 ## Compile
 
 ```
-go build -o treap main-raw.go
+go build -o treap main.go
 ```
 
 or
