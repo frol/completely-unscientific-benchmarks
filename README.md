@@ -104,6 +104,8 @@ All tables are sorted in an alphabetical order.
 | Java (no-limit / `-Xm*50M`)                   | 💚<br/>(9)      | 💚<br/>(1)     | 0.50 / 0.50        | x3            | 142 / 29   | N/A                             | OpenJDK 1.8.0                     |
 | Kotlin/JVM (no-limit / `-Xm*50M`)             | 💚<br/>(9)      | 💚<br/>(1)     | 0.53 / 0.51        | x3.2          | 144 / 30   | N/A                             | Kotlinc 1.2.40 + OpenJDK 1.8.0    |
 | Kotlin/Native                                 | 💚<br/>(9)      | 💚<br/>(1)     | 5.88               | x36           | 1.2        | 0.239                           | Kotlinc-native 0.7                |
+| Lua                                           | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.82               | x23           | 2.8        | N/A                             | Lua 5.3.4                         |
+| LuaJIT                                        | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 0.96               | x5.9          | 2.0        | N/A                             | LuaJIT 2.0.5                      |
 | Nim                                           | 💚<br/>(9)      | 💚<br/>(1)     | 1.00               | x6            | **0.5**    | 0.051                           | Nim 0.18 / GCC 8.1.0              |
 | Object Pascal "naive unsafe raw pointers"     | 💛<br/>(6)      | 💔<br/>(8)     | 0.37               | x2.2          | 0.38       | **0.028 (static)**              | FPC 3.0.4                         |
 | OCaml                                         | ?               | ?              | 0.69               | x4.2          | 3.8        | N/A                             | OCaml 4.06                        |
