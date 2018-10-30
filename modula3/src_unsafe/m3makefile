@@ -1,0 +1,4 @@
+import("libm3")
+implementation("Untraced")
+build_standalone()
+program("Untraced")
