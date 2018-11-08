@@ -107,7 +107,10 @@ All tables are sorted in an alphabetical order.
 | Kotlin/Native                                 | 💚<br/>(9)      | 💚<br/>(1)     | 5.88               | x36           | 1.2        | 0.239                           | Kotlinc-native 0.7                |
 | Lua                                           | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.82               | x23           | 2.8        | N/A                             | Lua 5.3.4                         |
 | LuaJIT                                        | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 0.96               | x5.9          | 2.0        | N/A                             | LuaJIT 2.0.5                      |
+| Modula-2                                      | ?               | ?              | 0.20               | x1.21         | **0.5**    | 0.1 + libstdc++                 | gm2 GCC 8.2.0                     |
+| Modula-3                                      | ?               | ?              | 0.47               | x2.8          | 1.8        | 1.0                             | Critical Mass Modula-3 d5.10.0    |
 | Nim                                           | 💚<br/>(9)      | 💚<br/>(1)     | 1.00               | x6            | **0.5**    | 0.051                           | Nim 0.18 / GCC 8.1.0              |
+| Oberon-07                                     | ?               | ?              | 0.24               | x1.45         | 1.3        | 0.031                           | OBNC 0.14.0                       |
 | Object Pascal "naive unsafe raw pointers"     | 💛<br/>(6)      | 💔<br/>(8)     | 0.37               | x2.2          | 0.38       | **0.028 (static)**              | FPC 3.0.4                         |
 | OCaml                                         | ?               | ?              | 0.69               | x4.2          | 3.8        | N/A                             | OCaml 4.06                        |
 | PHP                                           | 💚<br/>(9)      | 💙<br/>(3)\*\* | 4.44               | x27           | 5.8        | N/A                             | PHP 7.2.5                         |
@@ -209,6 +212,7 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 | D "no D runtime" `-static`                        | 0.193              | x1.17         | **0.25**   | 0.643 (static)                  | LDC 1.9.0                         |
 | Go "with-sync-pool"                               | 0.368              | x2.2          | 1.0        | 1.2 (static)                    | Go 1.10.2                         |
 | Haskell `+RTS -H128m`                             | 0.835              | x5.1          | 134        | 3.8                             | GHC 8.2.2                         |
+| Modula-3 "untraced references"                    | 0.244              | x1.5          | 0.8        | 1.0                             | Critical Mass Modula-3 d5.10.0    |
 | Nim `--gc:markAndSweep`                           | 0.655              | x4            | 5          | 0.055                           | Nim 0.18 / GCC 8.1.0              |
 | Nim "fast"                                        | 0.359              | x2.2          | 0.5        | 0.047                           | Nim 0.18 / GCC 8.1.0              |
 | Nim "fast" `--gc:markAndSweep`                    | 0.186              | x1.13         | 5.1        | 0.043                           | Nim 0.18 / GCC 8.1.0              |
