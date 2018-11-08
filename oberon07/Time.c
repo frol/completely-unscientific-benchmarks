@@ -4,11 +4,11 @@
 
 #include <stdio.h>
 
-const int Time_CTimeStruct_id;
-const int *const Time_CTimeStruct_ids[1] = {&Time_CTimeStruct_id};
-const OBNC_Td Time_CTimeStruct_td = {Time_CTimeStruct_ids, 1};
+const int Time__CTimeStruct_id;
+const int *const Time__CTimeStruct_ids[1] = {&Time__CTimeStruct_id};
+const OBNC_Td Time__CTimeStruct_td = {Time__CTimeStruct_ids, 1};
 
-void Time_Time_(Time_CTimeStruct_ *time_, const OBNC_Td *time_td)
+void Time__Time_(Time__CTimeStruct_ *time_, const OBNC_Td *time_td)
 {
   time_t rawtime;
   time(&rawtime);
@@ -22,6 +22,6 @@ void Time_Time_(Time_CTimeStruct_ *time_, const OBNC_Td *time_td)
 }
 
 
-void Time_Init(void)
+void Time__Init(void)
 {
 }

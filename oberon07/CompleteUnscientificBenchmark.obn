@@ -96,7 +96,7 @@ VAR
 BEGIN
    Split3(t.root, lower, equal, greater, val);
    t.root := Merge(lower, greater);
-   (* DeleteNode(equal); *)
+   DeleteNode(equal);
 END Erase;
 
 PROCEDURE HasValue(VAR t: Tree; val: INTEGER): INTEGER;
