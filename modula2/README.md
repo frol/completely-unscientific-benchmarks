@@ -4,7 +4,7 @@ Author: John Perry (john.perry@usm.edu)
 
 ## Compile
 
-Compiles with the Gnu Modula-2 compiler as follows:
+Compiles with the [GNU Modula-2 compiler](http://www.nongnu.org/gm2/debian.html) as follows:
 
 ```
 gm2 -Ofast -o main-gm2 Complete_Unscientific_Benchmark.mod

@@ -1,10 +1,10 @@
 with Ada.Integer_Text_IO;
 with Ada.Text_IO;
 
-with Tree_Fast; use Tree_Fast;
+with Tree_Naive_Pointers; use Tree_Naive_Pointers;
 
-procedure Main_Fast is
-  t: Tree_Fast.Tree;
+procedure Main_Naive_Pointers is
+  t: Tree_Naive_Pointers.Tree;
   cur: Integer := 5;
   res: Integer := 0;
   mode: Integer;
@@ -22,4 +22,4 @@ begin
     end if;
   end loop;
   PutI(res); New_Line(1);
-end Main_Fast;
+end Main_Naive_Pointers;

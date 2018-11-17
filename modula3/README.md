@@ -1,4 +1,4 @@
-# Modula-2
+# Modula-3
 
 Author: John Perry (john.perry@usm.edu)
 
@@ -17,7 +17,7 @@ There are three implementations of the code here.
 
 ## Compile
 
-To compile with the Critical Mass Modula-3 compiler,
+To compile with the [Critical Mass Modula-3 compiler](https://github.com/modula3/cm3/releases),
 first change to the version you wish to compile.
 Once you're in that directory, type
 
