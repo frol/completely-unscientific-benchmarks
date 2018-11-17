@@ -1,0 +1,1 @@
+INTERFACE NodeMemoryPool = MemoryPool (Node) END NodeMemoryPool.
