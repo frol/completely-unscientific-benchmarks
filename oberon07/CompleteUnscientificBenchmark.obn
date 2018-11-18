@@ -24,8 +24,8 @@ END InitNode;
 PROCEDURE DeleteNode(node: NodePtr);
 BEGIN
    IF node # NIL THEN
-      IF node^.left # NIL THEN DeleteNode(node^.left)
-      ELSIF node^.right # NIL THEN DeleteNode(node^.right)
+      IF node^.left # NIL THEN Out.String("Oops left"); Out.Ln; DeleteNode(node^.left)
+      ELSIF node^.right # NIL THEN Out.String("Oops right"); Out.Ln; DeleteNode(node^.right)
       END; (* IF *)
    END; (* IF *)
 END DeleteNode;
@@ -96,7 +96,7 @@ VAR
 BEGIN
    Split3(t.root, lower, equal, greater, val);
    t.root := Merge(lower, greater);
-   (* DeleteNode(equal); *)
+   DeleteNode(equal);
 END Erase;
 
 PROCEDURE HasValue(VAR t: Tree; val: INTEGER): INTEGER;

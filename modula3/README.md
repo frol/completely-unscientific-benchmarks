@@ -22,7 +22,7 @@ first change to the version you wish to compile.
 Once you're in that directory, type
 
 ```
-cm3 -O3
+cm3 -O
 ```
 
 ## Execute
