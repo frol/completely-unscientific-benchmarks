@@ -1,4 +1,4 @@
-UNSAFE MODULE Untraced EXPORTS Main;
+UNSAFE MODULE Pooled EXPORTS Main;
 
 (*
   This uses UNTRACED REF and is a lot faster than REF.
@@ -8,34 +8,29 @@ UNSAFE MODULE Untraced EXPORTS Main;
   We mark the module as UNSAFE because it DISPOSE's objects.
 *)
 
-IMPORT IO, Random;
+IMPORT IO, NodeMemoryPool AS MP, Node, Random;
 
 TYPE
 
-  Node = UNTRACED REF NodeT;
-
-  NodeT = RECORD
-    left, right: Node;
-    x, y: INTEGER;
-  END;
-
   Tree = RECORD
-    root: Node;
+    root: Node.URef;
   END;
 
 VAR
 
   random: Random.T := NEW(Random.Default).init();
 
-PROCEDURE CreateNode(value: INTEGER): Node =
+PROCEDURE CreateNode(value: INTEGER): Node.URef =
 VAR
-  result: Node;
+  result: Node.URef := MP.Create();
 BEGIN
-  result := NEW(Node, x := value, y := random.integer());
+  (*RETURN NEW(Node.URef, x := value, y := random.integer());*)
+  result.x := value;
+  result.y := random.integer();
   RETURN result;
 END CreateNode;
 
-PROCEDURE Merge(VAR lower, greater: Node): Node =
+PROCEDURE Merge(VAR lower, greater: Node.URef): Node.URef =
 BEGIN
   IF lower   = NIL THEN RETURN greater; END;
   IF greater = NIL THEN RETURN lower;   END;
@@ -48,15 +43,15 @@ BEGIN
   END;
 END Merge;
 
-PROCEDURE MergeThree(VAR lower, equal, greater: Node): Node =
+PROCEDURE MergeThree(VAR lower, equal, greater: Node.URef): Node.URef =
 VAR
-  tmp: Node;
+  tmp: Node.URef;
 BEGIN
   tmp := Merge(lower, equal);
   RETURN Merge(tmp, greater);
 END MergeThree;
 
-PROCEDURE Split2(orig: Node; VAR lower, greaterOrEqual: Node; value: INTEGER) =
+PROCEDURE Split2(orig: Node.URef; VAR lower, greaterOrEqual: Node.URef; value: INTEGER) =
 BEGIN
   IF orig = NIL THEN
     lower := orig;
@@ -72,9 +67,9 @@ BEGIN
   END;
 END Split2;
 
-PROCEDURE Split3(orig: Node; VAR lower, equal, greater: Node; value: INTEGER) =
+PROCEDURE Split3(orig: Node.URef; VAR lower, equal, greater: Node.URef; value: INTEGER) =
 VAR
-  equalOrGreater: Node := NIL;
+  equalOrGreater: Node.URef := NIL;
 BEGIN
   Split2(orig, lower, equalOrGreater, value);
   Split2(equalOrGreater, equal, greater, value + 1);
@@ -82,7 +77,7 @@ END Split3;
 
 PROCEDURE Insert(VAR t: Tree; value: INTEGER) =
 VAR
-  lower, equal, greater: Node := NIL;
+  lower, equal, greater: Node.URef := NIL;
 BEGIN
   Split3(t.root, lower, equal, greater, value);
   IF equal = NIL THEN equal := CreateNode(value); END;
@@ -91,16 +86,16 @@ END Insert;
 
 PROCEDURE Erase(VAR t: Tree; value: INTEGER) =
 VAR
-  lower, equal, greater: Node := NIL;
+  lower, equal, greater: Node.URef := NIL;
 BEGIN
   Split3(t.root, lower, equal, greater, value);
   t.root := Merge(lower, greater);
-  DISPOSE(equal);
+  IF equal # NIL THEN MP.Dispose(equal); END;
 END Erase;
 
 PROCEDURE HasValue(t: Tree; value: INTEGER): BOOLEAN =
 VAR
-  lower, equal, greater: Node := NIL;
+  lower, equal, greater: Node.URef := NIL;
   result: BOOLEAN;
 BEGIN
   Split3(t.root, lower, equal, greater, value);
@@ -119,7 +114,7 @@ BEGIN
   FOR i := 1 TO 999999 DO
     mode := i MOD 3;
     cur := (cur * 57 + 43) MOD 10007;
-    IF mode = 0 THEN
+    IF    mode = 0 THEN
       Insert(t, cur);
     ELSIF mode = 1 THEN
       Erase(t, cur);
@@ -130,4 +125,4 @@ BEGIN
   END;
   IO.PutInt(res); IO.PutChar('\n'); 
 
-END Untraced.
+END Pooled.

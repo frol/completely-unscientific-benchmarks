@@ -22,13 +22,8 @@ VAR
   random: Random.T := NEW(Random.Default).init();
 
 PROCEDURE CreateNode(value: INTEGER): Node =
-VAR
-  result: Node;
 BEGIN
-  result := NEW(Node);
-  result.x := value;
-  result.y := random.integer();
-  RETURN result;
+  RETURN NEW(Node, x := value, y := random.integer());
 END CreateNode;
 
 PROCEDURE Merge(VAR lower, greater: Node): Node =

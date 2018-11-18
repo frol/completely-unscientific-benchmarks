@@ -1,0 +1,15 @@
+import("libm3")
+
+interface("Node")
+
+generic_interface("MemoryPool")
+generic_module("MemoryPool")
+
+interface("NodeMemoryPool")
+module("NodeMemoryPool")
+
+implementation("Pooled")
+
+build_standalone()
+
+program("Pooled")
