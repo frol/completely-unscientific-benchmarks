@@ -2,21 +2,17 @@ note
 	description: "Treap application root class"
 	date: "$Date$"
 	revision: "$Revision$"
+	author: "John Perry"
 
-class
-	APPLICATION
+class APPLICATION
 
-inherit
-	ARGUMENTS_32
-
-create
-	make
+create make
 
 feature {NONE} -- Initialization
 
 	make
 	local
-		t: TREE2
+		t: TREAP
 		i, res, cur, mode: INTEGER
 	do
 		create t.make
@@ -33,7 +29,7 @@ feature {NONE} -- Initialization
 			elseif mode = 1 then
 				t.erase (cur)
 			else
-				res := res + t.has_value (cur)
+				res := res + (if t.has_value (cur) then 1 else 0 end)
 			end
 			i := i + 1
 		end

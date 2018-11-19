@@ -1,38 +1,38 @@
 note
-	description: "Summary description for {SPLIT_RESULT}."
-	author: ""
+	description: "used to pass two {NODE}s between functions in a way that they can be changed."
+	author: "John Perry"
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
-	DOUBLE_NODE
+expanded class DOUBLE_NODE
 
 inherit ANY redefine default_create end
 
-create
-	default_create, empty, with_values
+create empty, default_create
 
-feature { ANY }
-
-	default_create
-	do
-		lower := Void
-		greater_equal := Void
-	end
+feature { ANY } -- Initialization
 
 	empty
 	do
 		lower := Void
 		greater_equal := Void
+	ensure
+		is_empty
 	end
 
-	with_values(l, g: detachable NODE)
+	default_create
 	do
-		lower := l
-		greater_equal := g
+		empty
 	end
 
-feature { ANY }
+feature { ANY } -- Queries
+
+	is_empty: BOOLEAN
+	do
+		Result := lower = Void and greater_equal = Void
+	end
+
+feature { ANY } -- Assignment
 
 	set_lower(to: like lower)
 	do
@@ -43,6 +43,8 @@ feature { ANY }
 	do
 		greater_equal := to
 	end
+
+feature { ANY } -- Data
 
 	lower: detachable NODE assign set_lower
 	greater_equal: detachable NODE assign set_greater_equal
