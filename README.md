@@ -116,6 +116,7 @@ All tables are sorted in an alphabetical order.
 | PHP                                           | 💚<br/>(9)      | 💙<br/>(3)\*\* | 4.44               | x27           | 5.8        | N/A                             | PHP 7.2.5                         |
 | Python (CPython)                              | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 12.25              | x74           | 5          | N/A                             | CPython 3.6                       |
 | Python (PyPy)                                 | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.20               | x19           | 48.5       | N/A                             | PyPy 6.0.0                        |
+| Ruby                                          | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 6.65               | x40           | 5          | N/A                             | Ruby 2.5.3                        |
 | Rust "idiomatic"                              | 💙<br/>(8)      | 💚<br/>(2)     | 0.37\*\*\*         | x2.2          | **0.5**    | 0.427                           | Rustc 1.26                        |
 | Rust "ref-counted"                            | 💛<br/>(6)      | 💙<br/>(5)     | 0.37               | x2.2          | **0.5**    | 0.431                           | Rustc 1.26                        |
 | Swift                                         | 💚<br/>(9)      | 💚<br/>(1)     | 1.66               | x10           | 2.5        | 0.016 + Swift shared libraries  | Swift 4.1                         |
