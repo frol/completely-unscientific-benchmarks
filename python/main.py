@@ -6,7 +6,7 @@ class Node:
 
     def __init__(self, x):
         self.x = x
-        self.y = random.randint(0, 2**31)
+        self.y = random.random()
         self.left = None
         self.right = None
 

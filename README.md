@@ -114,8 +114,8 @@ All tables are sorted in an alphabetical order.
 | Object Pascal "naive unsafe raw pointers"     | 💛<br/>(6)      | 💔<br/>(8)     | 0.37               | x2.2          | 0.38       | **0.028 (static)**              | FPC 3.0.4                         |
 | OCaml                                         | ?               | ?              | 0.69               | x4.2          | 3.8        | N/A                             | OCaml 4.06                        |
 | PHP                                           | 💚<br/>(9)      | 💙<br/>(3)\*\* | 4.44               | x27           | 5.8        | N/A                             | PHP 7.2.5                         |
-| Python (CPython)                              | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 12.25              | x74           | 5          | N/A                             | CPython 3.6                       |
-| Python (PyPy)                                 | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.20               | x19           | 48.5       | N/A                             | PyPy 6.0.0                        |
+| Python (CPython)                              | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 11.15              | x68           | 5          | N/A                             | CPython 3.7                       |
+| Python (PyPy)                                 | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.40               | x20           | 48.5       | N/A                             | PyPy 6.0.0                        |
 | Ruby                                          | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 6.65               | x40           | 5          | N/A                             | Ruby 2.5.3                        |
 | Rust "idiomatic"                              | 💙<br/>(8)      | 💚<br/>(2)     | 0.37\*\*\*         | x2.2          | **0.5**    | 0.427                           | Rustc 1.26                        |
 | Rust "ref-counted"                            | 💛<br/>(6)      | 💙<br/>(5)     | 0.37               | x2.2          | **0.5**    | 0.431                           | Rustc 1.26                        |
