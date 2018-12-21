@@ -16,14 +16,15 @@ there are "ref-counted" versions of implementations for C++ and Rust, but then
 we still wanted to compare the results with idiomatic (a.k.a. common practices)
 implementations for C++ ("raw-pointers") and Rust ("idiomatic").
 
-I must say that all the implementations except for C++ were implemented by
-mostly adapting the syntax from the very first implementation of the algorithm
-in Kotlin. Even Rust, which is considered to have the steepest learning curve
-among the tested languages, didn't require any "black magic" (the solution does
-not require either unsafe code or lifetime annotations). C++ was implemented
-separately, so it has a few shortcuts, and thus it might be not a completely
-fair comparison (I will try to implement "fair" C++ solution and also
-"C++"-like Rust solution to see if the performance can be on par).
+I must say that most of the implementations (except for C++, Haskell, and OCaml)
+were implemented by mostly adapting the syntax from the very first
+implementation of the algorithm in Kotlin. Even Rust, which is considered to
+have the steepest learning curve among the tested languages, didn't require any
+"black magic" (the solution does not require either unsafe code or lifetime
+annotations). C++ was implemented separately, so it has a few shortcuts, and
+thus it might be not a completely fair comparison (I will try to implement
+"fair" C++ solution and also "C++"-like Rust solution to see if the performance
+can be on par).
 
 
 ## Metrics
@@ -99,7 +100,7 @@ All tables are sorted in an alphabetical order.
 | Crystal                                       | 💚<br/>(10)     | 💚<br/>(1)     | 0.30               | x1.8          | 1.6        | 0.135                           | Crystal 0.25.1                    |
 | D "garbage collected"                         | 💚<br/>(9)      | 💚<br/>(1)     | 0.27               | x1.6          | 1.6        | 0.019 + D runtime               | LDC 1.9.0                         |
 | D "naive unsafe raw pointers"                 | 💙<br/>(8)      | 💛<br/>(6)     | 0.24               | x1.45         | 1.6        | 0.019 + D runtime               | LDC 1.9.0                         |
-| Go "naive unsafe raw pointers"                | 💚<br/>(9)      | 💛<br/>(6)     | 0.38               | x2.3          | 5.8        | 1.2 (static)                    | Go 1.10.2                         |
+| Go "with pointers"                            | 💚<br/>(9)      | 💛<br/>(6)     | 0.38               | x2.3          | 5.8        | 1.2 (static)                    | Go 1.10.2                         |
 | Haskell                                       | ?               | ?              | 0.87               | x5.3          | 3.4        | 3.8                             | GHC 8.2.2                         |
 | JavaScript                                    | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 1.12               | x6.8          | 52         | N/A                             | Node.js 10.1.0                    |
 | Java (no-limit / `-Xm*50M`)                   | 💚<br/>(9)      | 💚<br/>(1)     | 0.50 / 0.50        | x3            | 142 / 29   | N/A                             | OpenJDK 1.8.0                     |
@@ -146,7 +147,7 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 | C++ "naive `shared_ptr`"          | 0.72               | x2.9          | 0.019 + libstdc++                | Apple LLVM version 9.1.0 (clang-902.0.39.1)   |
 | C#                                | 0.79\*             | x3.2          | 0.006 + .Net                     | .NET Core 2.1.200                             |
 | D "naive unsafe raw pointers"     | 0.26               | x1.04         | 0.019 + D runtime                | LDC 1.9.0                                     |
-| Go "naive unsafe raw pointers"    | 0.39               | x1.6          | 2.1 (static)                     | Go 1.10.2                                     |
+| Go "with pointers"                | 0.39               | x1.6          | 2.1 (static)                     | Go 1.10.2                                     |
 | Haskell                           | 1.15               | x4.6          | 1.3                              | GHC 8.2.2                                     |
 | JavaScript                        | 1.47               | x5.9          | N/A                              | Node.js 6.11.1                                |
 | Java (no-limit / `-Xm*50M`)       | 0.69 / 0.59        | x2.8 / x2.4   | N/A                              | Oracle JDK 1.8.0                              |
@@ -179,7 +180,7 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 | C++ "naive `shared_ptr`" (mingw)            | 0.65     | x2.3          | 0.031 + libstdc++                | GCC 6.3.0                                     |
 | C#                                | 0.56\*             | x2            | 0.006 + .Net                     | Visual Studio 2017 (Visual C# Compiler 2.7.0) |
 | D "naive unsafe raw pointers"     | 0.31               | x1.1          | 0.681 + D runtime                | LDC 1.9.0                                     |
-| Go "naive unsafe raw pointers"    | 0.43               | x1.5          | 2.0 (static)                     | Go 1.10.2                                     |
+| Go "with pointers"                | 0.43               | x1.5          | 2.0 (static)                     | Go 1.10.2                                     |
 | Haskell                           | 1.2                | x4.3          | 4.1                              | GHC 8.2.2                                     |
 | JavaScript                        | 1.25               | x4.2          | N/A                              | Node.js 8.11.1                                |
 | Java (no-limit / `-Xm*50M`)       | 0.8 / 0.75         | x2.7 / x2.5   | N/A                              | Oracle JDK 10.0.1                             |
@@ -211,7 +212,7 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 | C++ `unique_ptr` (gcc)                            | 0.248              | x1.5          | 0.38       | 0.043 + libstdc++               | GCC 8.1.0                         |
 | D "no D runtime"                                  | 0.193              | x1.17         | 0.38       | 0.011                           | LDC 1.9.0                         |
 | D "no D runtime" `-static`                        | 0.193              | x1.17         | **0.25**   | 0.643 (static)                  | LDC 1.9.0                         |
-| Go "with-sync-pool"                               | 0.368              | x2.2          | 1.0        | 1.2 (static)                    | Go 1.10.2                         |
+| Go "with sync pool"                               | 0.368              | x2.2          | 1.0        | 1.2 (static)                    | Go 1.10.2                         |
 | Haskell `+RTS -H128m`                             | 0.835              | x5.1          | 134        | 3.8                             | GHC 8.2.2                         |
 | Modula-3 "untraced references"                    | 0.244              | x1.5          | 0.8        | 1.0                             | Critical Mass Modula-3 d5.10.0    |
 | Nim `--gc:markAndSweep`                           | 0.655              | x4            | 5          | 0.055                           | Nim 0.18 / GCC 8.1.0              |
