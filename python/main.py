@@ -13,11 +13,11 @@ class Node:
 
 def merge(lower, greater):
     if lower is None:
-    	return greater
-    
+        return greater
+
     if greater is None:
-    	return lower
-    
+        return lower
+
     if lower.y < greater.y:
         lower.right = merge(lower.right, greater)
         return lower
@@ -27,8 +27,8 @@ def merge(lower, greater):
 
 def splitBinary(orig, value):
     if orig is None:
-    	return (None, None)
-    
+        return (None, None)
+
     if orig.x < value:
         splitPair = splitBinary(orig.right, value)
         orig.right = splitPair[0]
@@ -68,13 +68,13 @@ class Tree:
         res = splited.equal is not None
         self.root = merge3(splited.lower, splited.equal, splited.greater)
         return res
-    
+
     def insert(self, x):
         splited = split(self.root, x)
         if splited.equal is None:
             splited.equal = Node(x)
         self.root = merge3(splited.lower, splited.equal, splited.greater)
-    
+
     def erase(self, x):
         splited = split(self.root, x)
         self.root = merge(splited.lower, splited.greater)
