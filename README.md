@@ -116,6 +116,7 @@ All tables are sorted in an alphabetical order.
 | OCaml                                         | ?               | ?              | 0.69               | x4.2          | 3.8        | N/A                             | OCaml 4.06                        |
 | PHP                                           | 💚<br/>(9)      | 💙<br/>(3)\*\* | 4.44               | x27           | 5.8        | N/A                             | PHP 7.2.5                         |
 | Python (CPython)                              | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 11.15              | x68           | 5          | N/A                             | CPython 3.7                       |
+| Python (Cython)                               | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 5.88               | x36           | 5          | N/A                             | Cython 0.29.2                     |
 | Python (PyPy)                                 | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.40               | x20           | 48.5       | N/A                             | PyPy 6.0.0                        |
 | Ruby                                          | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 6.65               | x40           | 5          | N/A                             | Ruby 2.5.3                        |
 | Rust "idiomatic"                              | 💙<br/>(8)      | 💚<br/>(2)     | 0.37\*\*\*         | x2.2          | **0.5**    | 0.427                           | Rustc 1.26                        |
