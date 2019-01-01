@@ -8,7 +8,6 @@ dependencies:
 - base >=4 && <=5
 - primitive
 - mwc-random
-- strict-base-types
 executables:
   unscientific:
     main: Main.hs
