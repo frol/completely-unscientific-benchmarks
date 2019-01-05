@@ -97,7 +97,7 @@ All tables are sorted in an alphabetical order.
 | C++ "naive `shared_ptr`" (clang)              | 💛<br/>(6)      | 💛<br/>(6)     | 0.36               | x2.2          | **0.5**    | 0.015 + libstdc++               | Clang 6.0.0                       |
 | C++ "naive `shared_ptr`" (gcc)                | 💛<br/>(6)      | 💛<br/>(6)     | 0.35               | x2.1          | **0.5**    | 0.047 + libstdc++               | GCC 8.1.0                         |
 | C#                                            | 💚<br/>(9)      | 💚<br/>(1)     | 0.70\*             | x4.2          | 11         | N/A                             | .NET Core 2.0                     |
-| Crystal                                       | 💚<br/>(10)     | 💚<br/>(1)     | 0.30               | x1.8          | 1.6        | 0.135                           | Crystal 0.25.1                    |
+| Crystal                                       | 💚<br/>(10)     | 💚<br/>(1)     | 0.30               | x1.8          | 1.6        | 0.135                           | Crystal 0.27.0                    |
 | D "garbage collected"                         | 💚<br/>(9)      | 💚<br/>(1)     | 0.27               | x1.6          | 1.6        | 0.019 + D runtime               | LDC 1.9.0                         |
 | D "naive unsafe raw pointers"                 | 💙<br/>(8)      | 💛<br/>(6)     | 0.24               | x1.45         | 1.6        | 0.019 + D runtime               | LDC 1.9.0                         |
 | Go "with pointers"                            | 💚<br/>(9)      | 💛<br/>(6)     | 0.38               | x2.3          | 5.8        | 1.2 (static)                    | Go 1.10.2                         |
