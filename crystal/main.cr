@@ -57,7 +57,7 @@ def split(orig, value)
   return SplitResult.new lower, equal, greater
 end
 
-class Tree
+struct Tree
   def initialize
     @root = nil
   end
@@ -100,7 +100,7 @@ def main
       res += tree.has_value(cur) ? 1 : 0
     end
   end
-  p res
+  puts res
 end
 
 main()
