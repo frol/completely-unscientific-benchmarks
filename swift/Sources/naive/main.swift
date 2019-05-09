@@ -1,20 +1,21 @@
 import Foundation
 
-class Node {
+
+fileprivate class Node {
     var x: Int
     var y: Int
     var left: Node? = nil
     var right: Node? = nil
-
+    
     init(x: Int) {
         self.x = x
-        self.y = Int(rand())
+        self.y = Int.random(in: 0...Int.max)
     }
 }
 
-func merge(lower: Node?, greater: Node?) -> Node?
+fileprivate func merge(lower: Node?, greater: Node?) -> Node?
 {
-    if let lower = lower, let greater = greater {   
+    if let lower = lower, let greater = greater {
         if lower.y < greater.y {
             lower.right = merge(lower: lower.right, greater: greater)
             return lower
@@ -23,14 +24,14 @@ func merge(lower: Node?, greater: Node?) -> Node?
             return greater
         }
     } else if lower == nil {
-    	return greater
+        return greater
     } else {
-    	return lower
+        return lower
     }
- 
+    
 }
 
-func splitBinary(orig: Node?, value: Int) -> (Node?, Node?)
+fileprivate func splitBinary(orig: Node?, value: Int) -> (Node?, Node?)
 {
     if let orig = orig {
         if orig.x < value {
@@ -43,20 +44,20 @@ func splitBinary(orig: Node?, value: Int) -> (Node?, Node?)
             return (splitPair.0, orig)
         }
     } else {
-    	return (nil, nil)
+        return (nil, nil)
     }
 }
 
-func merge(lower: Node?, equal: Node?, greater: Node?) -> Node?
+fileprivate func merge(lower: Node?, equal: Node?, greater: Node?) -> Node?
 {
     return merge(lower: merge(lower: lower, greater: equal), greater: greater)
 }
 
-class SplitResult {
+fileprivate class SplitResult {
     var lower: Node?
     var equal: Node?
     var greater: Node?
-
+    
     init(lower: Node?, equal: Node?, greater: Node?) {
         self.lower = lower
         self.equal = equal
@@ -64,14 +65,14 @@ class SplitResult {
     }
 }
 
-func split(orig: Node?, value: Int) -> SplitResult
+fileprivate func split(orig: Node?, value: Int) -> SplitResult
 {
     let (lower, equalGreater) = splitBinary(orig: orig, value: value)
     let (equal, greater) = splitBinary(orig: equalGreater, value: value + 1)
     return SplitResult(lower: lower, equal: equal, greater: greater)
 }
 
-class Tree
+fileprivate class Tree
 {
     public func hasValue(x: Int) -> Bool
     {
@@ -85,7 +86,7 @@ class Tree
     {
         let splited = split(orig: mRoot, value: x)
         if splited.equal == nil {
-        	splited.equal = Node(x: x)
+            splited.equal = Node(x: x)
         }
         mRoot = merge(lower: splited.lower, equal: splited.equal, greater: splited.greater)
     }
@@ -99,7 +100,8 @@ class Tree
     private var mRoot: Node? = nil
 }
 
-func main() 
+
+func runNaive() -> Int
 {
     let tree = Tree()
     var cur = 5;
@@ -115,7 +117,9 @@ func main()
             default: break
         }
     }
-    print(res)
+    return res
 }
 
-main()
+
+print("Naive result \(runNaive())")
+

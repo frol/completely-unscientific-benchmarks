@@ -4,13 +4,14 @@ Author: Vlad Frolov (@frol)
 
 ## Compile
 
+
 ```
-swiftc -O -Xcc -flto -whole-module-optimization -o main-swift main.swift
-strip -s main-swift
+swift build -c release -Xswiftc -O -Xcc -flto -Xswiftc -whole-module-optimization
 ```
 
 ## Execute
 
 ```
-./main-swift
+./.build/x86_64-apple-macosx/release/unmanaged
+./.build/x86_64-apple-macosx/release/naive
 ```
