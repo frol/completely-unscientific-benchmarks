@@ -9,3 +9,4 @@
 *.pyc
 nimcache
 rust/target
+.build
