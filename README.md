@@ -121,7 +121,7 @@ All tables are sorted in an alphabetical order.
 | Ruby                                          | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 6.65               | x40           | 5          | N/A                             | Ruby 2.5.3                        |
 | Rust "idiomatic"                              | 💙<br/>(8)      | 💚<br/>(2)     | 0.37\*\*\*         | x2.2          | **0.5**    | 0.427                           | Rustc 1.26                        |
 | Rust "ref-counted"                            | 💛<br/>(6)      | 💙<br/>(5)     | 0.37               | x2.2          | **0.5**    | 0.431                           | Rustc 1.26                        |
-| Swift                                         | 💚<br/>(9)      | 💚<br/>(1)     | 1.66               | x10           | 2.5        | 0.016 + Swift shared libraries  | Swift 4.1                         |
+| Swift                                         | 💚<br/>(9)      | 💚<br/>(1)     | 1.95               | x12           | 2.1        | 0.023 + Swift shared libraries  | Swift 5.0                         |
 
 (\*) C# has a noticeable VM start time (~0.4 seconds), but we still measure real
 execution time of the whole program.
@@ -224,6 +224,7 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 | Object Pascal "no-heap cheating"                  | 0.327              | x2            | 8          | 0.027 (static)                  | FPC 3.0.4                         |
 | Rust "unsafe pointers"                            | 0.217              | x1.32         | 0.5        | 0.427                           | Rustc 1.26.0                      |
 | Rust "safe mem::forget"                           | 0.239              | x1.45         | 0.5        | 0.427                           | Rustc 1.26.0                      |
+| Swift                                             | 0.745              | x4.5          | 2.1        | 0.027 + Swift shared libraries  | Swift 5.0                         |
 
 
 #### Mac OS (Mac OS 10.13, Intel Core i7-4770HQ CPU) (outdated)
