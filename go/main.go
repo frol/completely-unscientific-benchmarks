@@ -3,98 +3,110 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"time"
 )
 
-type Node struct {
-	X        int
-	Y        int
-	Left     *Node
-	Right    *Node
+func init() {
+	rand.Seed(time.Now().UnixNano())
 }
 
-func NewNode(v int) *Node {
-	y := rand.Int()
-	return &Node{
-		X:        v,
-		Y:        y,
-	}
-}
-
+// Tree represents a treap
 type Tree struct {
-	Root *Node
+	root *Node
 }
 
+// Insert inserts a value into the treap
+func (t *Tree) Insert(v int) {
+	t.root = t.root.Insert(v)
+}
+
+// Erase removes a value from the treap
+func (t *Tree) Erase(v int) {
+	t.root = t.root.Erase(v)
+}
+
+// HasValue checks if the treap contains a value
 func (t *Tree) HasValue(v int) bool {
-	splitted := split(t.Root, v)
-	res := splitted.Equal != nil
-	t.Root = merge3(splitted.Lower, splitted.Equal, splitted.Greater)
-	return res
+	return t.root.HasValue(v)
 }
 
-func (t *Tree) Insert(v int) error {
-	splitted := split(t.Root, v)
-	if splitted.Equal == nil {
-		splitted.Equal = NewNode(v)
+// Node represents a node in the treap
+type Node struct {
+	X, Y        int
+	Left, Right *Node
+}
+
+// NewNode creates a new node with a value and a random weight
+func NewNode(v int) *Node {
+	return &Node{
+		X: v,
+		Y: rand.Int(),
 	}
-	t.Root = merge3(splitted.Lower, splitted.Equal, splitted.Greater)
-	return nil
 }
 
-func (t *Tree) Erase(v int) error {
-	splitted := split(t.Root, v)
-	t.Root = merge(splitted.Lower, splitted.Greater)
-	return nil
+// HasValue checks if the current node, or related nodes, contain a value
+func (n *Node) HasValue(v int) bool {
+	lower, equal, greater := n.split(v)
+	merge(merge(lower, equal), greater)
+	return equal != nil
 }
 
-type SplitResult struct {
-	Lower   *Node
-	Equal   *Node
-	Greater *Node
-}
-
-func merge(lower, greater *Node) *Node {
-	if lower == nil {
-		return greater
+// Insert inserts a value in the correct place in or below the current node
+func (n *Node) Insert(v int) *Node {
+	lower, equal, greater := n.split(v)
+	if equal == nil {
+		equal = NewNode(v)
 	}
-
-	if greater == nil {
-		return lower
-	}
-
-	if lower.Y < greater.Y {
-		right := merge(lower.Right, greater)
-		lower.Right = right
-		return lower
-	}
-	left := merge(lower, greater.Left)
-	greater.Left = left
-	return greater
-}
-
-func merge3(lower, equal, greater *Node) *Node {
 	return merge(merge(lower, equal), greater)
 }
 
-func splitBinary(original *Node, value int) (*Node, *Node) {
-	if original == nil {
-		return nil, nil
-	}
+// Erase deletes a node with a specified value from the tree
+func (n *Node) Erase(v int) *Node {
+	lower, _, greater := n.split(v)
 
-	if original.X < value {
-		splitPair0, splitPair1 := splitBinary(original.Right, value)
-		original.Right = splitPair0
-		return original, splitPair1
-	}
-
-	splitPair0, splitPair1 := splitBinary(original.Left, value)
-	original.Left = splitPair1
-	return splitPair0, original
+	return merge(lower, greater)
 }
 
-func split(original *Node, value int) SplitResult {
-	lower, equalGreater := splitBinary(original, value)
-	equal, greater := splitBinary(equalGreater, value+1)
-	return SplitResult{lower, equal, greater}
+// split splits the tree between binary equal and greater node-links
+func (n *Node) split(v int) (lower, equal, greater *Node) {
+	var equalGreater *Node
+
+	lower, equalGreater = n.splitBinary(v)
+	equal, greater = equalGreater.splitBinary(v + 1)
+
+	return
+}
+
+// splitbinary splits the tree in twain on a value
+func (n *Node) splitBinary(v int) (left, right *Node) {
+	if n == nil {
+		return
+	}
+
+	if n.X < v {
+		left = n
+		n.Right, right = n.Right.splitBinary(v)
+	} else {
+		right = n
+		left, n.Left = n.Left.splitBinary(v)
+	}
+
+	return
+}
+
+// merge two nodes
+func merge(left, right *Node) (result *Node) {
+	if left == nil {
+		result = right
+	} else if right == nil {
+		result = left
+	} else if left.Y > right.Y {
+		result, left.Right = left, merge(left.Right, right)
+	} else {
+		result, right.Left = right, merge(left, right.Left)
+	}
+
+	return
 }
 
 func main() {
@@ -111,9 +123,8 @@ func main() {
 		} else if a == 1 {
 			t.Erase(cur)
 		} else if a == 2 {
-			has := t.HasValue(cur)
-			if has {
-				res += 1
+			if t.HasValue(cur) {
+				res++
 			}
 		}
 	}
