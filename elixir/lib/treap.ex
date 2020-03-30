@@ -1,6 +1,6 @@
 defmodule Treap do
   defmodule TreapNode do
-    defstruct x: nil, y: :rand.uniform(), left: nil, right: nil
+    defstruct x: nil, y: nil, left: nil, right: nil
   end
 
   def has_value?(root, x) do
@@ -14,7 +14,7 @@ defmodule Treap do
     splitted = BulkOps.split(root, x)
 
     if splitted.equal == nil do
-      BulkOps.merge3(splitted.lower, %TreapNode{x: x}, splitted.greater)
+      BulkOps.merge3(splitted.lower, %TreapNode{x: x, y: :rand.uniform()}, splitted.greater)
     else
       BulkOps.merge3(splitted.lower, splitted.equal, splitted.greater)
     end
