@@ -1,6 +1,6 @@
 defmodule Treap do
   defmodule TreapNode do
-    defstruct x: nil, y: nil, left: nil, right: nil
+    defstruct [:x, :y, :left, :right]
   end
 
   def has_value?(root, x) do

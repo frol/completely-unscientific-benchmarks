@@ -1,6 +1,6 @@
 defmodule BulkOps do
   defmodule SplitResult do
-    defstruct lower: nil, equal: nil, greater: nil
+    defstruct [:lower, :equal, :greater]
   end
 
   def merge(nil, greater), do: greater
