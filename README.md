@@ -225,6 +225,7 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 | Rust "unsafe pointers"                            | 0.202              | x1.21         | 0.38       | 0.207                           | Rustc 1.42.0                      |
 | Rust "safe mem::forget"                           | 0.227              | x1.36         | 0.38       | 0.207                           | Rustc 1.42.0                      |
 | Swift "unmanaged"                                 | 0.756              | x4.5          | 2          | 0.027 + Swift shared libraries  | Swift 5.1.5                       |
+| Swift "unsafe-mutable-buffer-pointer"             | 0.675              | x4            | 17         | 0.016 + Swift shared libraries  | Swift 5.1.5                       |
 
 
 #### Mac OS (Mac OS 10.13, Intel Core i7-4770HQ CPU) (outdated)

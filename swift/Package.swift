@@ -11,6 +11,9 @@ let package = Package(
         .executable(
             name: "main-naive",
             targets:["naive"]),
+        .executable(
+            name: "main-unsafe-mutable-buffer-pointer",
+            targets:["unsafe-mutable-buffer-pointer"]),
     ],
     dependencies: [],
     targets: [
@@ -19,6 +22,9 @@ let package = Package(
             dependencies: []),
         .target(
             name: "naive",
+            dependencies: []),
+        .target(
+            name: "unsafe-mutable-buffer-pointer",
             dependencies: []),
     ]
 )

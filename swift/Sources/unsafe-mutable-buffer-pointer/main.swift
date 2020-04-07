@@ -21,7 +21,7 @@ fileprivate class Tree {
         mRoot = merge(lower: splitted.lower, equal: splitted.equal, greater: splitted.greater)
         return splitted.equal != nil
     }
-    
+
     func insert(_ value: Int) {
         var splitted = split(root: mRoot, value: value)
         if splitted.equal == nil {
@@ -31,7 +31,7 @@ fileprivate class Tree {
         }
         mRoot = merge(lower: splitted.lower, equal: splitted.equal, greater: splitted.greater)
     }
-    
+
     func erase(_ value: Int) {
         let splited = split(root: mRoot, value: value)
         mRoot = merge(lower: splited.lower, greater: splited.greater)
