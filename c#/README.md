@@ -5,11 +5,11 @@ Author: Nate Woolls (@nwoolls), Eamon Nerbonne @EamonNerbonne
 ## Compile
 
 ```
-dotnet build -c release
+dotnet build -c Release -o ./main-naive
 ```
 
 ## Execute
 
 ```
-dotnet bin/release/netcoreapp2.0/Benchmark.dll
+./main-naive/Benchmark
 ```

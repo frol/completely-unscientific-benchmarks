@@ -6,10 +6,10 @@ let package = Package(
     name: "swift-benchmarks",
     products: [
         .executable(
-            name: "unmanaged",
+            name: "main-unmanaged",
             targets: ["unmanaged"]),
         .executable(
-            name: "naive",
+            name: "main-naive",
             targets:["naive"]),
     ],
     dependencies: [],

@@ -13,7 +13,7 @@ ldc2 -betterC main_tuned_no_rt.d -O3 -release -flto=full -of=main_tuned_no_rt-ld
 
 ```
 gdc main_naive_pointers.d -O3 -frelease -flto -o main_naive_pointers-gdc
-gdc -betterC main_tuned_no_rt.d -O3 -frelease -flto -o main_tuned_no_rt-gdc
+gdc main_tuned_no_rt.d -O3 -frelease -flto -o main_tuned_no_rt-gdc
 ```
 
 NOTE: To compile statically, add `-static` flag.

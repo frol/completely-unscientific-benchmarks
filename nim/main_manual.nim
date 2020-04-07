@@ -103,7 +103,7 @@ proc main() =
     else:
       discard
 
-  stdout.write res
+  echo res
   destroy tree
 
 when isMainModule:

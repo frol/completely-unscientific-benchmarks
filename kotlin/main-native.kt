@@ -90,7 +90,7 @@ class Tree
 
 fun main(args: Array<String>) 
 {
-    srand(time(null).toInt())
+    srand(time(null).toUInt())
     val tree = Tree()
     var cur = 5;
     var res = 0

@@ -5,7 +5,7 @@ Author: Stas Minakov (@supermina999)
 ## Compile
 
 ```
-fpc -O3 -o main-fpc main.pas
+fpc -O3 -omain-fpc main.pas
 ```
 
 ## Execute

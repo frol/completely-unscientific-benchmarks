@@ -1,3 +1,5 @@
+#!/bin/env ruby
+
 class Node
   attr_accessor :x, :y, :left, :right
 

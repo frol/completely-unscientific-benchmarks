@@ -138,6 +138,6 @@ int main()
             res += tree.hasValue(cur);
         }
     }
-    std::cout << res;
+    std::cout << res << std::endl;
     return 0;
 }

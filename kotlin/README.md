@@ -24,7 +24,7 @@ java -jar -Xms50M -Xmx50M main-kt.jar
 ## Compile
 
 ```
-kotlinc-native -opt -o main-kt main.kt
+kotlinc-native -opt -o main-kt main-native.kt
 ```
 
 ## Execute

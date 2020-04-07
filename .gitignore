@@ -1,3 +1,4 @@
+*.o
 *.class
 *-gcc
 *-clang

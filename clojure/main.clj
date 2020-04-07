@@ -1,4 +1,4 @@
-#!/usr/bin/env clj
+#!/usr/bin/env clojure
 
 ;; Exponentiation:
 (defn ** [x n] (reduce * (repeat n x)))

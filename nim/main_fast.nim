@@ -82,7 +82,7 @@ proc main() =
     else:
       discard
 
-  stdout.write res
+  echo res
 
 when isMainModule:
   main()

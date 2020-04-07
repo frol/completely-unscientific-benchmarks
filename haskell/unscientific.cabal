@@ -1,0 +1,28 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 37d467e53e9d9a81b9ede5d19b027c57e80dd67165384babaa15fc211bd1312d
+
+name:           unscientific
+version:        0.0.0
+author:         Franklin Chen
+maintainer:     franklinchen@franklinchen.com
+build-type:     Simple
+extra-source-files:
+    README.md
+
+executable unscientific
+  main-is: Main.hs
+  other-modules:
+      Paths_unscientific
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -O2 -rtsopts
+  build-depends:
+      base >=4 && <=5
+    , mwc-random
+    , primitive
+  default-language: Haskell2010

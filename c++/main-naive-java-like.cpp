@@ -94,6 +94,6 @@ int main() {
       result += treap.HasValue(current);
     }
   }
-  std::cout << result;
+  std::cout << result << std::endl;
   return 0;
 }

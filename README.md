@@ -88,40 +88,41 @@ All tables are sorted in an alphabetical order.
 
 | Language                                      | e12s            | M.C.           | Real Time, seconds | Slowdown Time | Memory, MB | Binary Size, MB                 | Compiler Version                  |
 | --------------------------------------------- |:---------------:|:--------------:| ------------------ |:-------------:| ---------- | ------------------------------- | --------------------------------- |
-| *Best tuned solution*                         |                 |                | **0.165**          | x1            | **0.25**   |                                 |                                   |
-| Ada "naive unsafe raw pointers"               | 💛<br/>(6)      | 💔<br/>(8)     | 0.24               | x1.45         | **0.4**    | 0.278                           | GCC Ada 8.1.0                     |
-| C++ "java-like" (clang)                       | 💙<br/>(7)      | 💙<br/>(5)     | 0.33               | x2            | **0.5**    | 0.015 + libstdc++               | Clang 6.0.0                       |
-| C++ "java-like" (gcc)                         | 💙<br/>(7)      | 💙<br/>(5)     | 0.37               | x2.2          | **0.5**    | 0.043 + libstdc++               | GCC 8.1.0                         |
-| C++ "naive unsafe raw pointers" (clang)       | 💛<br/>(6)      | 💔<br/>(8)     | 0.20               | x1.21         | **0.4**    | 0.011 + libstdc++               | Clang 6.0.0                       |
-| **C++ "naive unsafe raw pointers" (gcc)**     | 💛<br/>(6)      | 💔<br/>(8)     | **0.19**           | x1.15         | **0.4**    | 0.023 + libstdc++               | GCC 8.1.0                         |
-| C++ "naive `shared_ptr`" (clang)              | 💛<br/>(6)      | 💛<br/>(6)     | 0.36               | x2.2          | **0.5**    | 0.015 + libstdc++               | Clang 6.0.0                       |
-| C++ "naive `shared_ptr`" (gcc)                | 💛<br/>(6)      | 💛<br/>(6)     | 0.35               | x2.1          | **0.5**    | 0.047 + libstdc++               | GCC 8.1.0                         |
-| C#                                            | 💚<br/>(9)      | 💚<br/>(1)     | 0.70\*             | x4.2          | 11         | N/A                             | .NET Core 2.0                     |
-| Crystal                                       | 💚<br/>(10)     | 💚<br/>(1)     | 0.30               | x1.8          | 1.6        | 0.135                           | Crystal 0.25.1                    |
-| D "garbage collected"                         | 💚<br/>(9)      | 💚<br/>(1)     | 0.27               | x1.6          | 1.6        | 0.019 + D runtime               | LDC 1.9.0                         |
-| D "naive unsafe raw pointers"                 | 💙<br/>(8)      | 💛<br/>(6)     | 0.24               | x1.45         | 1.6        | 0.019 + D runtime               | LDC 1.9.0                         |
-| Go "with pointers"                            | 💚<br/>(9)      | 💛<br/>(6)     | 0.38               | x2.3          | 5.8        | 1.2 (static)                    | Go 1.10.2                         |
-| Haskell                                       | ?               | ?              | 0.87               | x5.3          | 3.4        | 3.8                             | GHC 8.2.2                         |
-| JavaScript                                    | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 1.12               | x6.8          | 52         | N/A                             | Node.js 10.1.0                    |
-| Java (no-limit / `-Xm*50M`)                   | 💚<br/>(9)      | 💚<br/>(1)     | 0.50 / 0.50        | x3            | 142 / 29   | N/A                             | OpenJDK 1.8.0                     |
-| Kotlin/JVM (no-limit / `-Xm*50M`)             | 💚<br/>(9)      | 💚<br/>(1)     | 0.53 / 0.51        | x3.2          | 144 / 30   | N/A                             | Kotlinc 1.2.40 + OpenJDK 1.8.0    |
-| Kotlin/Native                                 | 💚<br/>(9)      | 💚<br/>(1)     | 5.88               | x36           | 1.2        | 0.239                           | Kotlinc-native 0.7                |
-| Lua                                           | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.82               | x23           | 2.8        | N/A                             | Lua 5.3.4                         |
-| LuaJIT                                        | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 0.96               | x5.9          | 2.0        | N/A                             | LuaJIT 2.0.5                      |
-| Modula-2                                      | ?               | ?              | 0.20               | x1.21         | **0.5**    | 0.1 + libstdc++                 | gm2 GCC 8.2.0                     |
+| *Best tuned solution*                         |                 |                | **0.167**          | x1            | **0.25**   |                                 |                                   |
+| Ada "naive unsafe raw pointers"               | 💛<br/>(6)      | 💔<br/>(8)     | 0.24               | x1.44         | **0.4**    | 0.292                           | GCC Ada 9.3.0                     |
+| C++ "java-like" (clang)                       | 💙<br/>(7)      | 💙<br/>(5)     | 0.33               | x2            | **0.5**    | 0.018 + libstdc++               | Clang 9.0.1                       |
+| C++ "java-like" (gcc)                         | 💙<br/>(7)      | 💙<br/>(5)     | 0.35               | x2.1          | **0.5**    | 0.039 + libstdc++               | GCC 9.3.0                         |
+| C++ "naive unsafe raw pointers" (clang)       | 💛<br/>(6)      | 💔<br/>(8)     | 0.20               | x1.2          | **0.4**    | 0.014 + libstdc++               | Clang 9.0.1                       |
+| **C++ "naive unsafe raw pointers" (gcc)**     | 💛<br/>(6)      | 💔<br/>(8)     | **0.19**           | x1.14         | **0.4**    | 0.026 + libstdc++               | GCC 9.3.0                         |
+| C++ "naive `shared_ptr`" (clang)              | 💛<br/>(6)      | 💛<br/>(6)     | 0.36               | x2.1          | **0.5**    | 0.018 + libstdc++               | Clang 9.0.1                       |
+| C++ "naive `shared_ptr`" (gcc)                | 💛<br/>(6)      | 💛<br/>(6)     | 0.35               | x2.1          | **0.5**    | 0.051 + libstdc++               | GCC 9.3.0                         |
+| C#                                            | 💚<br/>(9)      | 💚<br/>(1)     | 0.73\*             | x4.4          | 10         | N/A                             | .NET Core 3.1                     |
+| Crystal                                       | 💚<br/>(10)     | 💚<br/>(1)     | 0.28               | x1.7          | 1.6        | 0.220                           | Crystal 0.33.0                    |
+| D "garbage collected"                         | 💚<br/>(9)      | 💚<br/>(1)     | 0.26               | x1.5          | 1.6        | 0.026 + D runtime               | LDC 1.20.1                        |
+| D "naive unsafe raw pointers"                 | 💙<br/>(8)      | 💛<br/>(6)     | 0.23               | x1.4          | 1.6        | 0.019 + D runtime               | LDC 1.20.1                        |
+| F#                                            | ?               | ?              | 2.20               | x13           | 26         | 0.012 + mono runtime            | F# 10.2.3 + Mono 6.4.0            |
+| Go "with pointers"                            | 💚<br/>(9)      | 💛<br/>(6)     | 0.37               | x2.2          | 6.8        | 1.9 (static)                    | Go 1.14.1                         |
+| Haskell                                       | ?               | ?              | 0.95               | x5.7          | 3.4        | 4.1                             | GHC 8.8.3                         |
+| JavaScript                                    | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 1.03               | x6.2          | 49         | N/A                             | Node.js 13.12.0                   |
+| Java (no-limit / `-Xm*50M`)                   | 💚<br/>(9)      | 💚<br/>(1)     | 0.68 / 0.64        | x4.1          | 172 / 47   | N/A                             | OpenJDK 13.0.2                    |
+| Kotlin/JVM (no-limit / `-Xm*50M`)             | 💚<br/>(9)      | 💚<br/>(1)     | 0.72 / 0.67        | x4.3          | 174 / 49   | N/A                             | Kotlinc 1.3.70 + OpenJDK 13.0.2   |
+| Kotlin/Native                                 | 💚<br/>(9)      | 💚<br/>(1)     | 3.08               | x18           | 1.4        | 0.212                           | Kotlinc-native 1.3.71             |
+| Lua                                           | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.70               | x22           | 2.8        | N/A                             | Lua 5.3.5                         |
+| LuaJIT                                        | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 0.94               | x5.6          | 1.9        | N/A                             | LuaJIT 2.0.5                      |
+| Modula-2                                      | ?               | ?              | 0.20               | x1.2          | **0.5**    | 0.1 + libstdc++                 | gm2 GCC 8.2.0                     |
 | Modula-3                                      | ?               | ?              | 0.47               | x2.8          | 1.8        | 1.0                             | Critical Mass Modula-3 d5.10.0    |
-| Nim                                           | 💚<br/>(9)      | 💚<br/>(1)     | 0.47               | x2.8          | **0.5**    | 0.054                           | Nim 0.19 / GCC 8.2.1              |
-| Oberon-07                                     | ?               | ?              | 0.24               | x1.45         | 1.3        | 0.031                           | OBNC 0.14.0                       |
-| Object Pascal "naive unsafe raw pointers"     | 💛<br/>(6)      | 💔<br/>(8)     | 0.37               | x2.2          | 0.38       | **0.028 (static)**              | FPC 3.0.4                         |
-| OCaml                                         | ?               | ?              | 0.69               | x4.2          | 3.8        | N/A                             | OCaml 4.06                        |
-| PHP                                           | 💚<br/>(9)      | 💙<br/>(3)\*\* | 4.44               | x27           | 5.8        | N/A                             | PHP 7.2.5                         |
-| Python (CPython)                              | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 11.15              | x68           | 5          | N/A                             | CPython 3.7                       |
-| Python (Cython)                               | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 5.88               | x36           | 5          | N/A                             | Cython 0.29.2                     |
-| Python (PyPy)                                 | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.40               | x20           | 48.5       | N/A                             | PyPy 6.0.0                        |
-| Ruby                                          | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 6.65               | x40           | 5          | N/A                             | Ruby 2.5.3                        |
-| Rust "idiomatic"                              | 💙<br/>(8)      | 💚<br/>(2)     | 0.37\*\*\*         | x2.2          | **0.5**    | 0.427                           | Rustc 1.26                        |
-| Rust "ref-counted"                            | 💛<br/>(6)      | 💙<br/>(5)     | 0.37               | x2.2          | **0.5**    | 0.431                           | Rustc 1.26                        |
-| Swift                                         | 💚<br/>(9)      | 💚<br/>(1)     | 1.95               | x12           | 2.1        | 0.023 + Swift shared libraries  | Swift 5.0                         |
+| Nim                                           | 💚<br/>(9)      | 💚<br/>(1)     | 0.48               | x2.9          | **0.5**    | 0.059                           | Nim 1.2.0 / GCC 9.3.0              |
+| Oberon-07                                     | ?               | ?              | 0.24               | x1.4          | 1.3        | 0.031                           | OBNC 0.14.0                       |
+| Object Pascal "naive unsafe raw pointers"     | 💛<br/>(6)      | 💔<br/>(8)     | 0.35               | x2.1          | **0.4**    | 0.192 (static)                  | FPC 3.0.4                         |
+| OCaml                                         | ?               | ?              | 0.72               | x4.3          | 3.5        | N/A                             | OCaml 4.09.1                      |
+| PHP                                           | 💚<br/>(9)      | 💙<br/>(3)\*\* | 3.60               | x21           | 5          | N/A                             | PHP 7.4.4                         |
+| Python (CPython)                              | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 9.10               | x54           | 3.5        | N/A                             | CPython 3.8.2                     |
+| Python (Cython)                               | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 5.01               | x30           | 3.5        | N/A                             | Cython 0.29.16                    |
+| Python (PyPy)                                 | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.40               | x20           | 57         | N/A                             | PyPy3 7.3.0                       |
+| Ruby                                          | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 6.05               | x36           | 9          | N/A                             | Ruby 2.7.1                        |
+| Rust "idiomatic"                              | 💙<br/>(8)      | 💚<br/>(2)     | 0.31\*\*\*         | x1.8          | **0.4**    | 0.207                           | Rustc 1.42.0                      |
+| Rust "ref-counted"                            | 💛<br/>(6)      | 💙<br/>(5)     | 0.32               | x1.9          | **0.5**    | 0.211                           | Rustc 1.42.0                      |
+| Swift                                         | 💚<br/>(9)      | 💚<br/>(1)     | 1.98               | x12           | 1.9        | 0.016 + Swift shared libraries  | Swift 5.1.5                       |
 
 (\*) C# has a noticeable VM start time (~0.4 seconds), but we still measure real
 execution time of the whole program.
@@ -163,7 +164,7 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 | Swift                             | 1.72               | x6.9          | 0.019 + Swift shared libraries   | Apple Swift version 4.1                       |
 </p>
 </details>
-  
+
 #### Windows (Windows 10, x64, Intel Core i7-6700HQ CPU) (outdated)
 
 <details>
@@ -203,28 +204,27 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 
 | Language                                          | Real Time, seconds | Slowdown Time | Memory, MB | Binary Size, MB                 | Compiler Version                  |
 | ------------------------------------------------- | ------------------ |:-------------:| ---------- | ------------------------------- | -------------------------------   |
-| C++ "tuned raw pointers" (clang)                  | 0.182              | x1.10         | 0.5        | 0.011 + libstdc++               | Clang 6.0.0                       |
-| C++ "tuned raw pointers" (gcc)                    | 0.175              | x1.06         | 0.38       | 0.019 + libstdc++               | GCC 8.1.0                         |
-| C++ "tuned raw pointers" (gcc & static)           | 0.172              | x1.04         | **0.25**   | 1.7 (static)                    | GCC 8.1.0                         |
-| C++ "raw pointers with pool" (clang)              | 0.174              | x1.05         | 0.38       | 0.011 + libstdc++               | Clang 6.0.0                       |
-| **C++ "raw pointers with pool" (gcc)**            | **0.167**          | x1.01         | 0.38       | 0.015 + libstdc++               | GCC 8.1.0                         |
-| **C++ "raw pointers with pool" (gcc & static)**   | **0.165**          | **x1**        | **0.25**   | 1.7 (static)                    | GCC 8.1.0                         |
-| C++ `unique_ptr` (clang)                          | 0.248              | x1.5          | 0.38       | 0.011 + libstdc++               | Clang 6.0.0                       |
-| C++ `unique_ptr` (gcc)                            | 0.248              | x1.5          | 0.38       | 0.043 + libstdc++               | GCC 8.1.0                         |
-| D "no D runtime"                                  | 0.193              | x1.17         | 0.38       | 0.011                           | LDC 1.9.0                         |
-| D "no D runtime" `-static`                        | 0.193              | x1.17         | **0.25**   | 0.643 (static)                  | LDC 1.9.0                         |
-| Go "with sync pool"                               | 0.368              | x2.2          | 1.0        | 1.2 (static)                    | Go 1.10.2                         |
-| Haskell `+RTS -H128m`                             | 0.835              | x5.1          | 134        | 3.8                             | GHC 8.2.2                         |
-| Modula-3 "untraced references"                    | 0.244              | x1.5          | 0.8        | 1.0                             | Critical Mass Modula-3 d5.10.0    |
-| Nim `--gc:markAndSweep`                           | 0.244              | x1.5          | 0.8        | 0.058                           | Nim 0.19 / GCC 8.2.1              |
-| Nim "fast"                                        | 0.350              | x2.1          | 0.5        | 0.054                           | Nim 0.19 / GCC 8.2.1              |
-| Nim "fast" `--gc:markAndSweep`                    | 0.180              | x1.09         | 0.8        | 0.050                           | Nim 0.19 / GCC 8.2.1              |
-| Nim "manual memory management"                    | 0.177              | x1.07         | 0.38       | 0.046                           | Nim 0.19 / GCC 8.2.1              |
-| Nim "manual" (static)                             | 0.178              | x1.08         | 0.38       | 0.8 (static)                    | Nim 0.19 / GCC 8.2.1              |
-| Object Pascal "no-heap cheating"                  | 0.327              | x2            | 8          | 0.027 (static)                  | FPC 3.0.4                         |
-| Rust "unsafe pointers"                            | 0.217              | x1.32         | 0.5        | 0.427                           | Rustc 1.26.0                      |
-| Rust "safe mem::forget"                           | 0.239              | x1.45         | 0.5        | 0.427                           | Rustc 1.26.0                      |
-| Swift                                             | 0.745              | x4.5          | 2.1        | 0.027 + Swift shared libraries  | Swift 5.0                         |
+| C++ "tuned raw pointers" (clang)                  | 0.181              | x1.08         | 0.38       | 0.011 + libstdc++               | Clang 9.0.1                       |
+| C++ "tuned raw pointers" (gcc)                    | 0.175              | x1.04         | 0.38       | 0.019 + libstdc++               | GCC 9.3.0                         |
+| C++ "tuned raw pointers" (gcc & static)           | 0.175              | x1.04         | **0.25**   | 1.7 (static)                    | GCC 9.3.0                         |
+| C++ "raw pointers with pool" (clang)              | 0.176              | x1.05         | 0.38       | 0.011 + libstdc++               | Clang 9.0.1                       |
+| **C++ "raw pointers with pool" (gcc)**            | **0.169**          | x1.01         | 0.38       | 0.015 + libstdc++               | GCC 9.3.0                         |
+| **C++ "raw pointers with pool" (gcc & static)**   | **0.167**          | **x1**        | **0.25**   | 1.7 (static)                    | GCC 9.3.0                         |
+| C++ `unique_ptr` (clang)                          | 0.240              | x1.4          | 0.38       | 0.011 + libstdc++               | Clang 9.0.1                       |
+| C++ `unique_ptr` (gcc)                            | 0.246              | x1.4          | 0.38       | 0.043 + libstdc++               | GCC 9.3.0                         |
+| D "no D runtime"                                  | 0.183              | x1.09         | 0.38       | 0.011                           | LDC 1.20.1                        |
+| D "no D runtime" `-static`                        | 0.187              | x1.12         | **0.25**   | 0.7 (static)                    | LDC 1.20.1                        |
+| Go "with sync pool"                               | 0.348              | x2.1          | 1.8        | 1.2 (static)                    | Go 1.14.1                         |
+| Modula-3 "untraced references"                    | 0.244              | x1.4          | 0.8        | 1.0                             | Critical Mass Modula-3 d5.10.0    |
+| Nim `--gc:markAndSweep`                           | 0.244              | x1.4          | 0.8        | 0.058                           | Nim 1.2.0 / GCC 9.3.0             |
+| Nim "fast"                                        | 0.357              | x2.1          | 0.5        | 0.054                           | Nim 1.2.0 / GCC 9.3.0             |
+| Nim "fast" `--gc:markAndSweep`                    | 0.178              | x1.06         | 0.8        | 0.050                           | Nim 1.2.0 / GCC 9.3.0             |
+| Nim "manual memory management"                    | 0.177              | x1.06         | 0.5        | 0.046                           | Nim 1.2.0 / GCC 9.3.0             |
+| Nim "manual" (static)                             | 0.178              | x1.06         | 0.38       | 0.8 (static)                    | Nim 1.2.0 / GCC 9.3.0             |
+| Object Pascal "no-heap cheating"                  | 0.311              | x1.8          | 8          | 0.027 (static)                  | FPC 3.0.4                         |
+| Rust "unsafe pointers"                            | 0.202              | x1.21         | 0.38       | 0.207                           | Rustc 1.42.0                      |
+| Rust "safe mem::forget"                           | 0.227              | x1.36         | 0.38       | 0.207                           | Rustc 1.42.0                      |
+| Swift "unmanaged"                                 | 0.756              | x4.5          | 2          | 0.027 + Swift shared libraries  | Swift 5.1.5                       |
 
 
 #### Mac OS (Mac OS 10.13, Intel Core i7-4770HQ CPU) (outdated)

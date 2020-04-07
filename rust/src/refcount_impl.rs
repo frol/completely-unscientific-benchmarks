@@ -1,4 +1,3 @@
-use rand;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -94,19 +93,19 @@ pub struct Tree {
     root: NodePtr,
 }
 
-impl Tree {
-    pub fn new() -> Self {
+impl crate::TreeTrait for Tree {
+    fn new() -> Self {
         Self { root: None }
     }
 
-    pub fn has_value(&mut self, x: i32) -> bool {
+    fn has_value(&mut self, x: i32) -> bool {
         let splited = split(self.root.take(), x);
         let res = splited.equal.is_some();
         self.root = merge3(splited.lower, splited.equal, splited.greater);
         res
     }
 
-    pub fn insert(&mut self, x: i32) {
+    fn insert(&mut self, x: i32) {
         let mut splited = split(self.root.take(), x);
         if splited.equal.is_none() {
             splited.equal = Some(Rc::new(RefCell::new(Node::new(x))))
@@ -114,7 +113,7 @@ impl Tree {
         self.root = merge3(splited.lower, splited.equal, splited.greater);
     }
 
-    pub fn erase(&mut self, x: i32) {
+    fn erase(&mut self, x: i32) {
         let splited = split(self.root.take(), x);
         self.root = merge(splited.lower, splited.greater);
     }

@@ -1,16 +1,11 @@
 [package]
-name = "rust"
+name = "main"
 version = "0.1.0"
-authors = []
+authors = ["Vlad Frolov <frolvlad@gmail.com>"]
+edition = "2018"
 
 [dependencies]
-rand = "0.4.2"
-
-[features]
-refcount = []
-idiomatic = []
-unsafe = []
-swap_forget = []
+rand = "0.7.3"
 
 [profile.release]
 lto = true

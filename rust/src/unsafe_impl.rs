@@ -1,5 +1,3 @@
-extern crate rand;
-
 use std::ptr::null_mut;
 
 type NodePtr = *mut Node;
@@ -104,12 +102,12 @@ impl Drop for Tree {
     }
 }
 
-impl Tree {
-    pub fn new() -> Self {
+impl crate::TreeTrait for Tree {
+    fn new() -> Self {
         Self { root: null_mut() }
     }
 
-    pub fn has_value(&mut self, x: i32) -> bool {
+    fn has_value(&mut self, x: i32) -> bool {
         let mut lower = null_mut();
         let mut equal = null_mut();
         let mut greater = null_mut();
@@ -119,7 +117,7 @@ impl Tree {
         res
     }
 
-    pub fn insert(&mut self, x: i32) {
+    fn insert(&mut self, x: i32) {
         let mut lower = null_mut();
         let mut equal = null_mut();
         let mut greater = null_mut();
@@ -131,7 +129,7 @@ impl Tree {
         merge3(lower, equal, greater, &mut self.root);
     }
 
-    pub fn erase(&mut self, x: i32) {
+    fn erase(&mut self, x: i32) {
         let mut lower = null_mut();
         let mut equal = null_mut();
         let mut greater = null_mut();

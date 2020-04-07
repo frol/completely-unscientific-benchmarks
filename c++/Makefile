@@ -1,26 +1,30 @@
-TARGETS = \
-		main-naive-java-like \
-		main-naive-raw \
-		main-naive-shared_ptr \
-		main-tuned-raw \
-		main-tuned-raw-with-pool \
-		main-tuned-unique_ptr
+SRC_FILES = $(wildcard *.cpp)
+TARGETS = $(SRC_FILES:main-%.cpp=%)
+
+ALL_BINARIES = $(TARGETS:%=main-%-clang) $(TARGETS:%=main-%-clang-static) $(TARGETS:%=main-%-gcc) $(TARGETS:%=main-%-gcc-static)
 
 .PHONY: all
-all: $(TARGETS:%=%-clang) $(TARGETS:%=%-clang-static) $(TARGETS:%=%-gcc) $(TARGETS:%=%-gcc-static)
+all: $(ALL_BINARIES)
 
-$(TARGETS:%=%-clang): %-clang : %.cpp
+%-clang: %.cpp
 	clang++ -O3 --std=c++17 -flto -s -o $@ $<
 
-$(TARGETS:%=%-clang-static): %-clang-static : %.cpp
+%-clang-static : %.cpp
 	/usr/bin/clang++ -O3 --std=c++17 -flto -s -static -o $@ $<
 
-$(TARGETS:%=%-gcc): %-gcc : %.cpp
+%-gcc : %.cpp
 	g++ -O3 --std=c++17 -flto -s -o $@ $<
 
-$(TARGETS:%=%-gcc-static): %-gcc-static : %.cpp
+%-gcc-static : %.cpp
 	g++ -O3 --std=c++17 -flto -s -static -o $@ $<
 
 .PHONY: clean
 clean:
-	rm $(TARGETS:%=%-clang) $(TARGETS:%=%-clang-static) $(TARGETS:%=%-gcc) $(TARGETS:%=%-gcc-static)
+	rm $(ALL_BINARIES)
+
+RUN_ALL_BINARIES = $(ALL_BINARIES:%=run-%)
+$(RUN_ALL_BINARIES): run-% : %
+	./$<
+
+.PHONY: run
+run: $(RUN_ALL_BINARIES)
