@@ -133,8 +133,9 @@ from the maintenance perspective.
 (\*\*\*) With [a minor
 update](https://barrielle.cedeela.fr/research_page/dropping-drops.html)
 ([PR #52](https://github.com/frol/completely-unscientific-benchmarks/pull/52)),
-Rust solution gets a significant speedup while still keeping its safety
-guarantees (see the result in the "Tuned Implementations Scoreboard" below).
+Rust solution gets a [~significant~](https://github.com/frol/completely-unscientific-benchmarks/pull/84)
+speedup while still keeping its safety guarantees (see the result in the
+"Tuned Implementations Scoreboard" below).
 
 #### Mac OS (Mac OS 10.13, Intel Core i7-4770HQ CPU) (outdated)
 
@@ -263,7 +264,7 @@ guarantees (see the result in the "Tuned Implementations Scoreboard" below).
 D demonstrated the best performance among garbage-collected solutions. It even
 managed to outperform Object Pascal solution which used raw pointers and manual
 memory management, as well as naive C++ `shared_ptr`-based implementations and
-naive "idiomatic" Rust implementation.
+naive "ref-counted" solution in Rust.
 
 C++ "ref-counted" (`shared_ptr`) has significant performance hit on non-Linux
 platforms.
