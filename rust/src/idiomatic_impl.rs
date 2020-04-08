@@ -26,10 +26,10 @@ fn merge(lower: NodeCell, greater: NodeCell) -> NodeCell {
 
         (Some(mut lower_node), Some(mut greater_node)) => {
             if lower_node.y < greater_node.y {
-                lower_node.right = merge(lower_node.right.take(), Some(greater_node));
+                lower_node.right = merge(lower_node.right, Some(greater_node));
                 Some(lower_node)
             } else {
-                greater_node.left = merge(Some(lower_node), greater_node.left.take());
+                greater_node.left = merge(Some(lower_node), greater_node.left);
                 Some(greater_node)
             }
         }
@@ -39,11 +39,11 @@ fn merge(lower: NodeCell, greater: NodeCell) -> NodeCell {
 fn split_binary(orig: NodeCell, value: i32) -> (NodeCell, NodeCell) {
     if let Some(mut orig_node) = orig {
         if orig_node.x < value {
-            let split_pair = split_binary(orig_node.right.take(), value);
+            let split_pair = split_binary(orig_node.right, value);
             orig_node.right = split_pair.0;
             (Some(orig_node), split_pair.1)
         } else {
-            let split_pair = split_binary(orig_node.left.take(), value);
+            let split_pair = split_binary(orig_node.left, value);
             orig_node.left = split_pair.1;
             (split_pair.0, Some(orig_node))
         }
