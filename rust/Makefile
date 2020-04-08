@@ -6,7 +6,7 @@ ALL_BINARIES = $(TARGETS:%=main-%)
 .PHONY: all
 all: $(ALL_BINARIES)
 
-%: src/bin/%.rs
+%: src/bin/%.rs src/*.rs Cargo.toml Cargo.lock
 	cargo build --release --bin $@
 	mv ./target/release/$@ $@
 	strip -s $@

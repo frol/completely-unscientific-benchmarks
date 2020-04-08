@@ -120,7 +120,7 @@ All tables are sorted in an alphabetical order.
 | Python (Cython)                               | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 5.01               | x30           | 3.5        | N/A                             | Cython 0.29.16                    |
 | Python (PyPy)                                 | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 3.40               | x20           | 57         | N/A                             | PyPy3 7.3.0                       |
 | Ruby                                          | 💚<br/>(10)\*\* | 💙<br/>(3)\*\* | 6.05               | x36           | 9          | N/A                             | Ruby 2.7.1                        |
-| Rust "idiomatic"                              | 💙<br/>(8)      | 💚<br/>(2)     | 0.31\*\*\*         | x1.8          | **0.4**    | 0.207                           | Rustc 1.42.0                      |
+| Rust "idiomatic"                              | 💙<br/>(8)      | 💚<br/>(2)     | 0.23\*\*\*         | x1.4          | **0.4**    | 0.207                           | Rustc 1.42.0                      |
 | Rust "ref-counted"                            | 💛<br/>(6)      | 💙<br/>(5)     | 0.32               | x1.9          | **0.5**    | 0.211                           | Rustc 1.42.0                      |
 | Swift                                         | 💚<br/>(9)      | 💚<br/>(1)     | 1.98               | x12           | 1.9        | 0.016 + Swift shared libraries  | Swift 5.1.5                       |
 
