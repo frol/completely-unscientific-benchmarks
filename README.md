@@ -283,6 +283,12 @@ Nim, D, and Rust can go as fast as C/C++ can when you switch to "unsafe" manual 
 With CPython vs PyPy you trade speed for memory.
 
 
+## Conversations
+
+On Reddit in 2020: [r/rust](https://www.reddit.com/r/rust/comments/fwynp1/invisible_performance_wins/).
+
+On Reddit in 2018: [r/programming](https://www.reddit.com/r/programming/comments/8jbfa7/naive_benchmark_treap_implementation_of_c_rust/), [r/rust](https://www.reddit.com/r/rust/comments/8jbjku/naive_benchmark_treap_implementation_of_c_rust/), [r/ada](https://www.reddit.com/r/ada/comments/8jmdko/naive_benchmark_treap_implementation_of_ada_c/), [r/python](https://www.reddit.com/r/Python/comments/8jm3ee/naive_benchmark_treap_implementation_of_python/), [r/swift](https://www.reddit.com/r/swift/comments/8jfte4/naive_benchmark_treap_implementation_of_c_rust/), [r/dlang](https://www.reddit.com/r/dlang/comments/8jjafb/naive_benchmark_treap_implementation_of_d_c_rust/), [r/kotlin](https://www.reddit.com/r/Kotlin/comments/8jg5zf/naive_benchmark_treap_implementation_of_c_rust/), [r/javascript](https://www.reddit.com/r/javascript/comments/8jc2te/naive_benchmark_treap_implementation_of_c_rust/), [r/nim](https://www.reddit.com/r/nim/comments/8jbmml/naive_benchmark_treap_implementation_of_c_rust/), 
+
 ## License
 
 Completely Unscientific Benchmarks project is licensed under either of
