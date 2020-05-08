@@ -8,16 +8,16 @@ Author: Vlad Frolov (@frol)
 nim compile -d:release --passC:-flto --passL:-s --out:main-nim main.nim
 ```
 
-For maximum performance ([memory is the trade-off](https://github.com/frol/completely-unscientific-benchmarks/pull/1), currently a bug in Nim 0.18.0, fixed in devel):
+For a faster version that still uses the GC and returns a compound type:
 
 ```
-nim compile -d:release --passC:-flto --passL:-s --gc:markAndSweep --out:main-nim main.nim
+nim compile -d:release --passC:-flto --passL:-s --gc:arc --out:main-nim main.nim
 ```
 
-For a faster version that still uses the GC, but breaks the pattern of returning a compound type (like the C++ raw-pointer version):
+For an even faster version that still uses the GC, but breaks the pattern of returning a compound type (like the C++ raw-pointer version):
 
 ```
-nim compile -d:release --passC:-flto --passL:-s --gc:markAndSweep --out:main-nim main_fast.nim
+nim compile -d:release --passC:-flto --passL:-s --gc:arc --out:main-nim main_fast.nim
 ```
 
 For a version using manual memory allocation (so much less memory used):
