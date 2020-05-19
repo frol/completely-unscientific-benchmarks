@@ -12,10 +12,10 @@ all: $(ALL_BINARIES)
 	nim compile -d:release --passC:-flto --passL:-s --out:$@ $<
 
 %-arc_gc: %.nim
-	nim compile -d:release --passC:-flto --passL:-s --gc:arc --out:$@ $<
+	nim compile -d:danger --passC:-flto --passL:-s --gc:arc --out:$@ $<
 
 %-no_gc: %.nim
-	nim compile -d:release --passC:-flto --passL:-s --gc:none --out:$@ $<
+	nim compile -d:danger --passC:-flto --passL:-s --gc:none --out:$@ $<
 
 RUN_ALL_BINARIES = $(ALL_BINARIES:main_%=run-%)
 
