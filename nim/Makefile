@@ -1,7 +1,7 @@
 SRC_FILES = $(wildcard *.nim)
 TARGETS = $(SRC_FILES:main_%.nim=%)
 
-ALL_BINARIES = $(TARGETS:%=main_%) main_fast-arc_gc main_manual-no_gc
+ALL_BINARIES = $(TARGETS:%=main_%) main_fast-mark_and_sweep main_manual-no_gc
 
 .PHONY: all
 all: $(ALL_BINARIES)
@@ -11,8 +11,8 @@ all: $(ALL_BINARIES)
 %: %.nim
 	nim compile -d:release --passC:-flto --passL:-s --out:$@ $<
 
-%-arc_gc: %.nim
-	nim compile -d:danger --passC:-flto --passL:-s --gc:arc --out:$@ $<
+%-mark_and_sweep: %.nim
+	nim compile -d:danger --passC:-flto --passL:-s --gc:markAndSweep --out:$@ $<
 
 %-no_gc: %.nim
 	nim compile -d:danger --passC:-flto --passL:-s --gc:none --out:$@ $<
