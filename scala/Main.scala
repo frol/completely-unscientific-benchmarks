@@ -1,78 +1,79 @@
 import scala.annotation.tailrec
 import scala.util.Random
 
-
-class SplitResult(var lower: Node, var equal: Node, var greater: Node) {
+case class SplitResult(lower: Option[Node], equal: Option[Node], greater: Option[Node]) {
+  def flatten: Seq[Node] = Seq(lower, equal, greater).flatten
+  def sides: Seq[Node]   = Seq(lower, greater).flatten
 }
 
-class NodePair(val first: Node, val second: Node)
+class NodePair(val first: Option[Node], val second: Option[Node])
 
-object Node {
+case class Node(
+                 x: Int,
+                 left: Option[Node] = None,
+                 right: Option[Node] = None,
+                 y: Int = Node.random.nextInt
+               )
 
-  var random = new Random
-
-  def merge(lower: Node, greater: Node): Node = {
-    if (lower == null) return greater
-    if (greater == null) return lower
-    if (lower.y < greater.y) {
-      lower.right = merge(lower.right, greater)
-      lower
-    }
-    else {
-      greater.left = merge(lower, greater.left)
-      greater
-    }
-  }
-
-  def splitBinary(orig: Node, value: Int): NodePair = {
-    if (orig == null) return new NodePair(null, null)
-    if (orig.x < value) {
-      val splitPair = splitBinary(orig.right, value)
-      orig.right = splitPair.first
-      new NodePair(orig, splitPair.second)
-    }
-    else {
-      val splitPair = splitBinary(orig.left, value)
-      orig.left = splitPair.second
-      new NodePair(splitPair.first, orig)
-    }
-  }
-
-  def merge(lower: Node, equal: Node, greater: Node): Node = merge(merge(lower, equal), greater)
-
-  def split(orig: Node, value: Int): SplitResult = {
-    val lowerOther = splitBinary(orig, value)
-    val equalGreater = splitBinary(lowerOther.second, value + 1)
-    new SplitResult(lowerOther.first, equalGreater.first, equalGreater.second)
-  }
-}
-
-case class Node(var x: Int, var left: Node = null, var right: Node = null) {
-  val y: Int = Node.random.nextInt
-}
-
-class Tree(var mRoot: Node = null) {
-  def hasValue(x: Int, res: Int): (Int, Tree) = {
-    val splited = Node.split(mRoot, x)
-    (if (splited.equal != null) res + 1 else res) -> {
-      mRoot = Node.merge(splited.lower, splited.equal, splited.greater)
-      this
+case class Tree(mRoot: Option[Node] = None) {
+  def foldValue(x: Int, res: Int): (Int, Tree) = {
+    mRoot.map(Node.split(_, x)).fold(res -> this) { r =>
+      r.equal.fold(res)(_ => res + 1) -> copy(Some(Node.merge(r.flatten: _*)))
     }
   }
 
   def insert(x: Int): Tree = {
-    val splited = Node.split(mRoot, x)
-    if (splited.equal == null) {
-      splited.equal = new Node(x)
+    mRoot.map(Node.split(_, x)).fold(copy(Some(Node(x)))) { r =>
+      copy(Some(Node.merge(Seq(r.lower, Some(r.equal.getOrElse(Node(x, None, None))), r.greater).flatten: _*)))
     }
-    mRoot = Node.merge(splited.lower, splited.equal, splited.greater)
-    this
   }
 
   def erase(x: Int): Tree = {
-    val splited = Node.split(mRoot, x)
-    mRoot = Node.merge(splited.lower, splited.greater)
-    this
+    mRoot.map(Node.split(_, x)).fold(this) { r =>
+      val side = r.sides
+      if (side.isEmpty) {
+        copy(None)
+      } else copy(Some(Node.merge(side: _*)))
+    }
+  }
+}
+
+object Node {
+
+  lazy final val random = new Random
+
+  @tailrec
+  def merge(entries: Node*): Node = {
+    entries.toList match {
+      case a :: b :: x =>
+        merge(
+          x.+:(if (a.y < b.y) {
+            a.copy(right = Some(a.right.fold(b)(outlineMerge(_, b))), y = a.y)
+          } else {
+            b.copy(left = Some(b.left.fold(a)(outlineMerge(a, _))), y = b.y)
+          }): _*
+        )
+      case e :: _ => e
+    }
+  }
+  def outlineMerge(entries: Node*): Node = {
+    merge(entries: _*)
+  }
+
+  def split(orig: Node, value: Int): SplitResult = {
+    val f = splitBinary(orig, value)
+    val s = f.second.map(splitBinary(_, value + 1))
+    SplitResult(f.first, s.flatMap(_.first), s.flatMap(_.second))
+  }
+
+  private[this] def splitBinary(orig: Node, value: Int): NodePair = {
+    if (orig.x < value) {
+      val splitVal = orig.right.map(splitBinary(_, value))
+      new NodePair(Some(orig.copy(right = splitVal.flatMap(_.first), y = orig.y)), splitVal.flatMap(_.second))
+    } else {
+      val splitVal = orig.left.map(splitBinary(_, value))
+      new NodePair(splitVal.flatMap(_.first), Some(orig.copy(left = splitVal.flatMap(_.second), y = orig.y)))
+    }
   }
 }
 
@@ -86,7 +87,7 @@ object Main extends App {
         case 0 => run(nextcur, res, tree.insert(nextcur), i + 1)
         case 1 => run(nextcur, res, tree.erase(nextcur), i + 1)
         case 2 =>
-          val (nr, nt) = tree.hasValue(nextcur, res)
+          val (nr, nt) = tree.foldValue(nextcur, res)
           run(nextcur, nr, nt, i + 1)
       }
     } else {
@@ -94,5 +95,5 @@ object Main extends App {
     }
   }
 
-  println(run(5, 0, new Tree()))
+  println(run(5, 0, Tree()))
 }
